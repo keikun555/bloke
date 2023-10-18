@@ -30,9 +30,8 @@ from typing_bril import (
     Variable,
 )
 
-Z3_ERROR_VARIABLE = z3.Bool("Z3.ERROR")
-Z3_RETURN_PREFIX = "Z3.RETURN"
-Z3_PRINT_PREFIX = "Z3.PRINT.LINES"
+Z3_RETURN_PREFIX = "BRIL.RETURN"
+Z3_PRINT_PREFIX = "BRIL.PRINT.LINES"
 
 
 def z3_return_arg_name_get(program_label: int) -> str:
