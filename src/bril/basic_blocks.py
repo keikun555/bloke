@@ -8,8 +8,8 @@ import itertools
 from typing import Generator, TypeAlias
 from typing_extensions import TypedDict
 
-from typing_bril import Function, FunctionBase, Instruction, Program
-from bril_constants import TERMINATOR_OPERATORS
+from .typing_bril import Function, FunctionBase, Instruction, Program
+from .bril_constants import TERMINATOR_OPERATORS
 
 
 BasicBlock: TypeAlias = list[Instruction]

@@ -8,18 +8,18 @@ import copy
 
 from typing import cast, Generator
 
-from typing_bril import (
+from .typing_bril import (
     Program,
     InstructionBase,
     Effect,
 )
-from bril_constants import TERMINATOR_OPERATORS
+from .bril_constants import TERMINATOR_OPERATORS
 
-from basic_blocks import (
+from .basic_blocks import (
     basic_block_program_from_program,
     BasicBlock,
 )
-from bril_extract import label_get
+from .bril_extract import label_get
 
 
 class ControlFlowGraph(dict[int, set[int]]):

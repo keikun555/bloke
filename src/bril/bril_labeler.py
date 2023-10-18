@@ -7,13 +7,13 @@ from typing import Generator, Optional, TypeAlias
 
 import click
 
-from basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
-                          basic_block_program_from_program,
-                          program_from_basic_block_program)
-from bril_analyze import has_label
-from bril_extract import label_get
-from cfg import ControlFlowGraph, control_flow_graph_from_instructions
-from typing_bril import Label, Program
+from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
+                           basic_block_program_from_program,
+                           program_from_basic_block_program)
+from .bril_analyze import has_label
+from .bril_extract import label_get
+from .cfg import ControlFlowGraph, control_flow_graph_from_instructions
+from .typing_bril import Label, Program
 
 ENTRY_BLOCK_LABEL = "ENTRY"
 EXIT_BLOCK_LABEL = "EXIT"
@@ -76,7 +76,9 @@ def index_to_label_dict_get(
 
     return index_to_label
 
+
 LabelToIndexDict: TypeAlias = dict[str, int]
+
 
 def label_to_index_dict_get(index_to_label_dict: IndexToLabelDict) -> LabelToIndexDict:
     """Flips index and labels"""

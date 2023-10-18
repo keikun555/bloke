@@ -2,10 +2,10 @@
 
 from typing import cast
 
-from basic_blocks import BasicBlock
-from typing_bril import Instruction, Value, Effect
+from .basic_blocks import BasicBlock
+from .typing_bril import Instruction, Value, Effect
 
-from bril_constants import TERMINATOR_OPERATORS
+from .bril_constants import TERMINATOR_OPERATORS
 
 
 def has_label(basic_block: BasicBlock) -> bool:

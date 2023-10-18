@@ -2,28 +2,19 @@
 Utilities to find dominators and the likes
 """
 
-import sys
-import json
 import copy
-
-from typing import TypeAlias, Callable
+import json
+import sys
 from collections import defaultdict
+from typing import Callable, TypeAlias
 
 import click
 
-from typing_bril import Program
-from basic_blocks import (
-    BasicBlockProgram,
-    basic_block_program_from_program,
-)
-from cfg import (
-    ControlFlowGraph,
-    control_flow_graph_from_instructions,
-    reverse_cfg,
-    all_paths,
-)
-
-from bril_labeler import index_to_label_dict_get
+from .basic_blocks import BasicBlockProgram, basic_block_program_from_program
+from .bril_labeler import index_to_label_dict_get
+from .cfg import (ControlFlowGraph, all_paths,
+                  control_flow_graph_from_instructions, reverse_cfg)
+from .typing_bril import Program
 
 DominanceAnalysis: TypeAlias = dict[int, set[int]]
 

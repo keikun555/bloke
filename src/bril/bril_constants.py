@@ -2,7 +2,7 @@
 Constants used in Bril tools
 """
 
-from typing_bril import Operation
+from .typing_bril import Operation
 
 ENTRY_FUNCTION_NAME = "main"
 

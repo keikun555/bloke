@@ -5,30 +5,19 @@ import json
 import operator
 import sys
 from types import MappingProxyType
-from typing import Callable, Generator, NamedTuple, TypeAlias, TypedDict, TypeVar, cast
+from typing import (Callable, Generator, NamedTuple, TypeAlias, TypedDict,
+                    TypeVar, cast)
 
 import click
 import z3
 
-from basic_blocks import (
-    BasicBlock,
-    BasicBlockFunction,
-    BasicBlockProgram,
-    basic_block_program_from_program,
-)
-from bril_extract import phi_nodes_get, var_to_type_dict_get
-from bril_labeler import index_to_label_dict_get, label_to_index_dict_get
-from cfg import control_flow_graph_from_instructions, is_cyclic
-from typing_bril import (
-    BrilType,
-    Constant,
-    Effect,
-    Instruction,
-    Operation,
-    Program,
-    Value,
-    Variable,
-)
+from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
+                           basic_block_program_from_program)
+from .bril_extract import phi_nodes_get, var_to_type_dict_get
+from .bril_labeler import index_to_label_dict_get, label_to_index_dict_get
+from .cfg import control_flow_graph_from_instructions, is_cyclic
+from .typing_bril import (BrilType, Constant, Effect, Instruction, Operation,
+                          Program, Value, Variable)
 
 Z3_RETURN_PREFIX = "BRIL.RETURN"
 Z3_PRINT_PREFIX = "BRIL.PRINT.LINES"

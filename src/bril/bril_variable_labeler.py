@@ -7,7 +7,7 @@ from typing import cast
 
 import click
 
-from typing_bril import Effect, Program, Value, Variable
+from .typing_bril import Effect, Program, Value, Variable
 
 
 def renamed_variable_get(var: Variable, label: int | str) -> Variable:

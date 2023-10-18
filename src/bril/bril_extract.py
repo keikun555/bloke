@@ -2,9 +2,9 @@
 
 from typing import Optional, cast
 
-from basic_blocks import BasicBlock, BasicBlockFunction
-from bril_analyze import has_label, is_value
-from typing_bril import BrilType, Label, Value, Variable
+from .basic_blocks import BasicBlock, BasicBlockFunction
+from .bril_analyze import has_label, is_value
+from .typing_bril import BrilType, Label, Value, Variable
 
 
 def label_get(basic_block: BasicBlock) -> Optional[str]:

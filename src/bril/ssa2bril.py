@@ -10,14 +10,15 @@ from typing import cast
 
 import click
 
-from basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
-                          basic_block_program_from_program,
-                          program_from_basic_block_program)
-from bril_analyze import is_terminator
-from bril_extract import phi_nodes_get
-from bril_labeler import apply_labels, index_to_label_dict_get
-from cfg import control_flow_graph_from_instructions
-from typing_bril import Constant, Effect, Instruction, Program, Value, Variable
+from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
+                           basic_block_program_from_program,
+                           program_from_basic_block_program)
+from .bril_analyze import is_terminator
+from .bril_extract import phi_nodes_get
+from .bril_labeler import apply_labels, index_to_label_dict_get
+from .cfg import control_flow_graph_from_instructions
+from .typing_bril import (Constant, Effect, Instruction, Program, Value,
+                          Variable)
 
 
 def ssa_bb_func_to_bb_func(

@@ -8,23 +8,22 @@ from typing import (
     TypeAlias,
     TypeVar,
     Generic,
-    Optional,
 )
 from abc import ABC, abstractmethod
 from enum import Enum
 
 import click
 
-from typing_bril import Program, Value, Effect
-from basic_blocks import (
+from .typing_bril import Program, Value, Effect
+from .basic_blocks import (
     BasicBlockProgram,
     BasicBlockFunction,
     BasicBlock,
     basic_block_program_from_program,
 )
-from cfg import ControlFlowGraph, control_flow_graph_from_instructions
+from .cfg import ControlFlowGraph, control_flow_graph_from_instructions
 
-from bril_extract import label_get
+from .bril_extract import label_get
 
 
 Domain = TypeVar("Domain")
