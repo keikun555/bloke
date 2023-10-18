@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 300, in <module>
+    main()
+  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 295, in main
+    ssa_program: Program = bril_to_ssa(prog)
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 287, in bril_to_ssa
+    ssa_bb_program["functions"][i] = bb_func_to_ssa_bb_func(func)
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 154, in bb_func_to_ssa_bb_func
+    defs, orig, var_to_type = defs_orig_variable_dicts_get(bb_func)
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 100, in defs_orig_variable_dicts_get
+    var_to_type[var] = value["type"]
+KeyError: 'type'
+[0m[1m[31merror[0m: Uncaught (in promise) SyntaxError: Unexpected end of JSON input
+    let prog = JSON.parse(await readStdin()) as bril.Program;
+[0m[31m                    ^[0m
+    at [0m[1m[3mJSON.parse[0m ([0m[36m<anonymous>[0m)
+    at [0m[1m[3mmain[0m ([0m[36mfile:///home/kei/course/6120/bril/brili.ts[0m:[0m[33m958[0m:[0m[33m21[0m)
+    at [0m[1m[3meventLoopTick[0m ([0m[36mext:core/01_core.js[0m:[0m[33m183[0m:[0m[33m11[0m)

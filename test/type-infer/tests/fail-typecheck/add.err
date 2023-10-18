@@ -1,34 +1,14 @@
 Traceback (most recent call last):
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 300, in <module>
-    main()
-  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1157, in __call__
-    return self.main(*args, **kwargs)
-  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1078, in main
-    rv = self.invoke(ctx)
-  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1434, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-  File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 783, in invoke
-    return __callback(*args, **kwargs)
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 295, in main
-    ssa_program: Program = bril_to_ssa(prog)
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 287, in bril_to_ssa
-    ssa_bb_program["functions"][i] = bb_func_to_ssa_bb_func(func)
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 154, in bb_func_to_ssa_bb_func
-    defs, orig, var_to_type = defs_orig_variable_dicts_get(bb_func)
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2ssa.py", line 100, in defs_orig_variable_dicts_get
-    var_to_type[var] = value["type"]
-KeyError: 'type'
-Traceback (most recent call last):
   File "/home/kei/.local/bin/bril2txt", line 8, in <module>
     sys.exit(bril2txt())
   File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 343, in bril2txt
     print_prog(json.load(sys.stdin))
-  File "/usr/lib/python3.10/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-  File "/usr/lib/python3.10/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/usr/lib/python3.10/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/usr/lib/python3.10/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 333, in print_prog
+    print_func(func)
+  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 327, in print_func
+    print_instr(instr_or_label)
+  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 299, in print_instr
+    print('  {};'.format(instr_to_string(instr)))
+  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 272, in instr_to_string
+    value_to_str(instr['type'], instr['value']),
+KeyError: 'type'
