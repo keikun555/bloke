@@ -1,3 +1,7 @@
+# Vim swp files
+*.swp
+*.swo
+
 # Virtual Environment
 bloke_venv
 
