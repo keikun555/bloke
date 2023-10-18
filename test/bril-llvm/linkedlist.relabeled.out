@@ -1,0 +1,47 @@
+@cons(head: int, tail: ptr<int_list>): ptr<int_list> {
+  one.0: int = const 1;
+  p.0: ptr<int_list> = alloc one.0;
+  phead.0: ptr<int> = getmbr p.0 elt.0;
+  ptail.0: ptr<ptr<int_list>> = getmbr p.0 next.0;
+  store phead.0 head.0;
+  store ptail.0 tail.0;
+  ret p.0;
+}
+@print_list(list: ptr<int_list>) {
+  empty.0: bool = isnull list.0;
+  br empty.0 .end .print;
+.print:
+  xp.0: ptr<int> = getmbr list.0 elt.0;
+  x.0: int = load xp.0;
+  print x.0;
+  tp.0: ptr<ptr<int_list>> = getmbr list.0 next.0;
+  t.0: ptr<int_list> = load tp.0;
+  call @print_list t.0;
+.end:
+  ret;
+}
+@free_list(list: ptr<int_list>) {
+  empty.0: bool = isnull list.0;
+  br empty.0 .end .freetail;
+.freetail:
+  tp.0: ptr<ptr<int_list>> = getmbr list.0 next.0;
+  t.0: ptr<int_list> = load tp.0;
+  call @free_list t.0;
+  free list.0;
+.end:
+  ret;
+}
+@main {
+  a.0: int = const 2;
+  b.0: int = const 3;
+  c.0: int = const 5;
+  d.0: int = const 8;
+  n.0: ptr<int_list> = const 0;
+  s0.0: ptr<int_list> = call @cons a.0 n.0;
+  s1.0: ptr<int_list> = call @cons b.0 s0.0;
+  s2.0: ptr<int_list> = call @cons c.0 s1.0;
+  s3.0: ptr<int_list> = call @cons d.0 s2.0;
+  call @print_list s3.0;
+  call @free_list s3.0;
+  ret;
+}

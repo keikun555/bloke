@@ -1,0 +1,33 @@
+@main(input: int) {
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  neg_one.0: int = const -1;
+  vals.0: ptr<int> = alloc input.0;
+  store vals.0 zero.0;
+  vals_i.0: ptr<int> = ptradd vals.0 one.0;
+  store vals_i.0 one.0;
+  i.0: int = const 2;
+  i_minus_one.0: int = add i.0 neg_one.0;
+  i_minus_two.0: int = add i_minus_one.0 neg_one.0;
+.loop:
+  cond.0: bool = lt i.0 input.0;
+  br cond.0 .body .done;
+.body:
+  vals_i.0: ptr<int> = ptradd vals.0 i.0;
+  vals_i_minus_one.0: ptr<int> = ptradd vals.0 i_minus_one.0;
+  vals_i_minus_two.0: ptr<int> = ptradd vals.0 i_minus_two.0;
+  tmp.0: int = load vals_i_minus_one.0;
+  tmp2.0: int = load vals_i_minus_two.0;
+  tmp.0: int = add tmp.0 tmp2.0;
+  store vals_i.0 tmp.0;
+  i.0: int = add i.0 one.0;
+  i_minus_one.0: int = add i_minus_one.0 one.0;
+  i_minus_two.0: int = add i_minus_two.0 one.0;
+  jmp .loop;
+.done:
+  last.0: ptr<int> = ptradd vals.0 i_minus_one.0;
+  tmp.0: int = load last.0;
+  print tmp.0;
+  free vals.0;
+  ret;
+}

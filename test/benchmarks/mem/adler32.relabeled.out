@@ -1,0 +1,76 @@
+@main {
+  size.0: int = const 512;
+  arr.0: ptr<int> = alloc size.0;
+  call @fill_array arr.0 size.0;
+  checksum.0: int = call @adler32 arr.0 size.0;
+  print checksum.0;
+  free arr.0;
+}
+@mod(r: int, s: int): int {
+  x.0: int = div r.0 s.0;
+  y.0: int = mul x.0 s.0;
+  result.0: int = sub r.0 y.0;
+  ret result.0;
+}
+@fill_array(arr: ptr<int>, size: int) {
+  one.0: int = const 1;
+  curr.0: int = const 0;
+  loc.0: ptr<int> = id arr.0;
+.loop:
+  store loc.0 curr.0;
+  loc.0: ptr<int> = ptradd loc.0 one.0;
+  curr.0: int = add curr.0 one.0;
+  continue.0: bool = lt curr.0 size.0;
+  br continue.0 .loop .exit;
+.exit:
+  nop;
+}
+@bitwise_or(x: int, y: int): int {
+  one.0: int = const 1;
+  two.0: int = const 2;
+  val.0: int = const 1;
+  zero.0: int = const 0;
+  result.0: int = const 0;
+.loop:
+  xmod2.0: int = call @mod x.0 two.0;
+  ymod2.0: int = call @mod y.0 two.0;
+  xodd.0: bool = eq xmod2.0 one.0;
+  yodd.0: bool = eq ymod2.0 one.0;
+  cond.0: bool = or xodd.0 yodd.0;
+  br cond.0 .true .false;
+.true:
+  result.0: int = add result.0 val.0;
+.false:
+  x.0: int = div x.0 two.0;
+  y.0: int = div y.0 two.0;
+  xpos.0: bool = gt x.0 zero.0;
+  ypos.0: bool = gt y.0 zero.0;
+  val.0: int = mul val.0 two.0;
+  continue.0: bool = or xpos.0 ypos.0;
+  br continue.0 .loop .exit;
+.exit:
+  ret result.0;
+}
+@adler32(arr: ptr<int>, size: int): int {
+  a.0: int = const 1;
+  b.0: int = const 0;
+  one.0: int = const 1;
+  curr.0: int = const 0;
+  loc.0: ptr<int> = id arr.0;
+  adler.0: int = const 65521;
+  two_raised_to_16.0: int = const 65536;
+.loop:
+  val.0: int = load loc.0;
+  a.0: int = add a.0 val.0;
+  b.0: int = add b.0 a.0;
+  loc.0: ptr<int> = ptradd loc.0 one.0;
+  curr.0: int = add curr.0 one.0;
+  continue.0: bool = lt curr.0 size.0;
+  br continue.0 .loop .exit;
+.exit:
+  a.0: int = call @mod a.0 adler.0;
+  b.0: int = call @mod b.0 adler.0;
+  b.0: int = mul b.0 two_raised_to_16.0;
+  result.0: int = call @bitwise_or b.0 a.0;
+  ret result.0;
+}

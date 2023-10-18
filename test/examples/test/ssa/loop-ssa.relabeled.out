@@ -1,0 +1,15 @@
+@main {
+.entry:
+  i.1.0: int = const 1;
+  jmp .loop;
+.loop:
+  i.2.0: int = phi i.1.0 i.3.0 .entry .body;
+  max.0: int = const 10;
+  cond.0: bool = lt i.2.0 max.0;
+  br cond.0 .body .exit;
+.body:
+  i.3.0: int = add i.2.0 i.2.0;
+  jmp .loop;
+.exit:
+  print i.2.0;
+}

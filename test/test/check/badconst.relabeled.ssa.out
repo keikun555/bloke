@@ -1,0 +1,7 @@
+@main {
+.main.b0:
+  a.0.0: bool = const 4;
+  b.0.0: int = const true;
+  c.0.0: ptr<int> = const 2;
+  d.0.0: blah = const 0;
+}

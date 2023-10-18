@@ -1,0 +1,45 @@
+@main(input.0: int) {
+.main.b0:
+  input.1: int = id input.0;
+.main.b1:
+  n.0.0: int = id input.0;
+  v0.0.0: int = const 0;
+  v1.0.0: int = const 1;
+  v2.0.0: int = const 2;
+  sum.0.0: int = id v1.0.0;
+  i.0.0: int = id v2.0.0;
+  result.0.0: int = id v1.0.0;
+.for.cond.1:
+  sum.0.1: int = phi sum.0.0 sum.0.4 .main.b1 .for.incre;
+  qut.0.0: int = phi qut.0.1 .for.incre;
+  mpt.0.0: int = phi mpt.0.1 .for.incre;
+  ii.0.0: int = phi ii.0.1 .for.incre;
+  i.0.1: int = phi i.0.0 i.0.2 .main.b1 .for.incre;
+  dif.0.0: int = phi dif.0.1 .for.incre;
+  comp1.0.0: bool = phi comp1.0.1 .for.incre;
+  comp.0.0: bool = phi comp.0.1 .for.incre;
+  ii.0.1: int = mul i.0.1 i.0.1;
+  comp.0.1: bool = gt ii.0.1 n.0.0;
+  br comp.0.1 .for.end .for.body;
+.for.body:
+  qut.0.1: int = div n.0.0 i.0.1;
+  mpt.0.1: int = mul qut.0.1 i.0.1;
+  dif.0.1: int = sub n.0.0 mpt.0.1;
+  comp1.0.1: bool = eq dif.0.1 v0.0.0;
+  br comp1.0.1 .if.body .for.incre;
+.if.body:
+  sum.0.2: int = add sum.0.1 i.0.1;
+  sum.0.3: int = add sum.0.2 qut.0.1;
+.for.incre:
+  sum.0.4: int = phi sum.0.1 sum.0.3 .for.body .if.body;
+  i.0.2: int = add i.0.1 v1.0.0;
+  jmp .for.cond.1;
+.for.end:
+  comp2.0.0: bool = eq sum.0.1 n.0.0;
+  br comp2.0.0 .if.success .if.failure.end;
+.if.success:
+  result.0.2: int = id v0.0.0;
+.if.failure.end:
+  result.0.1: int = phi result.0.0 result.0.2 .for.end .if.success;
+  print result.0.1;
+}

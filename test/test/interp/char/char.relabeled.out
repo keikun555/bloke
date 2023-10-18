@@ -1,0 +1,7 @@
+@main {
+  c1.0: char = const 'h';
+  c2.0: char = const 'e';
+  c3.0: char = const 'y';
+  c4.0: char = const '🐶';
+  print c1.0 c2.0 c3.0 c4.0;
+}

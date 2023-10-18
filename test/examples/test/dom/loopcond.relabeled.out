@@ -1,0 +1,24 @@
+@main {
+.entry:
+  x.0: int = const 0;
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  max.0: int = const 10;
+  cond.0: bool = lt i.0 max.0;
+  br cond.0 .body .exit;
+.body:
+  mid.0: int = const 5;
+  cond.0: bool = lt i.0 mid.0;
+  br cond.0 .then .endif;
+.then:
+  x.0: int = add x.0 one.0;
+  jmp .endif;
+.endif:
+  factor.0: int = const 2;
+  x.0: int = mul x.0 factor.0;
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.exit:
+  print x.0;
+}

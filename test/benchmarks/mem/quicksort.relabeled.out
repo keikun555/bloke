@@ -1,0 +1,95 @@
+@main(n1: int, n2: int, n3: int, n4: int, n5: int, n6: int) {
+  size.0: int = const 6;
+  array.0: ptr<int> = call @pack size.0 n1.0 n2.0 n3.0 n4.0 n5.0 n6.0;
+  one.0: int = const 1;
+  size_minus_one.0: int = sub size.0 one.0;
+  zero.0: int = const 0;
+  call @qsort array.0 zero.0 size_minus_one.0;
+  call @print_array array.0 size.0;
+  free array.0;
+}
+@qsort(array: ptr<int>, l: int, r: int) {
+  l_ge_r.0: bool = ge l.0 r.0;
+  zero.0: int = const 0;
+  neg_r.0: bool = lt r.0 zero.0;
+  ret_cond.0: bool = or l_ge_r.0 neg_r.0;
+  br ret_cond.0 .done .continue;
+.continue:
+  p.0: int = call @partition array.0 l.0 r.0;
+  one.0: int = const 1;
+  p_minus_one.0: int = sub p.0 one.0;
+  p_plus_one.0: int = add p.0 one.0;
+  call @qsort array.0 l.0 p_minus_one.0;
+  call @qsort array.0 p_plus_one.0 r.0;
+.done:
+  ret;
+}
+@partition(array: ptr<int>, l: int, r: int): int {
+  pivot_loc.0: ptr<int> = ptradd array.0 r.0;
+  pivot.0: int = load pivot_loc.0;
+  one.0: int = const 1;
+  i.0: int = sub l.0 one.0;
+  j.0: int = id i.0;
+.loop.init:
+  j.0: int = add j.0 one.0;
+  cond.0: bool = lt j.0 r.0;
+  br cond.0 .body .post.loop;
+.body:
+  j_loc.0: ptr<int> = ptradd array.0 j.0;
+  a_j.0: int = load j_loc.0;
+  swap_cond.0: bool = le a_j.0 pivot.0;
+  br swap_cond.0 .swap .loop.init;
+.swap:
+  i.0: int = add i.0 one.0;
+  i_loc.0: ptr<int> = ptradd array.0 i.0;
+  a_i.0: int = load i_loc.0;
+  store j_loc.0 a_i.0;
+  store i_loc.0 a_j.0;
+  jmp .loop.init;
+.post.loop:
+  i.0: int = add i.0 one.0;
+  i_loc.0: ptr<int> = ptradd array.0 i.0;
+  a_i.0: int = load i_loc.0;
+  store i_loc.0 pivot.0;
+  store pivot_loc.0 a_i.0;
+  ret i.0;
+}
+@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int): ptr<int> {
+  one.0: int = const 1;
+  i.0: int = const 0;
+  array.0: ptr<int> = alloc size.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n1.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n2.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n3.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n4.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n5.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n6.0;
+  ret array.0;
+}
+@print_array(array: ptr<int>, size: int) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  val.0: int = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}

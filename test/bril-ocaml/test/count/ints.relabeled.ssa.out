@@ -1,0 +1,5 @@
+@main {
+.main.b0:
+  a.0.0: int = const 2;
+  b.0.0: int = const 3;
+}

@@ -1,0 +1,8 @@
+@main(n: int, m: int): int {
+  condi.0: bool = lt n.0 m.0;
+  br condi.0 .less .biggereq;
+.less:
+  ret m.0;
+.biggereq:
+  ret n.0;
+}

@@ -1,0 +1,26 @@
+@print_point(p: ptr<point>) {
+  px.0: ptr<int> = getmbr p.0 x.0;
+  py.0: ptr<int> = getmbr p.0 y.0;
+  xv.0: int = load px.0;
+  yv.0: int = load py.0;
+  print xv.0 yv.0;
+}
+@main(a: int, b: int) {
+  one.0: int = const 1;
+  two.0: int = const 2;
+  z.0: ptr<point> = alloc two.0;
+  z1.0: ptr<point> = ptradd z.0 one.0;
+  z0x.0: ptr<int> = getmbr z.0 x.0;
+  z0y.0: ptr<int> = getmbr z.0 y.0;
+  store z0x.0 a.0;
+  store z0y.0 b.0;
+  z1x.0: ptr<int> = getmbr z1.0 x.0;
+  z1y.0: ptr<int> = getmbr z1.0 y.0;
+  c.0: int = mul a.0 b.0;
+  d.0: int = add a.0 b.0;
+  store z1x.0 c.0;
+  store z1y.0 d.0;
+  call @print_point z.0;
+  call @print_point z1.0;
+  free z.0;
+}

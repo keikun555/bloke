@@ -1,0 +1,17 @@
+@main(x.0: int, b.0: bool) {
+.main.b0:
+  x.1: int = id x.0;
+  b.1: bool = id b.0;
+.main.b1:
+  speculate;
+  commit;
+  guard b.0 .l;
+  speculate x.0;
+  y.0.0: int = speculate;
+  commit x.0;
+  y.0.1: int = commit;
+  guard .l;
+  guard b.0;
+  y.0.2: int = guard b.0 .l;
+.l:
+}

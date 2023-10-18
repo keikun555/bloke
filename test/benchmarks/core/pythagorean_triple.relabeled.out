@@ -1,0 +1,24 @@
+@main(n: int) {
+  one.0: int = const 1;
+  n_sq.0: int = mul n.0 n.0;
+  a.0: int = id one.0;
+.outer_loop:
+  b.0: int = id one.0;
+.inner_loop:
+  a_sq.0: int = mul a.0 a.0;
+  b_sq.0: int = mul b.0 b.0;
+  sum.0: int = add a_sq.0 b_sq.0;
+  found.0: bool = eq sum.0 n_sq.0;
+  br found.0 .found .inner_continue;
+.found:
+  print b.0 a.0;
+.inner_continue:
+  b.0: int = add b.0 one.0;
+  done.0: bool = ge b.0 a.0;
+  br done.0 .outer_continue .inner_loop;
+.outer_continue:
+  a.0: int = add a.0 one.0;
+  done.0: bool = ge a.0 n.0;
+  br done.0 .finish .outer_loop;
+.finish:
+}

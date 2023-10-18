@@ -1,0 +1,12 @@
+@main {
+  v.0: int = const 4;
+  o1.0: int = const 1;
+  bp.0: ptr<bool> = alloc v.0;
+  bp2.0: ptr<bool> = ptradd bp.0 o1.0;
+  b.0: bool = const true;
+  store bp.0 b.0;
+  store bp2.0 b.0;
+  b.0: bool = load bp2.0;
+  print b.0;
+  free bp.0;
+}

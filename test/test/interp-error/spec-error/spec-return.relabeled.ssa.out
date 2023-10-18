@@ -1,0 +1,5 @@
+@main {
+.main.b0:
+  speculate;
+  ret;
+}

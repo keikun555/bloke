@@ -1,0 +1,30 @@
+@nothing {
+}
+@retint: int {
+.retint.b0:
+  x.0.0: int = const 5;
+  ret x.0.0;
+}
+@argint(x.0: int) {
+.argint.b0:
+  x.1: int = id x.0;
+}
+@noret {
+.noret.b0:
+  x.0.0: int = const 5;
+  ret x.0.0;
+}
+@yesret: int {
+.yesret.b0:
+  ret;
+}
+@main {
+.main.b0:
+  call @foo;
+  a.0.0: int = call @nothing;
+  call @nothing @nothing;
+  b.0.0: bool = call @retint;
+  call @argint b.0.0;
+  call @argint;
+  call @argint a.0.0 a.0.0;
+}

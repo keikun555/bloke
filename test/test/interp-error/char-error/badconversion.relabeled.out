@@ -1,0 +1,5 @@
+@main {
+  i.0: int = const 56193;
+  c.0: char = int2char i.0;
+  print c.0;
+}

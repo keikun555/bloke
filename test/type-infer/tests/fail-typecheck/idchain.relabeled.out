@@ -1,0 +1,15 @@
+@main {
+  jmp .l1;
+.l5:
+  d.0: bool = id c.0;
+  ret;
+.l4:
+  c.0 = id b.0;
+  jmp .l5;
+.l3:
+  b.0 = id a.0;
+  jmp .l4;
+.l2:
+  a.0 = id z.0;
+  jmp .l3;
+.l1:

@@ -1,0 +1,6 @@
+@main {
+  v.0: int = const 4;
+  print v.0;
+  ret;
+  print v.0;
+}

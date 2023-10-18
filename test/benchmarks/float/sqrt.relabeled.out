@@ -1,0 +1,59 @@
+@main {
+  v0.0: float = const 327;
+  n.0: float = id v0.0;
+  v1.0: float = const 1e-05;
+  precision.0: float = id v1.0;
+  v2.0: float = id n.0;
+  x.0: float = id v2.0;
+  v3.0: bool = const true;
+  notdone.0: bool = id v3.0;
+.for.cond.4:
+  v5.0: bool = id notdone.0;
+  br v5.0 .for.body.4 .for.end.4;
+.for.body.4:
+  v6.0: float = id n.0;
+  v7.0: float = id x.0;
+  v8.0: float = fdiv v6.0 v7.0;
+  root.0: float = id v8.0;
+  v9.0: float = id x.0;
+  v10.0: float = id root.0;
+  v11.0: float = fadd v9.0 v10.0;
+  root.0: float = id v11.0;
+  v12.0: float = const 0.5;
+  v13.0: float = id root.0;
+  v14.0: float = fmul v12.0 v13.0;
+  root.0: float = id v14.0;
+  v15.0: float = id root.0;
+  v16.0: float = id x.0;
+  v17.0: float = fsub v15.0 v16.0;
+  diff.0: float = id v17.0;
+  v19.0: float = id diff.0;
+  v20.0: float = const 0;
+  v21.0: bool = flt v19.0 v20.0;
+  br v21.0 .then.18 .else.18;
+.then.18:
+  v22.0: float = const 0;
+  v23.0: float = id diff.0;
+  v24.0: float = fsub v22.0 v23.0;
+  diff.0: float = id v24.0;
+  jmp .endif.18;
+.else.18:
+.endif.18:
+  v26.0: float = id diff.0;
+  v27.0: float = id precision.0;
+  v28.0: bool = flt v26.0 v27.0;
+  br v28.0 .then.25 .else.25;
+.then.25:
+  v29.0: bool = const false;
+  notdone.0: bool = id v29.0;
+  jmp .endif.25;
+.else.25:
+.endif.25:
+  v30.0: float = id root.0;
+  x.0: float = id v30.0;
+  jmp .for.cond.4;
+.for.end.4:
+  v31.0: float = id x.0;
+  print v31.0;
+  v32.0: int = const 0;
+}

@@ -1,0 +1,13 @@
+@funcA(p.0: ptr<int>) {
+.funcA.b0:
+  p.1: ptr<int> = id p.0;
+.funcA.b1:
+  ret;
+}
+@main {
+.main.b0:
+  five.0.0: int = const 5;
+  x.0.0: ptr<int> = alloc five.0.0;
+  call @funcA x.0.0;
+  free x.0.0;
+}

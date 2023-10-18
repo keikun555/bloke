@@ -1,0 +1,40 @@
+@main(input.0: int) {
+.main.b0:
+  input.1: int = id input.0;
+.main.b1:
+  n.0.0: int = id input.0;
+  v0.0.0: int = const 0;
+  v1.0.0: int = const 10;
+  result.0.0: int = id v0.0.0;
+  v2.0.0: bool = const true;
+  notdone.0.0: bool = id v2.0.0;
+.for.cond.3:
+  v5.0.0: int = phi v5.0.1 v5.0.1 .if.body .for.incre;
+  v4.0.0: bool = phi v4.0.1 v4.0.1 .if.body .for.incre;
+  result.0.1: int = phi result.0.0 result.0.3 result.0.3 .main.b1 .if.body .for.incre;
+  remainder.0.0: int = phi remainder.0.1 remainder.0.1 .if.body .for.incre;
+  notdone.0.1: bool = phi notdone.0.0 notdone.0.2 notdone.0.1 .main.b1 .if.body .for.incre;
+  n.0.1: int = phi n.0.0 n.0.2 n.0.2 .main.b1 .if.body .for.incre;
+  floor.0.0: int = phi floor.0.1 floor.0.1 .if.body .for.incre;
+  comp1.0.0: bool = phi comp1.0.1 comp1.0.1 .if.body .for.incre;
+  a.0.0: int = phi a.0.1 a.0.1 .if.body .for.incre;
+  v4.0.1: bool = id notdone.0.1;
+  br v4.0.1 .for.body.3 .for.end.3;
+.for.body.3:
+  v5.0.1: int = id n.0.1;
+  a.0.1: int = div v5.0.1 v1.0.0;
+  floor.0.1: int = mul a.0.1 v1.0.0;
+  remainder.0.1: int = sub v5.0.1 floor.0.1;
+  result.0.2: int = mul result.0.1 v1.0.0;
+  result.0.3: int = add result.0.2 remainder.0.1;
+  n.0.2: int = id a.0.1;
+  comp1.0.1: bool = eq n.0.2 v0.0.0;
+  br comp1.0.1 .if.body .for.incre;
+.if.body:
+  notdone.0.2: bool = const false;
+  jmp .for.cond.3;
+.for.incre:
+  jmp .for.cond.3;
+.for.end.3:
+  print result.0.1;
+}

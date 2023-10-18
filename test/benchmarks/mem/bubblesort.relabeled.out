@@ -1,0 +1,80 @@
+@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int): ptr<int> {
+  one.0: int = const 1;
+  i.0: int = const 0;
+  array.0: ptr<int> = alloc size.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n1.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n2.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n3.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n4.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n5.0;
+  ret array.0;
+}
+@print_array(array: ptr<int>, size: int) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  val.0: int = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}
+@swap_cond(array: ptr<int>, j: int) {
+  one.0: int = const 1;
+  j_add_1.0: int = add j.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 j.0;
+  loc_next.0: ptr<int> = ptradd array.0 j_add_1.0;
+  elem_a.0: int = load loc.0;
+  elem_b.0: int = load loc_next.0;
+  cond.0: bool = gt elem_a.0 elem_b.0;
+  br cond.0 .swap .done;
+.swap:
+  store loc.0 elem_b.0;
+  store loc_next.0 elem_a.0;
+.done:
+  ret;
+}
+@main(size: int, n1: int, n2: int, n3: int, n4: int, n5: int) {
+  array.0: ptr<int> = call @pack size.0 n1.0 n2.0 n3.0 n4.0 n5.0;
+  one.0: int = const 1;
+  i.0: int = const 0;
+  j.0: int = const 0;
+  sizei.0: int = sub size.0 one.0;
+.loopi:
+  condi.0: bool = lt i.0 sizei.0;
+  br condi.0 .bodyi .donei;
+.bodyi:
+  sizej.0: int = sub size.0 i.0;
+  sizej.0: int = sub sizej.0 one.0;
+.loopj:
+  condj.0: bool = lt j.0 sizej.0;
+  br condj.0 .bodyj .donej;
+.bodyj:
+  call @swap_cond array.0 j.0;
+.loop_endj:
+  j.0: int = add j.0 one.0;
+  jmp .loopj;
+.donej:
+  j.0: int = const 0;
+.loopi_end:
+  i.0: int = add i.0 one.0;
+  jmp .loopi;
+.donei:
+  call @print_array array.0 size.0;
+  free array.0;
+}

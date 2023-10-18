@@ -1,0 +1,13 @@
+@main {
+.main.b0:
+  x.0.0: int = const 1;
+  call @add2 x.0.0;
+}
+@add2(x.0: bool): int {
+.add2.b0:
+  x.1: bool = id x.0;
+.add2.b1:
+  z.0.0: int = const 2;
+  w.0.0: int = add x.0 z.0.0;
+  print w.0.0;
+}

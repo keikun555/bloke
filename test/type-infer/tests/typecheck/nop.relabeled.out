@@ -1,0 +1,7 @@
+@main {
+  nop;
+  v.0: int = const 5;
+  nop;
+  print v.0;
+  nop;
+}

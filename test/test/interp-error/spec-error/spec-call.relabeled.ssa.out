@@ -1,0 +1,8 @@
+@foo {
+}
+@main {
+.main.b0:
+  speculate;
+  call @foo;
+  commit;
+}

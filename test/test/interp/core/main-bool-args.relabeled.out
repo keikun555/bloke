@@ -1,0 +1,11 @@
+@main(b: bool) {
+  br b.0 .here .there;
+.here:
+  v.0: int = const 1;
+  print v.0;
+  ret;
+.there:
+  v.0: int = const 2;
+  print v.0;
+  ret;
+}

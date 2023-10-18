@@ -1,0 +1,52 @@
+@rand(seq: ptr<int>, max: int): int {
+  a.0: int = const 25214903917;
+  c.0: int = const 11;
+  m.0: int = const 281474976710656;
+  x.0: int = load seq.0;
+  ax.0: int = mul a.0 x.0;
+  axpc.0: int = add ax.0 c.0;
+  next.0: int = div axpc.0 m.0;
+  next.0: int = mul next.0 m.0;
+  next.0: int = sub axpc.0 next.0;
+  store seq.0 next.0;
+  val.0: int = div next.0 max.0;
+  val.0: int = mul val.0 max.0;
+  val.0: int = sub next.0 val.0;
+  ret val.0;
+}
+@randarray(size: int, rng: ptr<int>): ptr<int> {
+  arr.0: ptr<int> = alloc size.0;
+  i.0: int = const 0;
+  max.0: int = const 1000;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  val.0: int = call @rand rng.0 max.0;
+  loc.0: ptr<int> = ptradd arr.0 i.0;
+  store loc.0 val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret arr.0;
+}
+@main(size: int, seed: int) {
+  two.0: int = const 2;
+  rng.0: ptr<int> = alloc seed.0;
+  store rng.0 seed.0;
+  arr.0: ptr<int> = call @randarray size.0 rng.0;
+  i.0: int = const 0;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<int> = ptradd arr.0 i.0;
+  val.0: int = load loc.0;
+  val.0: int = mul val.0 two.0;
+  store loc.0 val.0;
+.done:
+  free arr.0;
+  free rng.0;
+}

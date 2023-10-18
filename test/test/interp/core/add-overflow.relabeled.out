@@ -1,0 +1,25 @@
+@pow(base: int, exp: int): int {
+  out.0: int = const 1;
+  one.0: int = const 1;
+.loop:
+  end.0: bool = lt exp.0 one.0;
+  br end.0 .ret .body;
+.body:
+  out.0: int = mul out.0 base.0;
+  exp.0: int = sub exp.0 one.0;
+  jmp .loop;
+.ret:
+  ret out.0;
+}
+@main {
+  one.0: int = const 1;
+  two.0: int = const 2;
+  sixtytwo.0: int = const 62;
+  half.0: int = call @pow two.0 sixtytwo.0;
+  print half.0;
+  smaller.0: int = sub half.0 one.0;
+  maxint.0: int = add half.0 smaller.0;
+  print maxint.0;
+  overflow.0: int = add maxint.0 one.0;
+  print overflow.0;
+}

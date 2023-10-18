@@ -1,0 +1,14 @@
+@main(cond: bool) {
+.entry:
+  a.1.0: int = const 47;
+  br cond.0 .left .right;
+.left:
+  a.2.0: int = add a.1.0 a.1.0;
+  jmp .exit;
+.right:
+  a.3.0: int = mul a.1.0 a.1.0;
+  jmp .exit;
+.exit:
+  a.4.0: int = phi a.2.0 a.3.0 .left .right;
+  print a.4.0;
+}

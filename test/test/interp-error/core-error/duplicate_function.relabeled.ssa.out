@@ -1,0 +1,14 @@
+@main {
+.main.b0:
+  call @f;
+}
+@f {
+.f.b0:
+  v.0.0: int = const 1;
+  print v.0.0;
+}
+@f {
+.f.b0:
+  v.0.0: int = const 2;
+  print v.0.0;
+}

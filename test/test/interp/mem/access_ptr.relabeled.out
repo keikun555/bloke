@@ -1,0 +1,18 @@
+@main {
+  inc.0: int = const 1;
+  v.0: int = const 1000;
+  max.0: int = const 1000000;
+  count.0: int = const 0;
+  pi.0: ptr<int> = alloc v.0;
+  pp.0: ptr<ptr<int>> = alloc v.0;
+.lbl:
+  count.0: int = add count.0 inc.0;
+  store pp.0 pi.0;
+  pi.0: ptr<int> = load pp.0;
+  loop.0: bool = ge count.0 max.0;
+  br loop.0 .end .lbl;
+.end:
+  free pi.0;
+  free pp.0;
+  print count.0;
+}

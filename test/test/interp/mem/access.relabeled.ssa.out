@@ -1,0 +1,20 @@
+@main {
+.main.b0:
+  inc.0.0: int = const 1;
+  v.0.0: int = const 1000000;
+  max.0.0: int = const 1000000;
+  p.0.0: ptr<int> = alloc v.0.0;
+  count.0.0: int = const 0;
+.lbl:
+  val.0.0: int = phi val.0.1 .lbl;
+  loop.0.0: bool = phi loop.0.1 .lbl;
+  count.0.1: int = phi count.0.0 count.0.2 .main.b0 .lbl;
+  count.0.2: int = add count.0.1 inc.0.0;
+  store p.0.0 v.0.0;
+  val.0.1: int = load p.0.0;
+  loop.0.1: bool = ge count.0.2 max.0.0;
+  br loop.0.1 .end .lbl;
+.end:
+  free p.0.0;
+  print count.0.2;
+}

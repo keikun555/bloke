@@ -1,0 +1,65 @@
+@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int, n7: int, n8: int, n9: int, n10: int): ptr<int> {
+  one.0: int = const 1;
+  i.0: int = const 0;
+  array.0: ptr<int> = alloc size.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n1.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n2.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n3.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n4.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n5.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n6.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n7.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n8.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n9.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n10.0;
+  ret array.0;
+}
+@max(n: int, m: int): int {
+  condi.0: bool = lt n.0 m.0;
+  br condi.0 .less .biggereq;
+.less:
+  ret m.0;
+.biggereq:
+  ret n.0;
+}
+@main(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int, n7: int, n8: int, n9: int, n10: int) {
+  array.0: ptr<int> = call @pack size.0 n1.0 n2.0 n3.0 n4.0 n5.0 n6.0 n7.0 n8.0 n9.0 n10.0;
+  sum.0: int = const 0;
+  max_sum.0: int = const 0;
+  one.0: int = const 1;
+  zero.0: int = const 0;
+  i.0: int = const 0;
+.loop:
+  condi.0: bool = lt i.0 size.0;
+  br condi.0 .bodyi .done;
+.bodyi:
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  elem.0: int = load loc.0;
+  sum_incr.0: int = add sum.0 elem.0;
+  sum.0: int = call @max zero.0 sum_incr.0;
+  max_sum.0: int = call @max max_sum.0 sum.0;
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  print max_sum.0;
+  free array.0;
+}

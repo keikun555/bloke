@@ -1,0 +1,9 @@
+@main {
+.main.b0:
+  a.0.0: int = const 1;
+  b.0.0: int = const 2;
+  c.0.0: int = add a.0.0 b.0.0;
+  b.0.1: int = const 3;
+  d.0.0: int = add a.0.0 b.0.1;
+  print d.0.0;
+}

@@ -1,0 +1,115 @@
+@main {
+.main.b0:
+  size.0.0: int = const 512;
+  arr.0.0: ptr<int> = alloc size.0.0;
+  call @fill_array arr.0.0 size.0.0;
+  checksum.0.0: int = call @adler32 arr.0.0 size.0.0;
+  print checksum.0.0;
+  free arr.0.0;
+}
+@mod(r.0: int, s.0: int): int {
+.mod.b0:
+  r.1: int = id r.0;
+  s.1: int = id s.0;
+.mod.b1:
+  x.0.0: int = div r.0 s.0;
+  y.0.0: int = mul x.0.0 s.0;
+  result.0.0: int = sub r.0 y.0.0;
+  ret result.0.0;
+}
+@fill_array(arr.0: ptr<int>, size.0: int) {
+.fill_array.b0:
+  arr.1: ptr<int> = id arr.0;
+  size.1: int = id size.0;
+.fill_array.b1:
+  one.0.0: int = const 1;
+  curr.0.0: int = const 0;
+  loc.0.0: ptr<int> = id arr.0;
+.loop:
+  loc.0.1: ptr<int> = phi loc.0.0 loc.0.2 .fill_array.b1 .loop;
+  curr.0.1: int = phi curr.0.0 curr.0.2 .fill_array.b1 .loop;
+  continue.0.0: bool = phi continue.0.1 .loop;
+  store loc.0.1 curr.0.1;
+  loc.0.2: ptr<int> = ptradd loc.0.1 one.0.0;
+  curr.0.2: int = add curr.0.1 one.0.0;
+  continue.0.1: bool = lt curr.0.2 size.0;
+  br continue.0.1 .loop .exit;
+.exit:
+  nop;
+}
+@bitwise_or(x.0: int, y.0: int): int {
+.bitwise_or.b0:
+  x.1: int = id x.0;
+  y.1: int = id y.0;
+.bitwise_or.b1:
+  one.0.0: int = const 1;
+  two.0.0: int = const 2;
+  val.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  result.0.0: int = const 0;
+.loop:
+  ypos.0.0: bool = phi ypos.0.1 .false;
+  yodd.0.0: bool = phi yodd.0.1 .false;
+  ymod2.0.0: int = phi ymod2.0.1 .false;
+  y.0.0: int = phi y.0.1 .false;
+  xpos.0.0: bool = phi xpos.0.1 .false;
+  xodd.0.0: bool = phi xodd.0.1 .false;
+  xmod2.0.0: int = phi xmod2.0.1 .false;
+  x.0.0: int = phi x.0.1 .false;
+  val.0.1: int = phi val.0.0 val.0.2 .bitwise_or.b1 .false;
+  result.0.1: int = phi result.0.0 result.0.3 .bitwise_or.b1 .false;
+  continue.0.0: bool = phi continue.0.1 .false;
+  cond.0.0: bool = phi cond.0.1 .false;
+  xmod2.0.1: int = call @mod x.0.0 two.0.0;
+  ymod2.0.1: int = call @mod y.0.0 two.0.0;
+  xodd.0.1: bool = eq xmod2.0.1 one.0.0;
+  yodd.0.1: bool = eq ymod2.0.1 one.0.0;
+  cond.0.1: bool = or xodd.0.1 yodd.0.1;
+  br cond.0.1 .true .false;
+.true:
+  result.0.2: int = add result.0.1 val.0.1;
+.false:
+  result.0.3: int = phi result.0.1 result.0.2 .loop .true;
+  x.0.1: int = div x.0.0 two.0.0;
+  y.0.1: int = div y.0.0 two.0.0;
+  xpos.0.1: bool = gt x.0.1 zero.0.0;
+  ypos.0.1: bool = gt y.0.1 zero.0.0;
+  val.0.2: int = mul val.0.1 two.0.0;
+  continue.0.1: bool = or xpos.0.1 ypos.0.1;
+  br continue.0.1 .loop .exit;
+.exit:
+  ret result.0.3;
+}
+@adler32(arr.0: ptr<int>, size.0: int): int {
+.adler32.b0:
+  arr.1: ptr<int> = id arr.0;
+  size.1: int = id size.0;
+.adler32.b1:
+  a.0.0: int = const 1;
+  b.0.0: int = const 0;
+  one.0.0: int = const 1;
+  curr.0.0: int = const 0;
+  loc.0.0: ptr<int> = id arr.0;
+  adler.0.0: int = const 65521;
+  two_raised_to_16.0.0: int = const 65536;
+.loop:
+  val.0.0: int = phi val.0.1 .loop;
+  loc.0.1: ptr<int> = phi loc.0.0 loc.0.2 .adler32.b1 .loop;
+  curr.0.1: int = phi curr.0.0 curr.0.2 .adler32.b1 .loop;
+  continue.0.0: bool = phi continue.0.1 .loop;
+  b.0.1: int = phi b.0.0 b.0.2 .adler32.b1 .loop;
+  a.0.1: int = phi a.0.0 a.0.2 .adler32.b1 .loop;
+  val.0.1: int = load loc.0.1;
+  a.0.2: int = add a.0.1 val.0.1;
+  b.0.2: int = add b.0.1 a.0.2;
+  loc.0.2: ptr<int> = ptradd loc.0.1 one.0.0;
+  curr.0.2: int = add curr.0.1 one.0.0;
+  continue.0.1: bool = lt curr.0.2 size.0;
+  br continue.0.1 .loop .exit;
+.exit:
+  a.0.3: int = call @mod a.0.2 adler.0.0;
+  b.0.3: int = call @mod b.0.2 adler.0.0;
+  b.0.4: int = mul b.0.3 two_raised_to_16.0.0;
+  result.0.0: int = call @bitwise_or b.0.4 a.0.3;
+  ret result.0.0;
+}

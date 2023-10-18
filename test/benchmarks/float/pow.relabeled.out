@@ -1,0 +1,37 @@
+@main {
+  v0.0: float = const 3.2;
+  x.0: float = id v0.0;
+  v1.0: int = const 2;
+  n.0: int = id v1.0;
+  v2.0: float = id x.0;
+  v3.0: int = id n.0;
+  call @pow v2.0 v3.0;
+  v4.0: int = const 0;
+}
+@pow(x: float, n: int) {
+  v0.0: float = id x.0;
+  res.0: float = id v0.0;
+  v2.0: int = const 0;
+  _i.0: int = id v2.0;
+.for.cond.1:
+  v3.0: int = id _i.0;
+  v4.0: int = id n.0;
+  v5.0: int = const 1;
+  v6.0: int = sub v4.0 v5.0;
+  v7.0: bool = lt v3.0 v6.0;
+  br v7.0 .for.body.1 .for.end.1;
+.for.body.1:
+  v8.0: float = id res.0;
+  v9.0: float = id x.0;
+  v10.0: float = fmul v8.0 v9.0;
+  res.0: float = id v10.0;
+  v11.0: int = id _i.0;
+  v12.0: int = const 1;
+  v13.0: int = add v11.0 v12.0;
+  _i.0: int = id v13.0;
+  jmp .for.cond.1;
+.for.end.1:
+  v14.0: float = id res.0;
+  print v14.0;
+  v15.0: int = const 0;
+}

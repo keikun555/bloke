@@ -1,0 +1,8 @@
+@main {
+  v0.0: int = const 1;
+  v1.0: int = const 2;
+  jmp .label;
+.label:
+  v2.0: int = add v0.0 v1.0;
+  print v2.0;
+}

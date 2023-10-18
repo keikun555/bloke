@@ -1,0 +1,7 @@
+@main {
+.main.b0:
+  v0.0.0: int = const -1;
+  zero.0.0: int = const 0;
+  res.0.0: int = div v0.0.0 zero.0.0;
+  print res.0.0;
+}

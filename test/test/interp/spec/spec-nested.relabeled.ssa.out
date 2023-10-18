@@ -1,0 +1,21 @@
+@main {
+.main.b0:
+  v.0.0: int = const 4;
+  speculate;
+  v.0.1: int = const 2;
+  speculate;
+  v.0.2: int = const 7;
+  b1.0.0: bool = const false;
+  guard b1.0.0 .failed1;
+  ret;
+.failed1:
+  y.0: int = const 0;
+  b2.0: bool = const true;
+  guard b2.0 .failed2;
+  commit;
+  print v.0;
+  print y.0;
+  ret;
+.failed2:
+  ret;
+}

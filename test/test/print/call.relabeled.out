@@ -1,0 +1,10 @@
+@add5(n: int): int {
+  five.0: int = const 5;
+  sum.0: int = add n.0 five.0;
+  ret sum.0;
+}
+@main {
+  a.0: int = const 9;
+  b.0: int = call @add5 a.0;
+  print b.0;
+}

@@ -1,0 +1,5 @@
+@main {
+  a.0: int = const 0;
+  b.0: bool = eq a.0 a.0;
+  c.0: bool = le a.0 a.0;
+}

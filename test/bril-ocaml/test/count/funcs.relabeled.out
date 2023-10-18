@@ -1,0 +1,11 @@
+@main {
+  a.0: int = const 2;
+  b.0: int = id a.0;
+  c.0: bool = eq a.0 b.0;
+  d.0: bool = id c.0;
+}
+@f(i: int): bool {
+  zero.0: int = const 0;
+  b.0: bool = eq i.0 zero.0;
+  ret b.0;
+}

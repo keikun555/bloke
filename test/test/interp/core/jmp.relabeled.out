@@ -1,0 +1,7 @@
+@main {
+  v.0: int = const 4;
+  jmp .somewhere;
+  v.0: int = const 2;
+.somewhere:
+  print v.0;
+}

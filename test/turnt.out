@@ -1,0 +1,986 @@
+1..277
+ok 1 - ./benchmarks/core/ackermann.bril variable-relabeler
+ok 2 - ./benchmarks/core/ackermann.bril relabeled-ssa
+ok 3 - ./benchmarks/core/ackermann.bril bril2z3
+ok 4 - ./benchmarks/core/armstrong.bril variable-relabeler
+ok 5 - ./benchmarks/core/armstrong.bril relabeled-ssa
+ok 6 - ./benchmarks/core/armstrong.bril bril2z3
+ok 7 - ./benchmarks/core/binary-fmt.bril variable-relabeler
+ok 8 - ./benchmarks/core/binary-fmt.bril relabeled-ssa
+ok 9 - ./benchmarks/core/binary-fmt.bril bril2z3
+ok 10 - ./benchmarks/core/bitshift.bril variable-relabeler
+ok 11 - ./benchmarks/core/bitshift.bril relabeled-ssa
+ok 12 - ./benchmarks/core/bitshift.bril bril2z3
+ok 13 - ./benchmarks/core/bitwise-ops.bril variable-relabeler
+ok 14 - ./benchmarks/core/bitwise-ops.bril relabeled-ssa
+ok 15 - ./benchmarks/core/bitwise-ops.bril bril2z3
+ok 16 - ./benchmarks/core/catalan.bril variable-relabeler
+not ok 17 - ./benchmarks/core/catalan.bril relabeled-ssa
+# exit code: 1
+not ok 18 - ./benchmarks/core/catalan.bril bril2z3
+# exit code: 1
+ok 19 - ./benchmarks/core/check-primes.bril variable-relabeler
+ok 20 - ./benchmarks/core/check-primes.bril relabeled-ssa
+ok 21 - ./benchmarks/core/check-primes.bril bril2z3
+ok 22 - ./benchmarks/core/collatz.bril variable-relabeler
+ok 23 - ./benchmarks/core/collatz.bril relabeled-ssa
+ok 24 - ./benchmarks/core/collatz.bril bril2z3
+ok 25 - ./benchmarks/core/digital-root.bril variable-relabeler
+ok 26 - ./benchmarks/core/digital-root.bril relabeled-ssa
+ok 27 - ./benchmarks/core/digital-root.bril bril2z3
+ok 28 - ./benchmarks/core/dot-product.bril variable-relabeler
+ok 29 - ./benchmarks/core/dot-product.bril relabeled-ssa
+ok 30 - ./benchmarks/core/dot-product.bril bril2z3
+ok 31 - ./benchmarks/core/euclid.bril variable-relabeler
+not ok 32 - ./benchmarks/core/euclid.bril relabeled-ssa
+# exit code: 1
+not ok 33 - ./benchmarks/core/euclid.bril bril2z3
+# exit code: 1
+ok 34 - ./benchmarks/core/fact.bril variable-relabeler
+ok 35 - ./benchmarks/core/fact.bril relabeled-ssa
+ok 36 - ./benchmarks/core/fact.bril bril2z3
+ok 37 - ./benchmarks/core/factors.bril variable-relabeler
+ok 38 - ./benchmarks/core/factors.bril relabeled-ssa
+ok 39 - ./benchmarks/core/factors.bril bril2z3
+ok 40 - ./benchmarks/core/fizz-buzz.bril variable-relabeler
+ok 41 - ./benchmarks/core/fizz-buzz.bril relabeled-ssa
+ok 42 - ./benchmarks/core/fizz-buzz.bril bril2z3
+ok 43 - ./benchmarks/core/gcd.bril variable-relabeler
+ok 44 - ./benchmarks/core/gcd.bril relabeled-ssa
+ok 45 - ./benchmarks/core/gcd.bril bril2z3
+ok 46 - ./benchmarks/core/hanoi.bril variable-relabeler
+ok 47 - ./benchmarks/core/hanoi.bril relabeled-ssa
+ok 48 - ./benchmarks/core/hanoi.bril bril2z3
+ok 49 - ./benchmarks/core/loopfact.bril variable-relabeler
+ok 50 - ./benchmarks/core/loopfact.bril relabeled-ssa
+ok 51 - ./benchmarks/core/loopfact.bril bril2z3
+ok 52 - ./benchmarks/core/mod_inv.bril variable-relabeler
+ok 53 - ./benchmarks/core/mod_inv.bril relabeled-ssa
+ok 54 - ./benchmarks/core/mod_inv.bril bril2z3
+ok 55 - ./benchmarks/core/orders.bril variable-relabeler
+not ok 56 - ./benchmarks/core/orders.bril relabeled-ssa
+# exit code: 1
+not ok 57 - ./benchmarks/core/orders.bril bril2z3
+# exit code: 1
+ok 58 - ./benchmarks/core/palindrome.bril variable-relabeler
+ok 59 - ./benchmarks/core/palindrome.bril relabeled-ssa
+ok 60 - ./benchmarks/core/palindrome.bril bril2z3
+ok 61 - ./benchmarks/core/pascals-row.bril variable-relabeler
+ok 62 - ./benchmarks/core/pascals-row.bril relabeled-ssa
+ok 63 - ./benchmarks/core/pascals-row.bril bril2z3
+ok 64 - ./benchmarks/core/perfect.bril variable-relabeler
+ok 65 - ./benchmarks/core/perfect.bril relabeled-ssa
+ok 66 - ./benchmarks/core/perfect.bril bril2z3
+ok 67 - ./benchmarks/core/primes-between.bril variable-relabeler
+ok 68 - ./benchmarks/core/primes-between.bril relabeled-ssa
+ok 69 - ./benchmarks/core/primes-between.bril bril2z3
+ok 70 - ./benchmarks/core/pythagorean_triple.bril variable-relabeler
+ok 71 - ./benchmarks/core/pythagorean_triple.bril relabeled-ssa
+ok 72 - ./benchmarks/core/pythagorean_triple.bril bril2z3
+ok 73 - ./benchmarks/core/quadratic.bril variable-relabeler
+ok 74 - ./benchmarks/core/quadratic.bril relabeled-ssa
+ok 75 - ./benchmarks/core/quadratic.bril bril2z3
+ok 76 - ./benchmarks/core/recfact.bril variable-relabeler
+ok 77 - ./benchmarks/core/recfact.bril relabeled-ssa
+ok 78 - ./benchmarks/core/recfact.bril bril2z3
+ok 79 - ./benchmarks/core/rectangles-area-difference.bril variable-relabeler
+ok 80 - ./benchmarks/core/rectangles-area-difference.bril relabeled-ssa
+ok 81 - ./benchmarks/core/rectangles-area-difference.bril bril2z3
+ok 82 - ./benchmarks/core/relative-primes.bril variable-relabeler
+not ok 83 - ./benchmarks/core/relative-primes.bril relabeled-ssa
+# exit code: 1
+not ok 84 - ./benchmarks/core/relative-primes.bril bril2z3
+# exit code: 1
+ok 85 - ./benchmarks/core/reverse.bril variable-relabeler
+ok 86 - ./benchmarks/core/reverse.bril relabeled-ssa
+ok 87 - ./benchmarks/core/reverse.bril bril2z3
+ok 88 - ./benchmarks/core/sum-bits.bril variable-relabeler
+ok 89 - ./benchmarks/core/sum-bits.bril relabeled-ssa
+ok 90 - ./benchmarks/core/sum-bits.bril bril2z3
+ok 91 - ./benchmarks/core/sum-divisors.bril variable-relabeler
+not ok 92 - ./benchmarks/core/sum-divisors.bril relabeled-ssa
+# exit code: 1
+not ok 93 - ./benchmarks/core/sum-divisors.bril bril2z3
+# exit code: 1
+ok 94 - ./benchmarks/core/sum-sq-diff.bril variable-relabeler
+ok 95 - ./benchmarks/core/sum-sq-diff.bril relabeled-ssa
+ok 96 - ./benchmarks/core/sum-sq-diff.bril bril2z3
+ok 97 - ./benchmarks/core/totient.bril variable-relabeler
+not ok 98 - ./benchmarks/core/totient.bril relabeled-ssa
+# exit code: 1
+not ok 99 - ./benchmarks/core/totient.bril bril2z3
+# exit code: 1
+ok 100 - ./benchmarks/core/up-arrow.bril variable-relabeler
+ok 101 - ./benchmarks/core/up-arrow.bril relabeled-ssa
+ok 102 - ./benchmarks/core/up-arrow.bril bril2z3
+ok 103 - ./benchmarks/float/conjugate-gradient.bril variable-relabeler
+ok 104 - ./benchmarks/float/conjugate-gradient.bril relabeled-ssa
+ok 105 - ./benchmarks/float/conjugate-gradient.bril bril2z3
+ok 106 - ./benchmarks/float/cordic.bril variable-relabeler
+ok 107 - ./benchmarks/float/cordic.bril relabeled-ssa
+ok 108 - ./benchmarks/float/cordic.bril bril2z3
+ok 109 - ./benchmarks/float/euler.bril variable-relabeler
+ok 110 - ./benchmarks/float/euler.bril relabeled-ssa
+ok 111 - ./benchmarks/float/euler.bril bril2z3
+ok 112 - ./benchmarks/float/mandelbrot.bril variable-relabeler
+ok 113 - ./benchmarks/float/mandelbrot.bril relabeled-ssa
+ok 114 - ./benchmarks/float/mandelbrot.bril bril2z3
+ok 115 - ./benchmarks/float/newton.bril variable-relabeler
+ok 116 - ./benchmarks/float/newton.bril relabeled-ssa
+ok 117 - ./benchmarks/float/newton.bril bril2z3
+ok 118 - ./benchmarks/float/norm.bril variable-relabeler
+ok 119 - ./benchmarks/float/norm.bril relabeled-ssa
+ok 120 - ./benchmarks/float/norm.bril bril2z3
+ok 121 - ./benchmarks/float/n_root.bril variable-relabeler
+ok 122 - ./benchmarks/float/n_root.bril relabeled-ssa
+ok 123 - ./benchmarks/float/n_root.bril bril2z3
+ok 124 - ./benchmarks/float/pow.bril variable-relabeler
+ok 125 - ./benchmarks/float/pow.bril relabeled-ssa
+ok 126 - ./benchmarks/float/pow.bril bril2z3
+ok 127 - ./benchmarks/float/ray-sphere-intersection.bril variable-relabeler
+ok 128 - ./benchmarks/float/ray-sphere-intersection.bril relabeled-ssa
+ok 129 - ./benchmarks/float/ray-sphere-intersection.bril bril2z3
+ok 130 - ./benchmarks/float/riemann.bril variable-relabeler
+ok 131 - ./benchmarks/float/riemann.bril relabeled-ssa
+ok 132 - ./benchmarks/float/riemann.bril bril2z3
+ok 133 - ./benchmarks/float/sqrt.bril variable-relabeler
+ok 134 - ./benchmarks/float/sqrt.bril relabeled-ssa
+ok 135 - ./benchmarks/float/sqrt.bril bril2z3
+ok 136 - ./benchmarks/long/function_call.bril variable-relabeler
+ok 137 - ./benchmarks/long/function_call.bril relabeled-ssa
+ok 138 - ./benchmarks/long/function_call.bril bril2z3
+ok 139 - ./benchmarks/mem/adj2csr.bril variable-relabeler
+ok 140 - ./benchmarks/mem/adj2csr.bril relabeled-ssa
+ok 141 - ./benchmarks/mem/adj2csr.bril bril2z3
+ok 142 - ./benchmarks/mem/adler32.bril variable-relabeler
+ok 143 - ./benchmarks/mem/adler32.bril relabeled-ssa
+ok 144 - ./benchmarks/mem/adler32.bril bril2z3
+ok 145 - ./benchmarks/mem/binary-search.bril variable-relabeler
+ok 146 - ./benchmarks/mem/binary-search.bril relabeled-ssa
+ok 147 - ./benchmarks/mem/binary-search.bril bril2z3
+ok 148 - ./benchmarks/mem/bubblesort.bril variable-relabeler
+ok 149 - ./benchmarks/mem/bubblesort.bril relabeled-ssa
+ok 150 - ./benchmarks/mem/bubblesort.bril bril2z3
+ok 151 - ./benchmarks/mem/eight-queens.bril variable-relabeler
+not ok 152 - ./benchmarks/mem/eight-queens.bril relabeled-ssa
+# exit code: 1
+not ok 153 - ./benchmarks/mem/eight-queens.bril bril2z3
+# exit code: 1
+ok 154 - ./benchmarks/mem/fib.bril variable-relabeler
+ok 155 - ./benchmarks/mem/fib.bril relabeled-ssa
+ok 156 - ./benchmarks/mem/fib.bril bril2z3
+ok 157 - ./benchmarks/mem/mat-mul.bril variable-relabeler
+ok 158 - ./benchmarks/mem/mat-mul.bril relabeled-ssa
+ok 159 - ./benchmarks/mem/mat-mul.bril bril2z3
+ok 160 - ./benchmarks/mem/max-subarray.bril variable-relabeler
+ok 161 - ./benchmarks/mem/max-subarray.bril relabeled-ssa
+ok 162 - ./benchmarks/mem/max-subarray.bril bril2z3
+ok 163 - ./benchmarks/mem/primitive-root.bril variable-relabeler
+not ok 164 - ./benchmarks/mem/primitive-root.bril relabeled-ssa
+# exit code: 1
+not ok 165 - ./benchmarks/mem/primitive-root.bril bril2z3
+# exit code: 1
+ok 166 - ./benchmarks/mem/quicksort.bril variable-relabeler
+ok 167 - ./benchmarks/mem/quicksort.bril relabeled-ssa
+ok 168 - ./benchmarks/mem/quicksort.bril bril2z3
+ok 169 - ./benchmarks/mem/sieve.bril variable-relabeler
+ok 170 - ./benchmarks/mem/sieve.bril relabeled-ssa
+ok 171 - ./benchmarks/mem/sieve.bril bril2z3
+ok 172 - ./benchmarks/mem/two-sum.bril variable-relabeler
+ok 173 - ./benchmarks/mem/two-sum.bril relabeled-ssa
+ok 174 - ./benchmarks/mem/two-sum.bril bril2z3
+ok 175 - ./benchmarks/mem/vsmul.bril variable-relabeler
+ok 176 - ./benchmarks/mem/vsmul.bril relabeled-ssa
+ok 177 - ./benchmarks/mem/vsmul.bril bril2z3
+ok 178 - ./benchmarks/mixed/cholesky.bril variable-relabeler
+ok 179 - ./benchmarks/mixed/cholesky.bril relabeled-ssa
+ok 180 - ./benchmarks/mixed/cholesky.bril bril2z3
+ok 181 - ./benchmarks/mixed/mat-inv.bril variable-relabeler
+ok 182 - ./benchmarks/mixed/mat-inv.bril relabeled-ssa
+ok 183 - ./benchmarks/mixed/mat-inv.bril bril2z3
+ok 184 - ./bril2z3/add.bril variable-relabeler
+ok 185 - ./bril2z3/add.bril relabeled-ssa
+ok 186 - ./bril2z3/add.bril bril2z3
+ok 187 - ./bril2z3/const.bril variable-relabeler
+ok 188 - ./bril2z3/const.bril relabeled-ssa
+ok 189 - ./bril2z3/const.bril bril2z3
+ok 190 - ./bril2z3/if-orig.bril variable-relabeler
+ok 191 - ./bril2z3/if-orig.bril relabeled-ssa
+ok 192 - ./bril2z3/if-orig.bril bril2z3
+ok 193 - ./bril2z3/many_adds.bril variable-relabeler
+ok 194 - ./bril2z3/many_adds.bril relabeled-ssa
+ok 195 - ./bril2z3/many_adds.bril bril2z3
+ok 196 - ./bril2z3/max.bril variable-relabeler
+ok 197 - ./bril2z3/max.bril relabeled-ssa
+ok 198 - ./bril2z3/max.bril bril2z3
+ok 199 - ./bril-llvm/linkedlist.bril variable-relabeler
+ok 200 - ./bril-llvm/linkedlist.bril relabeled-ssa
+ok 201 - ./bril-llvm/linkedlist.bril bril2z3
+ok 202 - ./bril-llvm/point.bril variable-relabeler
+ok 203 - ./bril-llvm/point.bril relabeled-ssa
+ok 204 - ./bril-llvm/point.bril bril2z3
+ok 205 - ./bril-ocaml/test/count/bools.bril variable-relabeler
+ok 206 - ./bril-ocaml/test/count/bools.bril relabeled-ssa
+ok 207 - ./bril-ocaml/test/count/bools.bril bril2z3
+ok 208 - ./bril-ocaml/test/count/empty.bril variable-relabeler
+ok 209 - ./bril-ocaml/test/count/empty.bril relabeled-ssa
+ok 210 - ./bril-ocaml/test/count/empty.bril bril2z3
+ok 211 - ./bril-ocaml/test/count/funcs.bril variable-relabeler
+ok 212 - ./bril-ocaml/test/count/funcs.bril relabeled-ssa
+ok 213 - ./bril-ocaml/test/count/funcs.bril bril2z3
+ok 214 - ./bril-ocaml/test/count/ints.bril variable-relabeler
+ok 215 - ./bril-ocaml/test/count/ints.bril relabeled-ssa
+ok 216 - ./bril-ocaml/test/count/ints.bril bril2z3
+ok 217 - ./examples/test/df/cond-args.bril variable-relabeler
+ok 218 - ./examples/test/df/cond-args.bril relabeled-ssa
+ok 219 - ./examples/test/df/cond-args.bril bril2z3
+ok 220 - ./examples/test/df/cond.bril variable-relabeler
+ok 221 - ./examples/test/df/cond.bril relabeled-ssa
+ok 222 - ./examples/test/df/cond.bril bril2z3
+ok 223 - ./examples/test/df/fact.bril variable-relabeler
+ok 224 - ./examples/test/df/fact.bril relabeled-ssa
+ok 225 - ./examples/test/df/fact.bril bril2z3
+ok 226 - ./examples/test/dom/loopcond.bril variable-relabeler
+ok 227 - ./examples/test/dom/loopcond.bril relabeled-ssa
+ok 228 - ./examples/test/dom/loopcond.bril bril2z3
+ok 229 - ./examples/test/dom/while.bril variable-relabeler
+ok 230 - ./examples/test/dom/while.bril relabeled-ssa
+ok 231 - ./examples/test/dom/while.bril bril2z3
+ok 232 - ./examples/test/lvn/clobber-arg.bril variable-relabeler
+ok 233 - ./examples/test/lvn/clobber-arg.bril relabeled-ssa
+ok 234 - ./examples/test/lvn/clobber-arg.bril bril2z3
+not ok 235 - ./examples/test/lvn/clobber.bril variable-relabeler
+# exit code: 1
+not ok 236 - ./examples/test/lvn/clobber.bril relabeled-ssa
+# exit code: 1
+not ok 237 - ./examples/test/lvn/clobber.bril bril2z3
+# exit code: 1
+not ok 238 - ./examples/test/lvn/clobber-fold.bril variable-relabeler
+# exit code: 1
+not ok 239 - ./examples/test/lvn/clobber-fold.bril relabeled-ssa
+# exit code: 1
+not ok 240 - ./examples/test/lvn/clobber-fold.bril bril2z3
+# exit code: 1
+ok 241 - ./examples/test/lvn/commute.bril variable-relabeler
+ok 242 - ./examples/test/lvn/commute.bril relabeled-ssa
+ok 243 - ./examples/test/lvn/commute.bril bril2z3
+ok 244 - ./examples/test/lvn/divide-by-zero.bril variable-relabeler
+ok 245 - ./examples/test/lvn/divide-by-zero.bril relabeled-ssa
+ok 246 - ./examples/test/lvn/divide-by-zero.bril bril2z3
+ok 247 - ./examples/test/lvn/fold-comparisons.bril variable-relabeler
+ok 248 - ./examples/test/lvn/fold-comparisons.bril relabeled-ssa
+ok 249 - ./examples/test/lvn/fold-comparisons.bril bril2z3
+ok 250 - ./examples/test/lvn/idchain.bril variable-relabeler
+ok 251 - ./examples/test/lvn/idchain.bril relabeled-ssa
+ok 252 - ./examples/test/lvn/idchain.bril bril2z3
+ok 253 - ./examples/test/lvn/idchain-nonlocal.bril variable-relabeler
+ok 254 - ./examples/test/lvn/idchain-nonlocal.bril relabeled-ssa
+ok 255 - ./examples/test/lvn/idchain-nonlocal.bril bril2z3
+ok 256 - ./examples/test/lvn/idchain-prop.bril variable-relabeler
+ok 257 - ./examples/test/lvn/idchain-prop.bril relabeled-ssa
+ok 258 - ./examples/test/lvn/idchain-prop.bril bril2z3
+ok 259 - ./examples/test/lvn/logical-operators.bril variable-relabeler
+ok 260 - ./examples/test/lvn/logical-operators.bril relabeled-ssa
+ok 261 - ./examples/test/lvn/logical-operators.bril bril2z3
+ok 262 - ./examples/test/lvn/nonlocal.bril variable-relabeler
+ok 263 - ./examples/test/lvn/nonlocal.bril relabeled-ssa
+ok 264 - ./examples/test/lvn/nonlocal.bril bril2z3
+ok 265 - ./examples/test/lvn/nonlocal-clobber.bril variable-relabeler
+ok 266 - ./examples/test/lvn/nonlocal-clobber.bril relabeled-ssa
+ok 267 - ./examples/test/lvn/nonlocal-clobber.bril bril2z3
+ok 268 - ./examples/test/lvn/reassign.bril variable-relabeler
+ok 269 - ./examples/test/lvn/reassign.bril relabeled-ssa
+ok 270 - ./examples/test/lvn/reassign.bril bril2z3
+ok 271 - ./examples/test/lvn/redundant.bril variable-relabeler
+ok 272 - ./examples/test/lvn/redundant.bril relabeled-ssa
+ok 273 - ./examples/test/lvn/redundant.bril bril2z3
+not ok 274 - ./examples/test/lvn/redundant-dce.bril variable-relabeler
+# exit code: 1
+not ok 275 - ./examples/test/lvn/redundant-dce.bril relabeled-ssa
+# exit code: 1
+not ok 276 - ./examples/test/lvn/redundant-dce.bril bril2z3
+# exit code: 1
+not ok 277 - ./examples/test/lvn/rename-fold.bril variable-relabeler
+# exit code: 1
+not ok 278 - ./examples/test/lvn/rename-fold.bril relabeled-ssa
+# exit code: 1
+not ok 279 - ./examples/test/lvn/rename-fold.bril bril2z3
+# exit code: 1
+ok 280 - ./examples/test/ssa/if-orig.bril variable-relabeler
+ok 281 - ./examples/test/ssa/if-orig.bril relabeled-ssa
+ok 282 - ./examples/test/ssa/if-orig.bril bril2z3
+ok 283 - ./examples/test/ssa/if-ssa.bril variable-relabeler
+ok 284 - ./examples/test/ssa/if-ssa.bril relabeled-ssa
+ok 285 - ./examples/test/ssa/if-ssa.bril bril2z3
+ok 286 - ./examples/test/ssa/loop-orig.bril variable-relabeler
+ok 287 - ./examples/test/ssa/loop-orig.bril relabeled-ssa
+ok 288 - ./examples/test/ssa/loop-orig.bril bril2z3
+ok 289 - ./examples/test/ssa/loop-ssa.bril variable-relabeler
+ok 290 - ./examples/test/ssa/loop-ssa.bril relabeled-ssa
+ok 291 - ./examples/test/ssa/loop-ssa.bril bril2z3
+ok 292 - ./examples/test/ssa_roundtrip/argwrite.bril variable-relabeler
+ok 293 - ./examples/test/ssa_roundtrip/argwrite.bril relabeled-ssa
+ok 294 - ./examples/test/ssa_roundtrip/argwrite.bril bril2z3
+ok 295 - ./examples/test/ssa_roundtrip/if.bril variable-relabeler
+ok 296 - ./examples/test/ssa_roundtrip/if.bril relabeled-ssa
+ok 297 - ./examples/test/ssa_roundtrip/if.bril bril2z3
+ok 298 - ./examples/test/ssa_roundtrip/if-const.bril variable-relabeler
+ok 299 - ./examples/test/ssa_roundtrip/if-const.bril relabeled-ssa
+ok 300 - ./examples/test/ssa_roundtrip/if-const.bril bril2z3
+ok 301 - ./examples/test/ssa_roundtrip/loop.bril variable-relabeler
+ok 302 - ./examples/test/ssa_roundtrip/loop.bril relabeled-ssa
+ok 303 - ./examples/test/ssa_roundtrip/loop.bril bril2z3
+ok 304 - ./examples/test/ssa_roundtrip/selfloop.bril variable-relabeler
+ok 305 - ./examples/test/ssa_roundtrip/selfloop.bril relabeled-ssa
+ok 306 - ./examples/test/ssa_roundtrip/selfloop.bril bril2z3
+ok 307 - ./examples/test/ssa_roundtrip/while.bril variable-relabeler
+ok 308 - ./examples/test/ssa_roundtrip/while.bril relabeled-ssa
+ok 309 - ./examples/test/ssa_roundtrip/while.bril bril2z3
+ok 310 - ./examples/test/tdce/combo.bril variable-relabeler
+ok 311 - ./examples/test/tdce/combo.bril relabeled-ssa
+ok 312 - ./examples/test/tdce/combo.bril bril2z3
+ok 313 - ./examples/test/tdce/diamond.bril variable-relabeler
+ok 314 - ./examples/test/tdce/diamond.bril relabeled-ssa
+ok 315 - ./examples/test/tdce/diamond.bril bril2z3
+ok 316 - ./examples/test/tdce/double.bril variable-relabeler
+ok 317 - ./examples/test/tdce/double.bril relabeled-ssa
+ok 318 - ./examples/test/tdce/double.bril bril2z3
+ok 319 - ./examples/test/tdce/double-pass.bril variable-relabeler
+ok 320 - ./examples/test/tdce/double-pass.bril relabeled-ssa
+ok 321 - ./examples/test/tdce/double-pass.bril bril2z3
+ok 322 - ./examples/test/tdce/reassign.bril variable-relabeler
+ok 323 - ./examples/test/tdce/reassign.bril relabeled-ssa
+ok 324 - ./examples/test/tdce/reassign.bril bril2z3
+ok 325 - ./examples/test/tdce/reassign-dkp.bril variable-relabeler
+ok 326 - ./examples/test/tdce/reassign-dkp.bril relabeled-ssa
+ok 327 - ./examples/test/tdce/reassign-dkp.bril bril2z3
+ok 328 - ./examples/test/tdce/simple.bril variable-relabeler
+ok 329 - ./examples/test/tdce/simple.bril relabeled-ssa
+ok 330 - ./examples/test/tdce/simple.bril bril2z3
+ok 331 - ./examples/test/tdce/skipped.bril variable-relabeler
+ok 332 - ./examples/test/tdce/skipped.bril relabeled-ssa
+ok 333 - ./examples/test/tdce/skipped.bril bril2z3
+ok 334 - ./examples/test/to_ssa/argwrite.bril variable-relabeler
+ok 335 - ./examples/test/to_ssa/argwrite.bril relabeled-ssa
+ok 336 - ./examples/test/to_ssa/argwrite.bril bril2z3
+ok 337 - ./examples/test/to_ssa/if.bril variable-relabeler
+ok 338 - ./examples/test/to_ssa/if.bril relabeled-ssa
+ok 339 - ./examples/test/to_ssa/if.bril bril2z3
+ok 340 - ./examples/test/to_ssa/if-const.bril variable-relabeler
+ok 341 - ./examples/test/to_ssa/if-const.bril relabeled-ssa
+ok 342 - ./examples/test/to_ssa/if-const.bril bril2z3
+ok 343 - ./examples/test/to_ssa/if-ssa.bril variable-relabeler
+ok 344 - ./examples/test/to_ssa/if-ssa.bril relabeled-ssa
+ok 345 - ./examples/test/to_ssa/if-ssa.bril bril2z3
+ok 346 - ./examples/test/to_ssa/loop-branch.bril variable-relabeler
+ok 347 - ./examples/test/to_ssa/loop-branch.bril relabeled-ssa
+ok 348 - ./examples/test/to_ssa/loop-branch.bril bril2z3
+ok 349 - ./examples/test/to_ssa/loop.bril variable-relabeler
+ok 350 - ./examples/test/to_ssa/loop.bril relabeled-ssa
+ok 351 - ./examples/test/to_ssa/loop.bril bril2z3
+ok 352 - ./examples/test/to_ssa/selfloop.bril variable-relabeler
+ok 353 - ./examples/test/to_ssa/selfloop.bril relabeled-ssa
+ok 354 - ./examples/test/to_ssa/selfloop.bril bril2z3
+ok 355 - ./examples/test/to_ssa/while.bril variable-relabeler
+ok 356 - ./examples/test/to_ssa/while.bril relabeled-ssa
+ok 357 - ./examples/test/to_ssa/while.bril bril2z3
+ok 358 - ./test/check/argtype.bril variable-relabeler
+ok 359 - ./test/check/argtype.bril relabeled-ssa
+ok 360 - ./test/check/argtype.bril bril2z3
+ok 361 - ./test/check/badcall.bril variable-relabeler
+ok 362 - ./test/check/badcall.bril relabeled-ssa
+ok 363 - ./test/check/badcall.bril bril2z3
+ok 364 - ./test/check/badconst.bril variable-relabeler
+ok 365 - ./test/check/badconst.bril relabeled-ssa
+not ok 366 - ./test/check/badconst.bril bril2z3
+# exit code: 1
+ok 367 - ./test/check/badid.bril variable-relabeler
+ok 368 - ./test/check/badid.bril relabeled-ssa
+not ok 369 - ./test/check/badid.bril bril2z3
+# exit code: 1
+ok 370 - ./test/check/badmem.bril variable-relabeler
+not ok 371 - ./test/check/badmem.bril relabeled-ssa
+# exit code: 1
+not ok 372 - ./test/check/badmem.bril bril2z3
+# exit code: 1
+ok 373 - ./test/check/char.bril variable-relabeler
+ok 374 - ./test/check/char.bril relabeled-ssa
+ok 375 - ./test/check/char.bril bril2z3
+ok 376 - ./test/check/extra.bril variable-relabeler
+ok 377 - ./test/check/extra.bril relabeled-ssa
+not ok 378 - ./test/check/extra.bril bril2z3
+# exit code: 1
+ok 379 - ./test/check/labels.bril variable-relabeler
+not ok 380 - ./test/check/labels.bril relabeled-ssa
+# exit code: 1
+not ok 381 - ./test/check/labels.bril bril2z3
+# exit code: 1
+ok 382 - ./test/check/main-args.bril variable-relabeler
+ok 383 - ./test/check/main-args.bril relabeled-ssa
+ok 384 - ./test/check/main-args.bril bril2z3
+ok 385 - ./test/check/mem.bril variable-relabeler
+ok 386 - ./test/check/mem.bril relabeled-ssa
+ok 387 - ./test/check/mem.bril bril2z3
+ok 388 - ./test/check/missarg.bril variable-relabeler
+ok 389 - ./test/check/missarg.bril relabeled-ssa
+not ok 390 - ./test/check/missarg.bril bril2z3
+# exit code: 1
+ok 391 - ./test/check/missdest.bril variable-relabeler
+ok 392 - ./test/check/missdest.bril relabeled-ssa
+not ok 393 - ./test/check/missdest.bril bril2z3
+# exit code: 1
+ok 394 - ./test/check/printres.bril variable-relabeler
+ok 395 - ./test/check/printres.bril relabeled-ssa
+ok 396 - ./test/check/printres.bril bril2z3
+ok 397 - ./test/check/ptr.bril variable-relabeler
+ok 398 - ./test/check/ptr.bril relabeled-ssa
+not ok 399 - ./test/check/ptr.bril bril2z3
+# exit code: 1
+ok 400 - ./test/check/speculate.bril variable-relabeler
+ok 401 - ./test/check/speculate.bril relabeled-ssa
+ok 402 - ./test/check/speculate.bril bril2z3
+ok 403 - ./test/check/ssa.bril variable-relabeler
+ok 404 - ./test/check/ssa.bril relabeled-ssa
+ok 405 - ./test/check/ssa.bril bril2z3
+ok 406 - ./test/check/tiny.bril variable-relabeler
+ok 407 - ./test/check/tiny.bril relabeled-ssa
+ok 408 - ./test/check/tiny.bril bril2z3
+ok 409 - ./test/check/typeconflict.bril variable-relabeler
+ok 410 - ./test/check/typeconflict.bril relabeled-ssa
+ok 411 - ./test/check/typeconflict.bril bril2z3
+ok 412 - ./test/check/undef.bril variable-relabeler
+not ok 413 - ./test/check/undef.bril relabeled-ssa
+# exit code: 1
+not ok 414 - ./test/check/undef.bril bril2z3
+# exit code: 1
+ok 415 - ./test/interp/char/char_args.bril variable-relabeler
+ok 416 - ./test/interp/char/char_args.bril relabeled-ssa
+ok 417 - ./test/interp/char/char_args.bril bril2z3
+ok 418 - ./test/interp/char/char.bril variable-relabeler
+ok 419 - ./test/interp/char/char.bril relabeled-ssa
+ok 420 - ./test/interp/char/char.bril bril2z3
+ok 421 - ./test/interp/char/char_ops.bril variable-relabeler
+ok 422 - ./test/interp/char/char_ops.bril relabeled-ssa
+ok 423 - ./test/interp/char/char_ops.bril bril2z3
+ok 424 - ./test/interp/char/control_char.bril variable-relabeler
+ok 425 - ./test/interp/char/control_char.bril relabeled-ssa
+ok 426 - ./test/interp/char/control_char.bril bril2z3
+ok 427 - ./test/interp/char/conversions.bril variable-relabeler
+ok 428 - ./test/interp/char/conversions.bril relabeled-ssa
+ok 429 - ./test/interp/char/conversions.bril bril2z3
+ok 430 - ./test/interp/core/add-overflow.bril variable-relabeler
+ok 431 - ./test/interp/core/add-overflow.bril relabeled-ssa
+ok 432 - ./test/interp/core/add-overflow.bril bril2z3
+ok 433 - ./test/interp/core/br.bril variable-relabeler
+ok 434 - ./test/interp/core/br.bril relabeled-ssa
+ok 435 - ./test/interp/core/br.bril bril2z3
+ok 436 - ./test/interp/core/call.bril variable-relabeler
+ok 437 - ./test/interp/core/call.bril relabeled-ssa
+ok 438 - ./test/interp/core/call.bril bril2z3
+ok 439 - ./test/interp/core/call-with-args.bril variable-relabeler
+not ok 440 - ./test/interp/core/call-with-args.bril relabeled-ssa
+# exit code: 1
+not ok 441 - ./test/interp/core/call-with-args.bril bril2z3
+# exit code: 1
+ok 442 - ./test/interp/core/div.bril variable-relabeler
+ok 443 - ./test/interp/core/div.bril relabeled-ssa
+ok 444 - ./test/interp/core/div.bril bril2z3
+ok 445 - ./test/interp/core/jmp.bril variable-relabeler
+ok 446 - ./test/interp/core/jmp.bril relabeled-ssa
+ok 447 - ./test/interp/core/jmp.bril bril2z3
+ok 448 - ./test/interp/core/main-args.bril variable-relabeler
+ok 449 - ./test/interp/core/main-args.bril relabeled-ssa
+ok 450 - ./test/interp/core/main-args.bril bril2z3
+ok 451 - ./test/interp/core/main-bool-args.bril variable-relabeler
+ok 452 - ./test/interp/core/main-bool-args.bril relabeled-ssa
+ok 453 - ./test/interp/core/main-bool-args.bril bril2z3
+ok 454 - ./test/interp/core/nop.bril variable-relabeler
+ok 455 - ./test/interp/core/nop.bril relabeled-ssa
+ok 456 - ./test/interp/core/nop.bril bril2z3
+ok 457 - ./test/interp/core/ret.bril variable-relabeler
+ok 458 - ./test/interp/core/ret.bril relabeled-ssa
+ok 459 - ./test/interp/core/ret.bril bril2z3
+ok 460 - ./test/interp/core/tiny.bril variable-relabeler
+ok 461 - ./test/interp/core/tiny.bril relabeled-ssa
+ok 462 - ./test/interp/core/tiny.bril bril2z3
+ok 463 - ./test/interp-error/char-error/badconversion.bril variable-relabeler
+ok 464 - ./test/interp-error/char-error/badconversion.bril relabeled-ssa
+ok 465 - ./test/interp-error/char-error/badconversion.bril bril2z3
+ok 466 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril variable-relabeler
+not ok 467 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril relabeled-ssa
+# exit code: 1
+not ok 468 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril bril2z3
+# exit code: 1
+ok 469 - ./test/interp-error/core-error/call-return-nothing-error.bril variable-relabeler
+ok 470 - ./test/interp-error/core-error/call-return-nothing-error.bril relabeled-ssa
+ok 471 - ./test/interp-error/core-error/call-return-nothing-error.bril bril2z3
+ok 472 - ./test/interp-error/core-error/call-return-wrong-type.bril variable-relabeler
+ok 473 - ./test/interp-error/core-error/call-return-wrong-type.bril relabeled-ssa
+ok 474 - ./test/interp-error/core-error/call-return-wrong-type.bril bril2z3
+ok 475 - ./test/interp-error/core-error/call-void-return-error.bril variable-relabeler
+ok 476 - ./test/interp-error/core-error/call-void-return-error.bril relabeled-ssa
+ok 477 - ./test/interp-error/core-error/call-void-return-error.bril bril2z3
+ok 478 - ./test/interp-error/core-error/call-wrong-argument-types.bril variable-relabeler
+ok 479 - ./test/interp-error/core-error/call-wrong-argument-types.bril relabeled-ssa
+ok 480 - ./test/interp-error/core-error/call-wrong-argument-types.bril bril2z3
+ok 481 - ./test/interp-error/core-error/call-wrong-arity.bril variable-relabeler
+ok 482 - ./test/interp-error/core-error/call-wrong-arity.bril relabeled-ssa
+ok 483 - ./test/interp-error/core-error/call-wrong-arity.bril bril2z3
+ok 484 - ./test/interp-error/core-error/call-wrong-declared-type.bril variable-relabeler
+not ok 485 - ./test/interp-error/core-error/call-wrong-declared-type.bril relabeled-ssa
+# exit code: 1
+not ok 486 - ./test/interp-error/core-error/call-wrong-declared-type.bril bril2z3
+# exit code: 1
+ok 487 - ./test/interp-error/core-error/divide_by_zero.bril variable-relabeler
+ok 488 - ./test/interp-error/core-error/divide_by_zero.bril relabeled-ssa
+ok 489 - ./test/interp-error/core-error/divide_by_zero.bril bril2z3
+ok 490 - ./test/interp-error/core-error/duplicate_function.bril variable-relabeler
+ok 491 - ./test/interp-error/core-error/duplicate_function.bril relabeled-ssa
+ok 492 - ./test/interp-error/core-error/duplicate_function.bril bril2z3
+ok 493 - ./test/interp-error/core-error/duplicate_main.bril variable-relabeler
+ok 494 - ./test/interp-error/core-error/duplicate_main.bril relabeled-ssa
+ok 495 - ./test/interp-error/core-error/duplicate_main.bril bril2z3
+ok 496 - ./test/interp-error/core-error/undefined-func.bril variable-relabeler
+ok 497 - ./test/interp-error/core-error/undefined-func.bril relabeled-ssa
+ok 498 - ./test/interp-error/core-error/undefined-func.bril bril2z3
+ok 499 - ./test/interp-error/mem-error/double_free.bril variable-relabeler
+ok 500 - ./test/interp-error/mem-error/double_free.bril relabeled-ssa
+ok 501 - ./test/interp-error/mem-error/double_free.bril bril2z3
+ok 502 - ./test/interp-error/mem-error/free_offset.bril variable-relabeler
+ok 503 - ./test/interp-error/mem-error/free_offset.bril relabeled-ssa
+ok 504 - ./test/interp-error/mem-error/free_offset.bril bril2z3
+ok 505 - ./test/interp-error/mem-error/leak.bril variable-relabeler
+ok 506 - ./test/interp-error/mem-error/leak.bril relabeled-ssa
+ok 507 - ./test/interp-error/mem-error/leak.bril bril2z3
+ok 508 - ./test/interp-error/mem-error/out_of_bounds_2.bril variable-relabeler
+ok 509 - ./test/interp-error/mem-error/out_of_bounds_2.bril relabeled-ssa
+ok 510 - ./test/interp-error/mem-error/out_of_bounds_2.bril bril2z3
+ok 511 - ./test/interp-error/mem-error/out_of_bounds.bril variable-relabeler
+ok 512 - ./test/interp-error/mem-error/out_of_bounds.bril relabeled-ssa
+ok 513 - ./test/interp-error/mem-error/out_of_bounds.bril bril2z3
+ok 514 - ./test/interp-error/mem-error/uninit_read.bril variable-relabeler
+ok 515 - ./test/interp-error/mem-error/uninit_read.bril relabeled-ssa
+ok 516 - ./test/interp-error/mem-error/uninit_read.bril bril2z3
+ok 517 - ./test/interp-error/mem-error/wrong_write.bril variable-relabeler
+ok 518 - ./test/interp-error/mem-error/wrong_write.bril relabeled-ssa
+ok 519 - ./test/interp-error/mem-error/wrong_write.bril bril2z3
+ok 520 - ./test/interp-error/spec-error/spec-call.bril variable-relabeler
+ok 521 - ./test/interp-error/spec-error/spec-call.bril relabeled-ssa
+ok 522 - ./test/interp-error/spec-error/spec-call.bril bril2z3
+ok 523 - ./test/interp-error/spec-error/spec-double-commit.bril variable-relabeler
+ok 524 - ./test/interp-error/spec-error/spec-double-commit.bril relabeled-ssa
+ok 525 - ./test/interp-error/spec-error/spec-double-commit.bril bril2z3
+ok 526 - ./test/interp-error/spec-error/spec-nonspec-abort.bril variable-relabeler
+ok 527 - ./test/interp-error/spec-error/spec-nonspec-abort.bril relabeled-ssa
+ok 528 - ./test/interp-error/spec-error/spec-nonspec-abort.bril bril2z3
+ok 529 - ./test/interp-error/spec-error/spec-return.bril variable-relabeler
+ok 530 - ./test/interp-error/spec-error/spec-return.bril relabeled-ssa
+ok 531 - ./test/interp-error/spec-error/spec-return.bril bril2z3
+ok 532 - ./test/interp-error/spec-error/spec-return-implicit.bril variable-relabeler
+ok 533 - ./test/interp-error/spec-error/spec-return-implicit.bril relabeled-ssa
+ok 534 - ./test/interp-error/spec-error/spec-return-implicit.bril bril2z3
+ok 535 - ./test/interp-error/ssa-error/ssa-mismatch.bril variable-relabeler
+ok 536 - ./test/interp-error/ssa-error/ssa-mismatch.bril relabeled-ssa
+ok 537 - ./test/interp-error/ssa-error/ssa-mismatch.bril bril2z3
+ok 538 - ./test/interp-error/ssa-error/ssa-nolabel.bril variable-relabeler
+ok 539 - ./test/interp-error/ssa-error/ssa-nolabel.bril relabeled-ssa
+ok 540 - ./test/interp-error/ssa-error/ssa-nolabel.bril bril2z3
+ok 541 - ./test/interp/float/float_args.bril variable-relabeler
+ok 542 - ./test/interp/float/float_args.bril relabeled-ssa
+ok 543 - ./test/interp/float/float_args.bril bril2z3
+ok 544 - ./test/interp/float/float.bril variable-relabeler
+ok 545 - ./test/interp/float/float.bril relabeled-ssa
+ok 546 - ./test/interp/float/float.bril bril2z3
+ok 547 - ./test/interp/float/float_divide_by_zero.bril variable-relabeler
+ok 548 - ./test/interp/float/float_divide_by_zero.bril relabeled-ssa
+ok 549 - ./test/interp/float/float_divide_by_zero.bril bril2z3
+ok 550 - ./test/interp/float/float_special.bril variable-relabeler
+ok 551 - ./test/interp/float/float_special.bril relabeled-ssa
+ok 552 - ./test/interp/float/float_special.bril bril2z3
+ok 553 - ./test/interp/mem/access.bril variable-relabeler
+ok 554 - ./test/interp/mem/access.bril relabeled-ssa
+ok 555 - ./test/interp/mem/access.bril bril2z3
+ok 556 - ./test/interp/mem/access_many.bril variable-relabeler
+ok 557 - ./test/interp/mem/access_many.bril relabeled-ssa
+ok 558 - ./test/interp/mem/access_many.bril bril2z3
+ok 559 - ./test/interp/mem/access_ptr.bril variable-relabeler
+ok 560 - ./test/interp/mem/access_ptr.bril relabeled-ssa
+ok 561 - ./test/interp/mem/access_ptr.bril bril2z3
+ok 562 - ./test/interp/mem/alloc.bril variable-relabeler
+ok 563 - ./test/interp/mem/alloc.bril relabeled-ssa
+ok 564 - ./test/interp/mem/alloc.bril bril2z3
+ok 565 - ./test/interp/mem/alloc_large.bril variable-relabeler
+ok 566 - ./test/interp/mem/alloc_large.bril relabeled-ssa
+ok 567 - ./test/interp/mem/alloc_large.bril bril2z3
+ok 568 - ./test/interp/mem/alloc_many.bril variable-relabeler
+ok 569 - ./test/interp/mem/alloc_many.bril relabeled-ssa
+ok 570 - ./test/interp/mem/alloc_many.bril bril2z3
+ok 571 - ./test/interp/mem/fib.bril variable-relabeler
+ok 572 - ./test/interp/mem/fib.bril relabeled-ssa
+ok 573 - ./test/interp/mem/fib.bril bril2z3
+ok 574 - ./test/interp/mem/mem_id.bril variable-relabeler
+ok 575 - ./test/interp/mem/mem_id.bril relabeled-ssa
+ok 576 - ./test/interp/mem/mem_id.bril bril2z3
+ok 577 - ./test/interp/mem/ptr_call.bril variable-relabeler
+ok 578 - ./test/interp/mem/ptr_call.bril relabeled-ssa
+ok 579 - ./test/interp/mem/ptr_call.bril bril2z3
+ok 580 - ./test/interp/mem/ptr_ret.bril variable-relabeler
+ok 581 - ./test/interp/mem/ptr_ret.bril relabeled-ssa
+ok 582 - ./test/interp/mem/ptr_ret.bril bril2z3
+ok 583 - ./test/interp/mixed/store-char.bril variable-relabeler
+ok 584 - ./test/interp/mixed/store-char.bril relabeled-ssa
+ok 585 - ./test/interp/mixed/store-char.bril bril2z3
+ok 586 - ./test/interp/mixed/store-float.bril variable-relabeler
+ok 587 - ./test/interp/mixed/store-float.bril relabeled-ssa
+ok 588 - ./test/interp/mixed/store-float.bril bril2z3
+ok 589 - ./test/interp/spec/spec-abort.bril variable-relabeler
+ok 590 - ./test/interp/spec/spec-abort.bril relabeled-ssa
+ok 591 - ./test/interp/spec/spec-abort.bril bril2z3
+ok 592 - ./test/interp/spec/spec-commit.bril variable-relabeler
+ok 593 - ./test/interp/spec/spec-commit.bril relabeled-ssa
+ok 594 - ./test/interp/spec/spec-commit.bril bril2z3
+ok 595 - ./test/interp/spec/spec-nested.bril variable-relabeler
+ok 596 - ./test/interp/spec/spec-nested.bril relabeled-ssa
+ok 597 - ./test/interp/spec/spec-nested.bril bril2z3
+ok 598 - ./test/interp/spec/spec-noabort.bril variable-relabeler
+ok 599 - ./test/interp/spec/spec-noabort.bril relabeled-ssa
+ok 600 - ./test/interp/spec/spec-noabort.bril bril2z3
+ok 601 - ./test/interp/ssa/ssa-simple.bril variable-relabeler
+ok 602 - ./test/interp/ssa/ssa-simple.bril relabeled-ssa
+ok 603 - ./test/interp/ssa/ssa-simple.bril bril2z3
+ok 604 - ./test/interp/ssa/ssa-simple-inv.bril variable-relabeler
+ok 605 - ./test/interp/ssa/ssa-simple-inv.bril relabeled-ssa
+ok 606 - ./test/interp/ssa/ssa-simple-inv.bril bril2z3
+not ok 607 - ./test/linking/diamond.bril variable-relabeler
+# exit code: 1
+not ok 608 - ./test/linking/diamond.bril relabeled-ssa
+# exit code: 1
+not ok 609 - ./test/linking/diamond.bril bril2z3
+# exit code: 1
+not ok 610 - ./test/linking/link_ops.bril variable-relabeler
+# exit code: 1
+not ok 611 - ./test/linking/link_ops.bril relabeled-ssa
+# exit code: 1
+not ok 612 - ./test/linking/link_ops.bril bril2z3
+# exit code: 1
+not ok 613 - ./test/linking/nested.bril variable-relabeler
+# exit code: 1
+not ok 614 - ./test/linking/nested.bril relabeled-ssa
+# exit code: 1
+not ok 615 - ./test/linking/nested.bril bril2z3
+# exit code: 1
+not ok 616 - ./test/linking/recursive.bril variable-relabeler
+# exit code: 1
+not ok 617 - ./test/linking/recursive.bril relabeled-ssa
+# exit code: 1
+not ok 618 - ./test/linking/recursive.bril bril2z3
+# exit code: 1
+ok 619 - ./test/parse/add.bril variable-relabeler
+ok 620 - ./test/parse/add.bril relabeled-ssa
+ok 621 - ./test/parse/add.bril bril2z3
+ok 622 - ./test/parse/char.bril variable-relabeler
+ok 623 - ./test/parse/char.bril relabeled-ssa
+ok 624 - ./test/parse/char.bril bril2z3
+ok 625 - ./test/parse/comment.bril variable-relabeler
+ok 626 - ./test/parse/comment.bril relabeled-ssa
+ok 627 - ./test/parse/comment.bril bril2z3
+ok 628 - ./test/parse/float.bril variable-relabeler
+ok 629 - ./test/parse/float.bril relabeled-ssa
+ok 630 - ./test/parse/float.bril bril2z3
+ok 631 - ./test/parse/mem.bril variable-relabeler
+ok 632 - ./test/parse/mem.bril relabeled-ssa
+ok 633 - ./test/parse/mem.bril bril2z3
+ok 634 - ./test/parse/positions.bril variable-relabeler
+ok 635 - ./test/parse/positions.bril relabeled-ssa
+ok 636 - ./test/parse/positions.bril bril2z3
+ok 637 - ./test/parse/print.bril variable-relabeler
+ok 638 - ./test/parse/print.bril relabeled-ssa
+ok 639 - ./test/parse/print.bril bril2z3
+ok 640 - ./test/print/add.bril variable-relabeler
+ok 641 - ./test/print/add.bril relabeled-ssa
+ok 642 - ./test/print/add.bril bril2z3
+ok 643 - ./test/print/call.bril variable-relabeler
+ok 644 - ./test/print/call.bril relabeled-ssa
+ok 645 - ./test/print/call.bril bril2z3
+ok 646 - ./test/print/char.bril variable-relabeler
+ok 647 - ./test/print/char.bril relabeled-ssa
+not ok 648 - ./test/print/char.bril bril2z3
+# exit code: 1
+ok 649 - ./test/print/eight-queens.bril variable-relabeler
+not ok 650 - ./test/print/eight-queens.bril relabeled-ssa
+# exit code: 1
+not ok 651 - ./test/print/eight-queens.bril bril2z3
+# exit code: 1
+ok 652 - ./test/print/ptr.bril variable-relabeler
+ok 653 - ./test/print/ptr.bril relabeled-ssa
+ok 654 - ./test/print/ptr.bril bril2z3
+ok 655 - ./test/print/spec-abort.bril variable-relabeler
+ok 656 - ./test/print/spec-abort.bril relabeled-ssa
+ok 657 - ./test/print/spec-abort.bril bril2z3
+ok 658 - ./type-infer/tests/fail-infer/arith_ops.bril variable-relabeler
+ok 659 - ./type-infer/tests/fail-infer/arith_ops.bril relabeled-ssa
+ok 660 - ./type-infer/tests/fail-infer/arith_ops.bril bril2z3
+not ok 661 - ./type-infer/tests/fail-infer/assign_label.bril variable-relabeler
+# exit code: 1
+not ok 662 - ./type-infer/tests/fail-infer/assign_label.bril relabeled-ssa
+# exit code: 1
+not ok 663 - ./type-infer/tests/fail-infer/assign_label.bril bril2z3
+# exit code: 1
+not ok 664 - ./type-infer/tests/fail-infer/br.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 665 - ./type-infer/tests/fail-infer/br.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 666 - ./type-infer/tests/fail-infer/br.bril bril2z3
+# exit code: 0, expected: 1
+ok 667 - ./type-infer/tests/fail-infer/comp_ops.bril variable-relabeler
+ok 668 - ./type-infer/tests/fail-infer/comp_ops.bril relabeled-ssa
+ok 669 - ./type-infer/tests/fail-infer/comp_ops.bril bril2z3
+ok 670 - ./type-infer/tests/fail-infer/control_ops.bril variable-relabeler
+ok 671 - ./type-infer/tests/fail-infer/control_ops.bril relabeled-ssa
+ok 672 - ./type-infer/tests/fail-infer/control_ops.bril bril2z3
+not ok 673 - ./type-infer/tests/fail-infer/div.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 674 - ./type-infer/tests/fail-infer/div.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 675 - ./type-infer/tests/fail-infer/div.bril bril2z3
+# exit code: 0, expected: 1
+not ok 676 - ./type-infer/tests/fail-infer/idchain.bril variable-relabeler
+# exit code: 1
+not ok 677 - ./type-infer/tests/fail-infer/idchain.bril relabeled-ssa
+# exit code: 1
+not ok 678 - ./type-infer/tests/fail-infer/idchain.bril bril2z3
+# exit code: 1
+not ok 679 - ./type-infer/tests/fail-infer/jmp.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 680 - ./type-infer/tests/fail-infer/jmp.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 681 - ./type-infer/tests/fail-infer/jmp.bril bril2z3
+# exit code: 0, expected: 1
+ok 682 - ./type-infer/tests/fail-infer/logic_ops.bril variable-relabeler
+ok 683 - ./type-infer/tests/fail-infer/logic_ops.bril relabeled-ssa
+ok 684 - ./type-infer/tests/fail-infer/logic_ops.bril bril2z3
+ok 685 - ./type-infer/tests/fail-infer/many_functions.bril variable-relabeler
+ok 686 - ./type-infer/tests/fail-infer/many_functions.bril relabeled-ssa
+ok 687 - ./type-infer/tests/fail-infer/many_functions.bril bril2z3
+not ok 688 - ./type-infer/tests/fail-infer/tricky-jump.bril variable-relabeler
+# exit code: 1
+not ok 689 - ./type-infer/tests/fail-infer/tricky-jump.bril relabeled-ssa
+# exit code: 1
+not ok 690 - ./type-infer/tests/fail-infer/tricky-jump.bril bril2z3
+# exit code: 1
+not ok 691 - ./type-infer/tests/fail-typecheck/add.bril variable-relabeler # differing: type-infer/tests/fail-typecheck/add.err
+not ok 692 - ./type-infer/tests/fail-typecheck/add.bril relabeled-ssa # differing: type-infer/tests/fail-typecheck/add.err
+ok 693 - ./type-infer/tests/fail-typecheck/add.bril bril2z3
+ok 694 - ./type-infer/tests/fail-typecheck/arith_ops.bril variable-relabeler
+ok 695 - ./type-infer/tests/fail-typecheck/arith_ops.bril relabeled-ssa
+ok 696 - ./type-infer/tests/fail-typecheck/arith_ops.bril bril2z3
+not ok 697 - ./type-infer/tests/fail-typecheck/br.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 698 - ./type-infer/tests/fail-typecheck/br.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 699 - ./type-infer/tests/fail-typecheck/br.bril bril2z3
+# exit code: 0, expected: 1
+ok 700 - ./type-infer/tests/fail-typecheck/comp_ops.bril variable-relabeler
+ok 701 - ./type-infer/tests/fail-typecheck/comp_ops.bril relabeled-ssa
+ok 702 - ./type-infer/tests/fail-typecheck/comp_ops.bril bril2z3
+ok 703 - ./type-infer/tests/fail-typecheck/control_ops.bril variable-relabeler
+ok 704 - ./type-infer/tests/fail-typecheck/control_ops.bril relabeled-ssa
+ok 705 - ./type-infer/tests/fail-typecheck/control_ops.bril bril2z3
+not ok 706 - ./type-infer/tests/fail-typecheck/div.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 707 - ./type-infer/tests/fail-typecheck/div.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 708 - ./type-infer/tests/fail-typecheck/div.bril bril2z3
+# exit code: 0, expected: 1
+ok 709 - ./type-infer/tests/fail-typecheck/idchain.bril variable-relabeler
+ok 710 - ./type-infer/tests/fail-typecheck/idchain.bril relabeled-ssa
+ok 711 - ./type-infer/tests/fail-typecheck/idchain.bril bril2z3
+not ok 712 - ./type-infer/tests/fail-typecheck/jmp.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 713 - ./type-infer/tests/fail-typecheck/jmp.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 714 - ./type-infer/tests/fail-typecheck/jmp.bril bril2z3
+# exit code: 0, expected: 1
+ok 715 - ./type-infer/tests/fail-typecheck/logic_ops.bril variable-relabeler
+ok 716 - ./type-infer/tests/fail-typecheck/logic_ops.bril relabeled-ssa
+ok 717 - ./type-infer/tests/fail-typecheck/logic_ops.bril bril2z3
+ok 718 - ./type-infer/tests/fail-typecheck/many_functions.bril variable-relabeler
+ok 719 - ./type-infer/tests/fail-typecheck/many_functions.bril relabeled-ssa
+ok 720 - ./type-infer/tests/fail-typecheck/many_functions.bril bril2z3
+not ok 721 - ./type-infer/tests/fail-typecheck/nop.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 722 - ./type-infer/tests/fail-typecheck/nop.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 723 - ./type-infer/tests/fail-typecheck/nop.bril bril2z3
+# exit code: 0, expected: 1
+not ok 724 - ./type-infer/tests/fail-typecheck/ret.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 725 - ./type-infer/tests/fail-typecheck/ret.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 726 - ./type-infer/tests/fail-typecheck/ret.bril bril2z3
+# exit code: 0, expected: 1
+not ok 727 - ./type-infer/tests/fail-typecheck/tiny.bril variable-relabeler
+# exit code: 0, expected: 1
+not ok 728 - ./type-infer/tests/fail-typecheck/tiny.bril relabeled-ssa
+# exit code: 0, expected: 1
+not ok 729 - ./type-infer/tests/fail-typecheck/tiny.bril bril2z3
+# exit code: 0, expected: 1
+ok 730 - ./type-infer/tests/fail-typecheck/tricky-jump.bril variable-relabeler
+ok 731 - ./type-infer/tests/fail-typecheck/tricky-jump.bril relabeled-ssa
+ok 732 - ./type-infer/tests/fail-typecheck/tricky-jump.bril bril2z3
+not ok 733 - ./type-infer/tests/infer/addarg.bril variable-relabeler
+# exit code: 1
+not ok 734 - ./type-infer/tests/infer/addarg.bril relabeled-ssa
+# exit code: 1
+not ok 735 - ./type-infer/tests/infer/addarg.bril bril2z3
+# exit code: 1
+not ok 736 - ./type-infer/tests/infer/arith_ops.bril variable-relabeler
+# exit code: 1
+not ok 737 - ./type-infer/tests/infer/arith_ops.bril relabeled-ssa
+# exit code: 1
+not ok 738 - ./type-infer/tests/infer/arith_ops.bril bril2z3
+# exit code: 1
+ok 739 - ./type-infer/tests/infer/br.bril variable-relabeler
+ok 740 - ./type-infer/tests/infer/br.bril relabeled-ssa
+ok 741 - ./type-infer/tests/infer/br.bril bril2z3
+not ok 742 - ./type-infer/tests/infer/comp_ops.bril variable-relabeler
+# exit code: 1
+not ok 743 - ./type-infer/tests/infer/comp_ops.bril relabeled-ssa
+# exit code: 1
+not ok 744 - ./type-infer/tests/infer/comp_ops.bril bril2z3
+# exit code: 1
+not ok 745 - ./type-infer/tests/infer/control_ops.bril variable-relabeler
+# exit code: 1
+not ok 746 - ./type-infer/tests/infer/control_ops.bril relabeled-ssa
+# exit code: 1
+not ok 747 - ./type-infer/tests/infer/control_ops.bril bril2z3
+# exit code: 1
+ok 748 - ./type-infer/tests/infer/div.bril variable-relabeler
+ok 749 - ./type-infer/tests/infer/div.bril relabeled-ssa
+ok 750 - ./type-infer/tests/infer/div.bril bril2z3
+not ok 751 - ./type-infer/tests/infer/idchain.bril variable-relabeler
+# exit code: 1
+not ok 752 - ./type-infer/tests/infer/idchain.bril relabeled-ssa
+# exit code: 1
+not ok 753 - ./type-infer/tests/infer/idchain.bril bril2z3
+# exit code: 1
+ok 754 - ./type-infer/tests/infer/jmp.bril variable-relabeler
+ok 755 - ./type-infer/tests/infer/jmp.bril relabeled-ssa
+ok 756 - ./type-infer/tests/infer/jmp.bril bril2z3
+not ok 757 - ./type-infer/tests/infer/logic_ops.bril variable-relabeler
+# exit code: 1
+not ok 758 - ./type-infer/tests/infer/logic_ops.bril relabeled-ssa
+# exit code: 1
+not ok 759 - ./type-infer/tests/infer/logic_ops.bril bril2z3
+# exit code: 1
+not ok 760 - ./type-infer/tests/infer/many_functions.bril variable-relabeler
+# exit code: 1
+not ok 761 - ./type-infer/tests/infer/many_functions.bril relabeled-ssa
+# exit code: 1
+not ok 762 - ./type-infer/tests/infer/many_functions.bril bril2z3
+# exit code: 1
+ok 763 - ./type-infer/tests/infer/nop.bril variable-relabeler
+ok 764 - ./type-infer/tests/infer/nop.bril relabeled-ssa
+ok 765 - ./type-infer/tests/infer/nop.bril bril2z3
+ok 766 - ./type-infer/tests/infer/ret.bril variable-relabeler
+ok 767 - ./type-infer/tests/infer/ret.bril relabeled-ssa
+ok 768 - ./type-infer/tests/infer/ret.bril bril2z3
+ok 769 - ./type-infer/tests/infer/tiny.bril variable-relabeler
+ok 770 - ./type-infer/tests/infer/tiny.bril relabeled-ssa
+ok 771 - ./type-infer/tests/infer/tiny.bril bril2z3
+not ok 772 - ./type-infer/tests/infer/tricky-jump.bril variable-relabeler
+# exit code: 1
+not ok 773 - ./type-infer/tests/infer/tricky-jump.bril relabeled-ssa
+# exit code: 1
+not ok 774 - ./type-infer/tests/infer/tricky-jump.bril bril2z3
+# exit code: 1
+not ok 775 - ./type-infer/tests/parse/add.bril variable-relabeler
+# exit code: 1
+not ok 776 - ./type-infer/tests/parse/add.bril relabeled-ssa
+# exit code: 1
+not ok 777 - ./type-infer/tests/parse/add.bril bril2z3
+# exit code: 1
+ok 778 - ./type-infer/tests/parse/div.bril variable-relabeler
+ok 779 - ./type-infer/tests/parse/div.bril relabeled-ssa
+ok 780 - ./type-infer/tests/parse/div.bril bril2z3
+not ok 781 - ./type-infer/tests/parse/partial.bril variable-relabeler
+# exit code: 1
+not ok 782 - ./type-infer/tests/parse/partial.bril relabeled-ssa
+# exit code: 1
+not ok 783 - ./type-infer/tests/parse/partial.bril bril2z3
+# exit code: 1
+not ok 784 - ./type-infer/tests/print/add.bril variable-relabeler
+# exit code: 1
+not ok 785 - ./type-infer/tests/print/add.bril relabeled-ssa
+# exit code: 1
+not ok 786 - ./type-infer/tests/print/add.bril bril2z3
+# exit code: 1
+ok 787 - ./type-infer/tests/print/div.bril variable-relabeler
+ok 788 - ./type-infer/tests/print/div.bril relabeled-ssa
+ok 789 - ./type-infer/tests/print/div.bril bril2z3
+not ok 790 - ./type-infer/tests/print/partial.bril variable-relabeler
+# exit code: 1
+not ok 791 - ./type-infer/tests/print/partial.bril relabeled-ssa
+# exit code: 1
+not ok 792 - ./type-infer/tests/print/partial.bril bril2z3
+# exit code: 1
+not ok 793 - ./type-infer/tests/typecheck/arith_ops.bril variable-relabeler
+# exit code: 1
+not ok 794 - ./type-infer/tests/typecheck/arith_ops.bril relabeled-ssa
+# exit code: 1
+not ok 795 - ./type-infer/tests/typecheck/arith_ops.bril bril2z3
+# exit code: 1
+ok 796 - ./type-infer/tests/typecheck/br.bril variable-relabeler
+ok 797 - ./type-infer/tests/typecheck/br.bril relabeled-ssa
+ok 798 - ./type-infer/tests/typecheck/br.bril bril2z3
+not ok 799 - ./type-infer/tests/typecheck/comp_ops.bril variable-relabeler
+# exit code: 1
+not ok 800 - ./type-infer/tests/typecheck/comp_ops.bril relabeled-ssa
+# exit code: 1
+not ok 801 - ./type-infer/tests/typecheck/comp_ops.bril bril2z3
+# exit code: 1
+not ok 802 - ./type-infer/tests/typecheck/control_ops.bril variable-relabeler
+# exit code: 1
+not ok 803 - ./type-infer/tests/typecheck/control_ops.bril relabeled-ssa
+# exit code: 1
+not ok 804 - ./type-infer/tests/typecheck/control_ops.bril bril2z3
+# exit code: 1
+ok 805 - ./type-infer/tests/typecheck/div.bril variable-relabeler
+ok 806 - ./type-infer/tests/typecheck/div.bril relabeled-ssa
+ok 807 - ./type-infer/tests/typecheck/div.bril bril2z3
+not ok 808 - ./type-infer/tests/typecheck/idchain.bril variable-relabeler
+# exit code: 1
+not ok 809 - ./type-infer/tests/typecheck/idchain.bril relabeled-ssa
+# exit code: 1
+not ok 810 - ./type-infer/tests/typecheck/idchain.bril bril2z3
+# exit code: 1
+ok 811 - ./type-infer/tests/typecheck/jmp.bril variable-relabeler
+ok 812 - ./type-infer/tests/typecheck/jmp.bril relabeled-ssa
+ok 813 - ./type-infer/tests/typecheck/jmp.bril bril2z3
+not ok 814 - ./type-infer/tests/typecheck/logic_ops.bril variable-relabeler
+# exit code: 1
+not ok 815 - ./type-infer/tests/typecheck/logic_ops.bril relabeled-ssa
+# exit code: 1
+not ok 816 - ./type-infer/tests/typecheck/logic_ops.bril bril2z3
+# exit code: 1
+not ok 817 - ./type-infer/tests/typecheck/many_functions.bril variable-relabeler
+# exit code: 1
+not ok 818 - ./type-infer/tests/typecheck/many_functions.bril relabeled-ssa
+# exit code: 1
+not ok 819 - ./type-infer/tests/typecheck/many_functions.bril bril2z3
+# exit code: 1
+ok 820 - ./type-infer/tests/typecheck/nop.bril variable-relabeler
+ok 821 - ./type-infer/tests/typecheck/nop.bril relabeled-ssa
+ok 822 - ./type-infer/tests/typecheck/nop.bril bril2z3
+ok 823 - ./type-infer/tests/typecheck/ret.bril variable-relabeler
+ok 824 - ./type-infer/tests/typecheck/ret.bril relabeled-ssa
+ok 825 - ./type-infer/tests/typecheck/ret.bril bril2z3
+ok 826 - ./type-infer/tests/typecheck/tiny.bril variable-relabeler
+ok 827 - ./type-infer/tests/typecheck/tiny.bril relabeled-ssa
+ok 828 - ./type-infer/tests/typecheck/tiny.bril bril2z3
+not ok 829 - ./type-infer/tests/typecheck/tricky-jump.bril variable-relabeler
+# exit code: 1
+not ok 830 - ./type-infer/tests/typecheck/tricky-jump.bril relabeled-ssa
+# exit code: 1
+not ok 831 - ./type-infer/tests/typecheck/tricky-jump.bril bril2z3
+# exit code: 1

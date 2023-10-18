@@ -1,0 +1,69 @@
+@main(input: int) {
+  n.0: int = id input.0;
+  zero.0: int = const 0;
+  icount.0: int = id zero.0;
+  site.0: ptr<int> = alloc n.0;
+  result.0: int = call @queen zero.0 n.0 icount.0 site.0;
+  print result.0;
+  free site.0;
+}
+@queen(n: int, queens: int, icount: int, site: ptr<int>): int {
+  one.0: int = const 1;
+  ite.0: int = id one.0;
+  ret_cond.0: bool = eq n.0 queens.0;
+  br ret_cond.0 .next.ret .for.cond;
+.next.ret:
+  icount.0: int = add icount.0 one.0;
+  ret icount.0;
+.for.cond:
+  for_cond_0.0: bool = le ite.0 queens.0;
+  br for_cond_0.0 .for.body .next.ret.1;
+.for.body:
+  nptr.0: ptr<int> = ptradd site.0 n.0;
+  store nptr.0 ite.0;
+  is_valid.0: bool = call @valid n.0 site.0;
+  br is_valid.0 .rec.func .next.loop;
+.rec.func:
+  n_1.0: int = add n.0 one.0;
+  icount.0: int = call @queen n_1.0 queens.0 icount.0 site.0;
+.next.loop:
+  ite.0: int = add ite.0 one.0;
+  jmp .for.cond;
+.next.ret.1:
+  ret icount.0;
+}
+@valid(n: int, site: ptr<int>): bool {
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  true.0: bool = eq one.0 one.0;
+  false.0: bool = eq zero.0 one.0;
+  ite.0: int = id zero.0;
+.for.cond:
+  for_cond.0: bool = lt ite.0 n.0;
+  br for_cond.0 .for.body .ret.end;
+.for.body:
+  iptr.0: ptr<int> = ptradd site.0 ite.0;
+  nptr.0: ptr<int> = ptradd site.0 n.0;
+  help_0.0: int = const 500;
+  vali.0: int = load iptr.0;
+  valn.0: int = load nptr.0;
+  eq_cond_0.0: bool = eq vali.0 valn.0;
+  br eq_cond_0.0 .true.ret.0 .false.else;
+.true.ret.0:
+  ret false.0;
+.false.else:
+  sub_0.0: int = sub vali.0 valn.0;
+  sub_1.0: int = sub valn.0 vali.0;
+  sub_2.0: int = sub n.0 ite.0;
+  eq_cond_1.0: bool = eq sub_0.0 sub_2.0;
+  eq_cond_2.0: bool = eq sub_1.0 sub_2.0;
+  eq_cond_12.0: bool = or eq_cond_1.0 eq_cond_2.0;
+  br eq_cond_12.0 .true.ret.1 .false.loop;
+.true.ret.1:
+  ret false.0;
+.false.loop:
+  ite.0: int = add ite.0 one.0;
+  jmp .for.cond;
+.ret.end:
+  ret true.0;
+}

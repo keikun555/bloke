@@ -1,0 +1,8 @@
+@main {
+.main.b0:
+  v.0.0: int = const 4;
+  speculate;
+  v.0.1: int = const 2;
+  commit;
+  print v.0.1;
+}

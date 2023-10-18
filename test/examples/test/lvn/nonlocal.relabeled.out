@@ -1,0 +1,10 @@
+@main {
+  a.0: int = const 4;
+  b.0: int = const 2;
+  sum1.0: int = add a.0 b.0;
+  sum2.0: int = add a.0 b.0;
+  jmp .label;
+.label:
+  prod.0: int = mul sum1.0 sum2.0;
+  print prod.0;
+}

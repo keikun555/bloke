@@ -1,0 +1,7 @@
+@main {
+  speculate;
+  commit;
+  f.0: bool = const false;
+  guard f.0 .lbl;
+.lbl:
+}

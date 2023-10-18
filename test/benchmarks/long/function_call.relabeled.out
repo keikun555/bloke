@@ -1,0 +1,23 @@
+@main(starting_m: int) {
+  m.0: int = id starting_m.0;
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  two.0: int = const 2;
+  cond_m.0: bool = eq m.0 zero.0;
+  br cond_m.0 .end .m_nonzero;
+.m_nonzero:
+  m.0: int = sub m.0 one.0;
+  call @main m.0;
+  cond_m.0: bool = eq m.0 zero.0;
+  br cond_m.0 .end .m_nonzero2;
+.m_nonzero2:
+  m.0: int = sub m.0 one.0;
+  call @main m.0;
+  cond_m.0: bool = eq m.0 zero.0;
+  br cond_m.0 .end .m_nonzero3;
+.m_nonzero3:
+  m.0: int = sub m.0 one.0;
+  call @main m.0;
+.end:
+  print starting_m.0;
+}

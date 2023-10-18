@@ -1,0 +1,14 @@
+@main {
+.entry:
+  one.0: int = const 1;
+  zero.0: int = const 0;
+  x.0: int = const 5;
+.loop:
+  x.0: int = sub x.0 one.0;
+  done.0: bool = eq x.0 zero.0;
+.br:
+  br done.0 .exit .loop;
+.exit:
+  print x.0;
+  ret;
+}

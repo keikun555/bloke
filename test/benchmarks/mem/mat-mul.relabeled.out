@@ -1,0 +1,114 @@
+@rand(seq: ptr<int>, max: int): int {
+  a.0: int = const 25214903917;
+  c.0: int = const 11;
+  m.0: int = const 281474976710656;
+  x.0: int = load seq.0;
+  ax.0: int = mul a.0 x.0;
+  axpc.0: int = add ax.0 c.0;
+  next.0: int = div axpc.0 m.0;
+  next.0: int = mul next.0 m.0;
+  next.0: int = sub axpc.0 next.0;
+  store seq.0 next.0;
+  val.0: int = div next.0 max.0;
+  val.0: int = mul val.0 max.0;
+  val.0: int = sub next.0 val.0;
+  ret val.0;
+}
+@randarray(size: int, rng: ptr<int>): ptr<int> {
+  arr.0: ptr<int> = alloc size.0;
+  i.0: int = const 0;
+  max.0: int = const 1000;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  val.0: int = call @rand rng.0 max.0;
+  loc.0: ptr<int> = ptradd arr.0 i.0;
+  store loc.0 val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret arr.0;
+}
+@printarray(size: int, arr: ptr<int>) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<int> = ptradd arr.0 i.0;
+  val.0: int = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}
+@matmul(size: int, arr1: ptr<int>, arr2: ptr<int>, dest: ptr<int>) {
+  one.0: int = const 1;
+  row.0: int = const 0;
+.row.loop:
+  cond.0: bool = lt row.0 size.0;
+  br cond.0 .row.body .row.done;
+.row.body:
+  col.0: int = const 0;
+.col.loop:
+  cond.0: bool = lt col.0 size.0;
+  br cond.0 .col.body .col.done;
+.col.body:
+  sum.0: int = const 0;
+  i.0: int = const 0;
+.sum.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .sum.body .sum.done;
+.sum.body:
+  lidx.0: int = mul row.0 size.0;
+  lidx.0: int = add lidx.0 i.0;
+  ridx.0: int = mul i.0 size.0;
+  ridx.0: int = add ridx.0 col.0;
+  lvalloc.0: ptr<int> = ptradd arr1.0 lidx.0;
+  lval.0: int = load lvalloc.0;
+  rvalloc.0: ptr<int> = ptradd arr2.0 ridx.0;
+  rval.0: int = load rvalloc.0;
+  prod.0: int = mul lval.0 rval.0;
+  sum.0: int = add sum.0 prod.0;
+.sum.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .sum.loop;
+.sum.done:
+  idx.0: int = mul row.0 size.0;
+  idx.0: int = add idx.0 col.0;
+  loc.0: ptr<int> = ptradd dest.0 idx.0;
+  store loc.0 sum.0;
+.col.loop_end:
+  col.0: int = add col.0 one.0;
+  jmp .col.loop;
+.col.done:
+.row.loop_end:
+  row.0: int = add row.0 one.0;
+  jmp .row.loop;
+.row.done:
+  ret;
+}
+@main(size: int, seed: int) {
+  one.0: int = const 1;
+  rng.0: ptr<int> = alloc one.0;
+  store rng.0 seed.0;
+  sqsize.0: int = mul size.0 size.0;
+  arr1.0: ptr<int> = call @randarray sqsize.0 rng.0;
+  arr2.0: ptr<int> = call @randarray sqsize.0 rng.0;
+  dest.0: ptr<int> = call @randarray sqsize.0 rng.0;
+  call @matmul size.0 arr1.0 arr2.0 dest.0;
+  call @printarray sqsize.0 arr1.0;
+  call @printarray sqsize.0 arr2.0;
+  call @printarray sqsize.0 dest.0;
+  free arr1.0;
+  free arr2.0;
+  free dest.0;
+  free rng.0;
+  ret;
+}

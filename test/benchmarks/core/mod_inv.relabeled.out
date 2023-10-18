@@ -1,0 +1,63 @@
+@main(n: int, p: int) {
+  v0.0: int = const 2;
+  two.0: int = id v0.0;
+  v1.0: int = id p.0;
+  v2.0: int = id two.0;
+  v3.0: int = sub v1.0 v2.0;
+  m.0: int = id v3.0;
+  v4.0: int = const 1;
+  ans.0: int = id v4.0;
+  v5.0: int = id n.0;
+  a.0: int = id v5.0;
+  v7.0: int = const 1;
+  i.0: int = id v7.0;
+.for.cond.6:
+  v8.0: int = id m.0;
+  v9.0: int = const 0;
+  v10.0: bool = gt v8.0 v9.0;
+  br v10.0 .for.body.6 .for.end.6;
+.for.body.6:
+  v12.0: int = id m.0;
+  v13.0: int = id m.0;
+  v14.0: int = id two.0;
+  v15.0: int = div v13.0 v14.0;
+  v16.0: int = id two.0;
+  v17.0: int = mul v15.0 v16.0;
+  v18.0: bool = eq v12.0 v17.0;
+  br v18.0 .then.11 .else.11;
+.then.11:
+  jmp .endif.11;
+.else.11:
+  v19.0: int = id ans.0;
+  v20.0: int = id a.0;
+  v21.0: int = mul v19.0 v20.0;
+  v22.0: int = id p.0;
+  v23.0: int = call @mod v21.0 v22.0;
+  ans.0: int = id v23.0;
+.endif.11:
+  v24.0: int = id a.0;
+  v25.0: int = id a.0;
+  v26.0: int = mul v24.0 v25.0;
+  v27.0: int = id p.0;
+  v28.0: int = call @mod v26.0 v27.0;
+  a.0: int = id v28.0;
+  v29.0: int = id m.0;
+  v30.0: int = id two.0;
+  v31.0: int = div v29.0 v30.0;
+  m.0: int = id v31.0;
+  jmp .for.cond.6;
+.for.end.6:
+  v32.0: int = id ans.0;
+  print v32.0;
+  v33.0: int = const 0;
+}
+@mod(n: int, p: int): int {
+  v0.0: int = id n.0;
+  v1.0: int = id n.0;
+  v2.0: int = id p.0;
+  v3.0: int = div v1.0 v2.0;
+  v4.0: int = id p.0;
+  v5.0: int = mul v3.0 v4.0;
+  v6.0: int = sub v0.0 v5.0;
+  ret v6.0;
+}

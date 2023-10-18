@@ -1,0 +1,31 @@
+@main {
+.entry:
+  x.0.0: int = const 0;
+  i.0.0: int = const 0;
+  one.0.0: int = const 1;
+.loop:
+  x.0.1: int = phi x.0.0 x.0.4 .entry .endif;
+  mid.0.0: int = phi mid.0.1 .endif;
+  max.0.0: int = phi max.0.1 .endif;
+  i.0.1: int = phi i.0.0 i.0.2 .entry .endif;
+  factor.0.0: int = phi factor.0.1 .endif;
+  cond.0.0: bool = phi cond.0.2 .endif;
+  max.0.1: int = const 10;
+  cond.0.1: bool = lt i.0.1 max.0.1;
+  br cond.0.1 .body .exit;
+.body:
+  mid.0.1: int = const 5;
+  cond.0.2: bool = lt i.0.1 mid.0.1;
+  br cond.0.2 .then .endif;
+.then:
+  x.0.2: int = add x.0.1 one.0.0;
+  jmp .endif;
+.endif:
+  x.0.3: int = phi x.0.1 x.0.2 .body .then;
+  factor.0.1: int = const 2;
+  x.0.4: int = mul x.0.3 factor.0.1;
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .loop;
+.exit:
+  print x.0.1;
+}

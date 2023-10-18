@@ -1,0 +1,9 @@
+@main(b: bool) {
+  jmp .bad;
+  br b.0 .foo;
+  br b.0 .foo .foo .foo;
+  c.0: bool = not b.0 .foo;
+.foo:
+.bar:
+.bar:
+}

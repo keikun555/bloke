@@ -1,0 +1,106 @@
+@main(in.0: int) {
+.main.b0:
+  in.1: int = id in.0;
+.main.b1:
+  ten.0.0: int = const 10;
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  index.0.0: int = const 1;
+  not_finished.0.0: bool = const true;
+.for.cond:
+  power.0.0: int = phi power.0.1 power.0.1 .if.true .if.false;
+  not_finished.0.1: bool = phi not_finished.0.0 not_finished.0.2 not_finished.0.1 .main.b1 .if.true .if.false;
+  index.0.1: int = phi index.0.0 index.0.1 index.0.2 .main.b1 .if.true .if.false;
+  d.0.0: int = phi d.0.1 d.0.1 .if.true .if.false;
+  check.0.0: bool = phi check.0.1 check.0.1 .if.true .if.false;
+  br not_finished.0.1 .for.body .for.end;
+.for.body:
+  power.0.1: int = call @pow ten.0.0 index.0.1;
+  d.0.1: int = div in.0 power.0.1;
+  check.0.1: bool = eq d.0.1 zero.0.0;
+  br check.0.1 .if.true .if.false;
+.if.true:
+  not_finished.0.2: bool = const false;
+  jmp .for.cond;
+.if.false:
+  index.0.2: int = add index.0.1 one.0.0;
+  jmp .for.cond;
+.for.end:
+  exp.0.0: int = sub index.0.1 one.0.0;
+  is_palindrome.0.0: bool = call @palindrome in.0 exp.0.0;
+  print is_palindrome.0.0;
+}
+@pow(base.0: int, exp.0: int): int {
+.pow.b0:
+  base.1: int = id base.0;
+  exp.1: int = id exp.0;
+.pow.b1:
+  res.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  not_finished.0.0: bool = const true;
+.for.cond.pow:
+  res.0.1: int = phi res.0.0 res.0.1 res.0.2 .pow.b1 .if.true.pow .if.false.pow;
+  not_finished.0.1: bool = phi not_finished.0.0 not_finished.0.2 not_finished.0.1 .pow.b1 .if.true.pow .if.false.pow;
+  finished.0.0: bool = phi finished.0.1 finished.0.1 .if.true.pow .if.false.pow;
+  exp.0.0: int = phi exp.0.0 exp.0.1 .if.true.pow .if.false.pow;
+  br not_finished.0.1 .for.body.pow .for.end.pow;
+.for.body.pow:
+  finished.0.1: bool = eq exp.0.0 zero.0.0;
+  br finished.0.1 .if.true.pow .if.false.pow;
+.if.true.pow:
+  not_finished.0.2: bool = const false;
+  jmp .for.cond.pow;
+.if.false.pow:
+  res.0.2: int = mul res.0.1 base.0;
+  exp.0.1: int = sub exp.0.0 one.0.0;
+  jmp .for.cond.pow;
+.for.end.pow:
+  ret res.0.1;
+}
+@palindrome(in.0: int, len.0: int): bool {
+.palindrome.b0:
+  in.1: int = id in.0;
+  len.1: int = id len.0;
+.palindrome.b1:
+  is_palindrome.0.0: bool = const false;
+  zero.0.0: int = const 0;
+  two.0.0: int = const 2;
+  ten.0.0: int = const 10;
+  check.0.0: bool = le len.0 zero.0.0;
+  br check.0.0 .if.true.palindrome .if.false.palindrome;
+.if.true.palindrome:
+  is_palindrome.0.1: bool = const true;
+  jmp .if.end.palindrome;
+.if.false.palindrome:
+  power.0.0: int = call @pow ten.0.0 len.0;
+  left.0.0: int = div in.0 power.0.0;
+  v1.0.0: int = div in.0 ten.0.0;
+  v2.0.0: int = mul v1.0.0 ten.0.0;
+  right.0.0: int = sub in.0 v2.0.0;
+  is_equal.0.0: bool = eq left.0.0 right.0.0;
+  br is_equal.0.0 .if.true.mirror .if.false.mirror;
+.if.true.mirror:
+  temp.0.0: int = mul power.0.0 left.0.0;
+  temp.0.1: int = sub in.0 temp.0.0;
+  temp.0.2: int = sub temp.0.1 right.0.0;
+  next_in.0.0: int = div temp.0.2 ten.0.0;
+  next_len.0.0: int = sub len.0 two.0.0;
+  is_palindrome.0.2: bool = call @palindrome next_in.0.0 next_len.0.0;
+  jmp .if.end.palindrome;
+.if.false.mirror:
+  is_palindrome.0.3: bool = const false;
+  jmp .if.end.palindrome;
+.if.end.palindrome:
+  v2.0.1: int = phi v2.0.0 v2.0.0 .if.true.mirror .if.false.mirror;
+  v1.0.1: int = phi v1.0.0 v1.0.0 .if.true.mirror .if.false.mirror;
+  temp.0.3: int = phi temp.0.2 .if.true.mirror;
+  right.0.1: int = phi right.0.0 right.0.0 .if.true.mirror .if.false.mirror;
+  power.0.1: int = phi power.0.0 power.0.0 .if.true.mirror .if.false.mirror;
+  next_len.0.1: int = phi next_len.0.0 .if.true.mirror;
+  next_in.0.1: int = phi next_in.0.0 .if.true.mirror;
+  left.0.1: int = phi left.0.0 left.0.0 .if.true.mirror .if.false.mirror;
+  is_palindrome.0.4: bool = phi is_palindrome.0.1 is_palindrome.0.2 is_palindrome.0.3 .if.true.palindrome .if.true.mirror .if.false.mirror;
+  is_equal.0.1: bool = phi is_equal.0.0 is_equal.0.0 .if.true.mirror .if.false.mirror;
+  ret is_palindrome.0.4;
+}

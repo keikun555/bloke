@@ -1,0 +1,13 @@
+@main {
+  v.0: int = const 4;
+  speculate;
+  v.0: int = const 2;
+  b.0: bool = const false;
+  guard b.0 .failed;
+  commit;
+  print v.0;
+  ret;
+.failed:
+  y.0: int = const 0;
+  print y.0;
+}

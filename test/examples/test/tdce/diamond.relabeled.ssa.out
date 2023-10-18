@@ -1,0 +1,15 @@
+@main {
+.main.b0:
+  a.0.0: int = const 47;
+  cond.0.0: bool = const true;
+  br cond.0.0 .left .right;
+.left:
+  a.0.1: int = const 1;
+  jmp .end;
+.right:
+  a.0.2: int = const 2;
+  jmp .end;
+.end:
+  a.0.3: int = phi a.0.1 a.0.2 .left .right;
+  print a.0.3;
+}

@@ -1,0 +1,9 @@
+@main {
+.main.b0:
+  v.0.0: int = call @print4;
+}
+@print4: int {
+.print4.b0:
+  b.0.0: bool = const false;
+  ret b.0.0;
+}

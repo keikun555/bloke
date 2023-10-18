@@ -1,0 +1,38 @@
+@main(input: int) {
+  zero.0: int = const 0;
+  ten.0: int = const 10;
+  result.0: int = const 0;
+.begin:
+  digit.0: int = call @peel_last_digit input.0;
+  input.0: int = div input.0 ten.0;
+  result.0: int = add result.0 digit.0;
+.check_result:
+  print result.0;
+  processed.0: bool = call @is_single_digit result.0;
+  br processed.0 .check_done .process_result;
+.process_result:
+  r0.0: int = call @peel_last_digit result.0;
+  result.0: int = div result.0 ten.0;
+  result.0: int = add result.0 r0.0;
+  jmp .check_result;
+.check_done:
+  done.0: bool = eq input.0 zero.0;
+  br done.0 .done .begin;
+.done:
+  print result.0;
+}
+@is_single_digit(input: int): bool {
+  ten.0: int = const 10;
+  zero.0: int = const 0;
+  divided.0: int = div input.0 ten.0;
+  mul_by_ten.0: int = mul divided.0 ten.0;
+  result.0: bool = eq mul_by_ten.0 zero.0;
+  ret result.0;
+}
+@peel_last_digit(input: int): int {
+  ten.0: int = const 10;
+  div_by_ten.0: int = div input.0 ten.0;
+  mul_by_ten.0: int = mul div_by_ten.0 ten.0;
+  last_digit.0: int = sub input.0 mul_by_ten.0;
+  ret last_digit.0;
+}

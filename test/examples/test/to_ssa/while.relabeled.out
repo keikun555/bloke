@@ -1,0 +1,12 @@
+@main(a: int) {
+.while.cond:
+  zero.0: int = const 0;
+  is_term.0: bool = eq a.0 zero.0;
+  br is_term.0 .while.finish .while.body;
+.while.body:
+  one.0: int = const 1;
+  a.0: int = sub a.0 one.0;
+  jmp .while.cond;
+.while.finish:
+  print a.0;
+}

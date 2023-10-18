@@ -1,0 +1,191 @@
+@matget(matrix.0: ptr<float>, r.0: int, c.0: int): float {
+.matget.b0:
+  matrix.1: ptr<float> = id matrix.0;
+  r.1: int = id r.0;
+  c.1: int = id c.0;
+.matget.b1:
+  three.0.0: int = const 3;
+  trip_r.0.0: int = mul three.0.0 r.0;
+  index.0.0: int = add c.0 trip_r.0.0;
+  ptr.0.0: ptr<float> = ptradd matrix.0 index.0.0;
+  res.0.0: float = load ptr.0.0;
+  ret res.0.0;
+}
+@mod(a.0: int, b.0: int): int {
+.mod.b0:
+  a.1: int = id a.0;
+  b.1: int = id b.0;
+.mod.b1:
+  acc.0.0: int = div a.0 b.0;
+  acc.0.1: int = mul b.0 acc.0.0;
+  acc.0.2: int = sub a.0 acc.0.1;
+  ret acc.0.2;
+}
+@determinant(matrix.0: ptr<float>): float {
+.determinant.b0:
+  matrix.1: ptr<float> = id matrix.0;
+.determinant.b1:
+  two.0.0: int = const 2;
+  one.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  det.0.0: float = const 0;
+  i.0.0: int = const 0;
+  three.0.0: int = const 3;
+.loop:
+  to_sub.0.0: float = phi to_sub.0.3 .loop;
+  to_add.0.0: float = phi to_add.0.3 .loop;
+  tmp.0.0: float = phi tmp.0.4 .loop;
+  i_lt_three.0.0: bool = phi i_lt_three.0.1 .loop;
+  i.0.1: int = phi i.0.0 i.0.2 .determinant.b1 .loop;
+  det.0.1: float = phi det.0.0 det.0.3 .determinant.b1 .loop;
+  col.0.0: int = phi col.0.4 .loop;
+  to_add.0.1: float = call @matget matrix.0 zero.0.0 i.0.1;
+  to_sub.0.1: float = id to_add.0.1;
+  col.0.1: int = add i.0.1 one.0.0;
+  col.0.2: int = call @mod col.0.1 three.0.0;
+  tmp.0.1: float = call @matget matrix.0 one.0.0 col.0.2;
+  to_add.0.2: float = fmul to_add.0.1 tmp.0.1;
+  tmp.0.2: float = call @matget matrix.0 two.0.0 col.0.2;
+  to_sub.0.2: float = fmul to_sub.0.1 tmp.0.2;
+  col.0.3: int = add i.0.1 two.0.0;
+  col.0.4: int = call @mod col.0.3 three.0.0;
+  tmp.0.3: float = call @matget matrix.0 two.0.0 col.0.4;
+  to_add.0.3: float = fmul to_add.0.2 tmp.0.3;
+  tmp.0.4: float = call @matget matrix.0 one.0.0 col.0.4;
+  to_sub.0.3: float = fmul to_sub.0.2 tmp.0.4;
+  det.0.2: float = fadd det.0.1 to_add.0.3;
+  det.0.3: float = fsub det.0.2 to_sub.0.3;
+  i.0.2: int = add i.0.1 one.0.0;
+  i_lt_three.0.1: bool = lt i.0.2 three.0.0;
+  br i_lt_three.0.1 .loop .done;
+.done:
+  ret det.0.3;
+}
+@inverse(matrix.0: ptr<float>): ptr<float> {
+.inverse.b0:
+  matrix.1: ptr<float> = id matrix.0;
+.inverse.b1:
+  det.0.0: float = call @determinant matrix.0;
+  nine.0.0: int = const 9;
+  result.0.0: ptr<float> = alloc nine.0.0;
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  two.0.0: int = const 2;
+  three.0.0: int = const 3;
+  i.0.0: int = id zero.0.0;
+.outer:
+  val.0.0: float = phi val.0.5 .continue;
+  tmp.0.0: float = phi tmp.0.4 .continue;
+  temp.0.0: float = phi temp.0.2 .continue;
+  ptr.0.0: ptr<float> = phi ptr.0.2 .continue;
+  jp2.0.0: int = phi jp2.0.3 .continue;
+  jp1.0.0: int = phi jp1.0.3 .continue;
+  j_lt_three.0.0: bool = phi j_lt_three.0.2 .continue;
+  j.0.0: int = phi j.0.3 .continue;
+  ip2.0.0: int = phi ip2.0.3 .continue;
+  ip1.0.0: int = phi ip1.0.3 .continue;
+  index.0.0: int = phi index.0.3 .continue;
+  i_lt_three.0.0: bool = phi i_lt_three.0.1 .continue;
+  i.0.1: int = phi i.0.0 i.0.2 .inverse.b1 .continue;
+  j.0.1: int = id zero.0.0;
+.inner:
+  val.0.1: float = phi val.0.0 val.0.5 .outer .inner;
+  tmp.0.1: float = phi tmp.0.0 tmp.0.4 .outer .inner;
+  temp.0.1: float = phi temp.0.0 temp.0.2 .outer .inner;
+  ptr.0.1: ptr<float> = phi ptr.0.0 ptr.0.2 .outer .inner;
+  jp2.0.1: int = phi jp2.0.0 jp2.0.3 .outer .inner;
+  jp1.0.1: int = phi jp1.0.0 jp1.0.3 .outer .inner;
+  j_lt_three.0.1: bool = phi j_lt_three.0.0 j_lt_three.0.2 .outer .inner;
+  j.0.2: int = phi j.0.1 j.0.3 .outer .inner;
+  ip2.0.1: int = phi ip2.0.0 ip2.0.3 .outer .inner;
+  ip1.0.1: int = phi ip1.0.0 ip1.0.3 .outer .inner;
+  index.0.1: int = phi index.0.0 index.0.3 .outer .inner;
+  jp1.0.2: int = add j.0.2 one.0.0;
+  jp1.0.3: int = call @mod jp1.0.2 three.0.0;
+  jp2.0.2: int = add j.0.2 two.0.0;
+  jp2.0.3: int = call @mod jp2.0.2 three.0.0;
+  ip1.0.2: int = add i.0.1 one.0.0;
+  ip1.0.3: int = call @mod ip1.0.2 three.0.0;
+  ip2.0.2: int = add i.0.1 two.0.0;
+  ip2.0.3: int = call @mod ip2.0.2 three.0.0;
+  val.0.2: float = call @matget matrix.0 jp1.0.3 ip1.0.3;
+  tmp.0.2: float = call @matget matrix.0 jp2.0.3 ip2.0.3;
+  val.0.3: float = fmul val.0.2 tmp.0.2;
+  tmp.0.3: float = call @matget matrix.0 jp1.0.3 ip2.0.3;
+  temp.0.2: float = call @matget matrix.0 jp2.0.3 ip1.0.3;
+  tmp.0.4: float = fmul tmp.0.3 temp.0.2;
+  val.0.4: float = fsub val.0.3 tmp.0.4;
+  val.0.5: float = fdiv val.0.4 det.0.0;
+  index.0.2: int = mul three.0.0 i.0.1;
+  index.0.3: int = add index.0.2 j.0.2;
+  ptr.0.2: ptr<float> = ptradd result.0.0 index.0.3;
+  store ptr.0.2 val.0.5;
+  j.0.3: int = add j.0.2 one.0.0;
+  j_lt_three.0.2: bool = lt j.0.3 three.0.0;
+  br j_lt_three.0.2 .inner .continue;
+.continue:
+  i.0.2: int = add i.0.1 one.0.0;
+  i_lt_three.0.1: bool = lt i.0.2 three.0.0;
+  br i_lt_three.0.1 .outer .finished;
+.finished:
+  ret result.0.0;
+}
+@main {
+.main.b0:
+  nine.0.0: int = const 9;
+  one.0.0: int = const 1;
+  matrix.0.0: ptr<float> = alloc nine.0.0;
+  zero.0.0: float = const 0;
+  onef.0.0: float = const 1;
+  three.0.0: float = const 3;
+  four.0.0: float = const 4;
+  five.0.0: float = const 5;
+  seven.0.0: float = const 7;
+  store matrix.0.0 zero.0.0;
+  ptr.0.0: ptr<float> = ptradd matrix.0.0 one.0.0;
+  store ptr.0.0 onef.0.0;
+  ptr.0.1: ptr<float> = ptradd ptr.0.0 one.0.0;
+  store ptr.0.1 seven.0.0;
+  ptr.0.2: ptr<float> = ptradd ptr.0.1 one.0.0;
+  store ptr.0.2 four.0.0;
+  ptr.0.3: ptr<float> = ptradd ptr.0.2 one.0.0;
+  store ptr.0.3 three.0.0;
+  ptr.0.4: ptr<float> = ptradd ptr.0.3 one.0.0;
+  store ptr.0.4 five.0.0;
+  ptr.0.5: ptr<float> = ptradd ptr.0.4 one.0.0;
+  store ptr.0.5 seven.0.0;
+  ptr.0.6: ptr<float> = ptradd ptr.0.5 one.0.0;
+  store ptr.0.6 four.0.0;
+  ptr.0.7: ptr<float> = ptradd ptr.0.6 one.0.0;
+  store ptr.0.7 five.0.0;
+  det.0.0: float = call @determinant matrix.0.0;
+  print det.0.0;
+  inv.0.0: ptr<float> = call @inverse matrix.0.0;
+  call @printarray nine.0.0 inv.0.0;
+  free inv.0.0;
+  free matrix.0.0;
+}
+@printarray(size.0: int, arr.0: ptr<float>) {
+.printarray.b0:
+  size.1: int = id size.0;
+  arr.1: ptr<float> = id arr.0;
+.printarray.b1:
+  i.0.0: int = const 0;
+  one.0.0: int = const 1;
+.loop:
+  val.0.0: float = phi val.0.1 .loop_end;
+  loc.0.0: ptr<float> = phi loc.0.1 .loop_end;
+  i.0.1: int = phi i.0.0 i.0.2 .printarray.b1 .loop_end;
+  cond.0.0: bool = phi cond.0.1 .loop_end;
+  cond.0.1: bool = lt i.0.1 size.0;
+  br cond.0.1 .body .done;
+.body:
+  loc.0.1: ptr<float> = ptradd arr.0 i.0.1;
+  val.0.1: float = load loc.0.1;
+  print val.0.1;
+.loop_end:
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .loop;
+.done:
+  ret;
+}

@@ -1,0 +1,136 @@
+@matget(matrix: ptr<float>, r: int, c: int): float {
+  three.0: int = const 3;
+  trip_r.0: int = mul three.0 r.0;
+  index.0: int = add c.0 trip_r.0;
+  ptr.0: ptr<float> = ptradd matrix.0 index.0;
+  res.0: float = load ptr.0;
+  ret res.0;
+}
+@mod(a: int, b: int): int {
+  acc.0: int = div a.0 b.0;
+  acc.0: int = mul b.0 acc.0;
+  acc.0: int = sub a.0 acc.0;
+  ret acc.0;
+}
+@determinant(matrix: ptr<float>): float {
+  two.0: int = const 2;
+  one.0: int = const 1;
+  zero.0: int = const 0;
+  det.0: float = const 0;
+  i.0: int = const 0;
+  three.0: int = const 3;
+.loop:
+  to_add.0: float = call @matget matrix.0 zero.0 i.0;
+  to_sub.0: float = id to_add.0;
+  col.0: int = add i.0 one.0;
+  col.0: int = call @mod col.0 three.0;
+  tmp.0: float = call @matget matrix.0 one.0 col.0;
+  to_add.0: float = fmul to_add.0 tmp.0;
+  tmp.0: float = call @matget matrix.0 two.0 col.0;
+  to_sub.0: float = fmul to_sub.0 tmp.0;
+  col.0: int = add i.0 two.0;
+  col.0: int = call @mod col.0 three.0;
+  tmp.0: float = call @matget matrix.0 two.0 col.0;
+  to_add.0: float = fmul to_add.0 tmp.0;
+  tmp.0: float = call @matget matrix.0 one.0 col.0;
+  to_sub.0: float = fmul to_sub.0 tmp.0;
+  det.0: float = fadd det.0 to_add.0;
+  det.0: float = fsub det.0 to_sub.0;
+  i.0: int = add i.0 one.0;
+  i_lt_three.0: bool = lt i.0 three.0;
+  br i_lt_three.0 .loop .done;
+.done:
+  ret det.0;
+}
+@inverse(matrix: ptr<float>): ptr<float> {
+  det.0: float = call @determinant matrix.0;
+  nine.0: int = const 9;
+  result.0: ptr<float> = alloc nine.0;
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  two.0: int = const 2;
+  three.0: int = const 3;
+  i.0: int = id zero.0;
+.outer:
+  j.0: int = id zero.0;
+.inner:
+  jp1.0: int = add j.0 one.0;
+  jp1.0: int = call @mod jp1.0 three.0;
+  jp2.0: int = add j.0 two.0;
+  jp2.0: int = call @mod jp2.0 three.0;
+  ip1.0: int = add i.0 one.0;
+  ip1.0: int = call @mod ip1.0 three.0;
+  ip2.0: int = add i.0 two.0;
+  ip2.0: int = call @mod ip2.0 three.0;
+  val.0: float = call @matget matrix.0 jp1.0 ip1.0;
+  tmp.0: float = call @matget matrix.0 jp2.0 ip2.0;
+  val.0: float = fmul val.0 tmp.0;
+  tmp.0: float = call @matget matrix.0 jp1.0 ip2.0;
+  temp.0: float = call @matget matrix.0 jp2.0 ip1.0;
+  tmp.0: float = fmul tmp.0 temp.0;
+  val.0: float = fsub val.0 tmp.0;
+  val.0: float = fdiv val.0 det.0;
+  index.0: int = mul three.0 i.0;
+  index.0: int = add index.0 j.0;
+  ptr.0: ptr<float> = ptradd result.0 index.0;
+  store ptr.0 val.0;
+  j.0: int = add j.0 one.0;
+  j_lt_three.0: bool = lt j.0 three.0;
+  br j_lt_three.0 .inner .continue;
+.continue:
+  i.0: int = add i.0 one.0;
+  i_lt_three.0: bool = lt i.0 three.0;
+  br i_lt_three.0 .outer .finished;
+.finished:
+  ret result.0;
+}
+@main {
+  nine.0: int = const 9;
+  one.0: int = const 1;
+  matrix.0: ptr<float> = alloc nine.0;
+  zero.0: float = const 0;
+  onef.0: float = const 1;
+  three.0: float = const 3;
+  four.0: float = const 4;
+  five.0: float = const 5;
+  seven.0: float = const 7;
+  store matrix.0 zero.0;
+  ptr.0: ptr<float> = ptradd matrix.0 one.0;
+  store ptr.0 onef.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 seven.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 four.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 three.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 five.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 seven.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 four.0;
+  ptr.0: ptr<float> = ptradd ptr.0 one.0;
+  store ptr.0 five.0;
+  det.0: float = call @determinant matrix.0;
+  print det.0;
+  inv.0: ptr<float> = call @inverse matrix.0;
+  call @printarray nine.0 inv.0;
+  free inv.0;
+  free matrix.0;
+}
+@printarray(size: int, arr: ptr<float>) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<float> = ptradd arr.0 i.0;
+  val.0: float = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}

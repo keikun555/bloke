@@ -1,0 +1,7 @@
+@main {
+  x.0: int = const 4;
+  copy1.0: int = id x.0;
+  copy2.0: int = id copy1.0;
+  copy3.0: int = id copy2.0;
+  print copy3.0;
+}

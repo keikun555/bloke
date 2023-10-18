@@ -1,0 +1,38 @@
+@main(n: int) {
+  i.0: int = const 0;
+  res.0: int = const 0;
+  one.0: int = const 1;
+  non.0: int = const -1;
+  zer.0: int = const 0;
+  nlz.0: bool = lt n.0 zer.0;
+  br nlz.0 .neg .begin;
+.neg:
+  n.0: int = mul n.0 non.0;
+.begin:
+  i.0: int = add i.0 one.0;
+  isq.0: int = mul i.0 i.0;
+  sqgt.0: bool = gt isq.0 n.0;
+  br sqgt.0 .end .check;
+.check:
+  m.0: int = call @mod n.0 i.0;
+  eqz.0: bool = eq m.0 zer.0;
+  br eqz.0 .body .begin;
+.body:
+  print i.0;
+  res.0: int = add res.0 i.0;
+  d.0: int = div n.0 i.0;
+  deqi.0: bool = eq d.0 i.0;
+  br deqi.0 .begin .then;
+.then:
+  print d.0;
+  res.0: int = add res.0 d.0;
+  jmp .begin;
+.end:
+  print res.0;
+}
+@mod(dividend: int, divisor: int): int {
+  quot.0: int = div dividend.0 divisor.0;
+  prod.0: int = mul divisor.0 quot.0;
+  diff.0: int = sub dividend.0 prod.0;
+  ret diff.0;
+}

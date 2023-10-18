@@ -1,0 +1,7 @@
+@main {
+  two.0: int = const 2;
+  p.0: ptr<int> = alloc two.0;
+  btrue.0: bool = const true;
+  store p.0 btrue.0;
+  free p.0;
+}

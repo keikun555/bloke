@@ -1,0 +1,48 @@
+@main(n: int) {
+  print n.0;
+  tot.0: int = call @totient n.0;
+  print tot.0;
+}
+@totient(n: int): int {
+  result.0: int = id n.0;
+  p.0: int = const 2;
+  one.0: int = const 1;
+  zero.0: int = const 0;
+.for.set.cond:
+  pp.0: int = mul p.0 p.0;
+  cond.0: bool = le pp.0 n.0;
+  br cond.0 .for.set.body .for.set.end;
+.for.set.body:
+  npmod.0: int = call @mod n.0 p.0;
+  if_cond.0: bool = eq npmod.0 zero.0;
+  br if_cond.0 .if_lbl .else_lbl;
+.if_lbl:
+.while.set.cond:
+  npmod.0: int = call @mod n.0 p.0;
+  while_cond.0: bool = eq npmod.0 zero.0;
+  br while_cond.0 .while.body .while.end;
+.while.body:
+  npdiv.0: int = div n.0 p.0;
+  n.0: int = id npdiv.0;
+  jmp .while.set.cond;
+.while.end:
+  resdiv.0: int = div result.0 p.0;
+  result.0: int = sub result.0 resdiv.0;
+.else_lbl:
+  p.0: int = add p.0 one.0;
+  jmp .for.set.cond;
+.for.set.end:
+  final_if_cond.0: bool = gt n.0 one.0;
+  br final_if_cond.0 .final_if_label .final_else_label;
+.final_if_label:
+  resdiv.0: int = div result.0 n.0;
+  result.0: int = sub result.0 resdiv.0;
+.final_else_label:
+  ret result.0;
+}
+@mod(a: int, b: int): int {
+  ad.0: int = div a.0 b.0;
+  mad.0: int = mul b.0 ad.0;
+  ans.0: int = sub a.0 mad.0;
+  ret ans.0;
+}

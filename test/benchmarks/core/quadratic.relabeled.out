@@ -1,0 +1,74 @@
+@main(a: int, b: int, c: int) {
+  call @quadratic a.0 b.0 c.0;
+}
+@sqrt(x: int): int {
+  v1.0: int = const 1;
+  i.0: int = id v1.0;
+.for.cond.0:
+  v2.0: int = id i.0;
+  v3.0: int = id x.0;
+  v4.0: int = const 1;
+  v5.0: int = sub v3.0 v4.0;
+  v6.0: bool = lt v2.0 v5.0;
+  br v6.0 .for.body.0 .for.end.0;
+.for.body.0:
+  v8.0: int = id i.0;
+  v9.0: int = id i.0;
+  v10.0: int = mul v8.0 v9.0;
+  v11.0: int = id x.0;
+  v12.0: bool = ge v10.0 v11.0;
+  br v12.0 .then.7 .else.7;
+.then.7:
+  v13.0: int = id i.0;
+  ret v13.0;
+.else.7:
+.endif.7:
+  v14.0: int = id i.0;
+  v15.0: int = const 1;
+  v16.0: int = add v14.0 v15.0;
+  i.0: int = id v16.0;
+  jmp .for.cond.0;
+.for.end.0:
+  v17.0: int = const 0;
+  ret v17.0;
+}
+@quadratic(a: int, b: int, c: int) {
+  v0.0: int = id b.0;
+  v1.0: int = id b.0;
+  v2.0: int = mul v0.0 v1.0;
+  v3.0: int = const 4;
+  v4.0: int = id a.0;
+  v5.0: int = mul v3.0 v4.0;
+  v6.0: int = id c.0;
+  v7.0: int = mul v5.0 v6.0;
+  v8.0: int = sub v2.0 v7.0;
+  s.0: int = id v8.0;
+  v9.0: int = const 2;
+  v10.0: int = id a.0;
+  v11.0: int = mul v9.0 v10.0;
+  d.0: int = id v11.0;
+  v12.0: int = const 0;
+  v13.0: int = id b.0;
+  v14.0: int = sub v12.0 v13.0;
+  v15.0: int = id s.0;
+  v16.0: int = call @sqrt v15.0;
+  v17.0: int = add v14.0 v16.0;
+  r1.0: int = id v17.0;
+  v18.0: int = const 0;
+  v19.0: int = id b.0;
+  v20.0: int = sub v18.0 v19.0;
+  v21.0: int = id s.0;
+  v22.0: int = call @sqrt v21.0;
+  v23.0: int = sub v20.0 v22.0;
+  r2.0: int = id v23.0;
+  v24.0: int = id r1.0;
+  v25.0: int = id d.0;
+  v26.0: int = div v24.0 v25.0;
+  print v26.0;
+  v27.0: int = const 0;
+  v28.0: int = id r2.0;
+  v29.0: int = id d.0;
+  v30.0: int = div v28.0 v29.0;
+  print v30.0;
+  v31.0: int = const 0;
+}

@@ -1,0 +1,9 @@
+@main(c1.0: char, c2.0: char, c3.0: char, c4.0: char) {
+.main.b0:
+  c1.1: char = id c1.0;
+  c2.1: char = id c2.0;
+  c3.1: char = id c3.0;
+  c4.1: char = id c4.0;
+.main.b1:
+  print c1.0 c2.0 c3.0 c4.0;
+}

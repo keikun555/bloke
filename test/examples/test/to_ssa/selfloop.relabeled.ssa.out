@@ -1,0 +1,16 @@
+@main {
+.entry:
+  one.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  x.0.0: int = const 5;
+.loop:
+  x.0.1: int = phi x.0.0 x.0.2 .entry .br;
+  done.0.0: bool = phi done.0.1 .br;
+  x.0.2: int = sub x.0.1 one.0.0;
+  done.0.1: bool = eq x.0.2 zero.0.0;
+.br:
+  br done.0.1 .exit .loop;
+.exit:
+  print x.0.2;
+  ret;
+}

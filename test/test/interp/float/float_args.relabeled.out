@@ -1,0 +1,3 @@
+@main(float_one: float, float_two: float, float_three: float) {
+  print float_one.0 float_two.0 float_three.0;
+}

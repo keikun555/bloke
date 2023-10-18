@@ -1,0 +1,7 @@
+@main {
+  v.0: int = const 4;
+  speculate;
+  v.0: int = const 2;
+  commit;
+  print v.0;
+}

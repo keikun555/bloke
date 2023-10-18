@@ -1,0 +1,22 @@
+@main(cond.0: bool) {
+.main.b0:
+  cond.1: bool = id cond.0;
+.main.b1:
+  a.0.0: int = const 47;
+  b.0.0: int = const 42;
+  br cond.0 .left .right;
+.left:
+  b.0.1: int = const 1;
+  c.0.0: int = const 5;
+  jmp .end;
+.right:
+  a.0.1: int = const 2;
+  c.0.1: int = const 10;
+  jmp .end;
+.end:
+  c.0.2: int = phi c.0.0 c.0.1 .left .right;
+  b.0.2: int = phi b.0.1 b.0.0 .left .right;
+  a.0.2: int = phi a.0.0 a.0.1 .left .right;
+  d.0.0: int = sub a.0.2 c.0.2;
+  print d.0.0;
+}

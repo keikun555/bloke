@@ -1,0 +1,8 @@
+@main {
+.main.b0:
+  v.0.0: int = const 4;
+  print v.0.0;
+  ret;
+.main.b1:
+  print v.0;
+}

@@ -1,0 +1,181 @@
+@rand(seq.0: ptr<int>, max.0: int): int {
+.rand.b0:
+  seq.1: ptr<int> = id seq.0;
+  max.1: int = id max.0;
+.rand.b1:
+  a.0.0: int = const 25214903917;
+  c.0.0: int = const 11;
+  m.0.0: int = const 281474976710656;
+  x.0.0: int = load seq.0;
+  ax.0.0: int = mul a.0.0 x.0.0;
+  axpc.0.0: int = add ax.0.0 c.0.0;
+  next.0.0: int = div axpc.0.0 m.0.0;
+  next.0.1: int = mul next.0.0 m.0.0;
+  next.0.2: int = sub axpc.0.0 next.0.1;
+  store seq.0 next.0.2;
+  val.0.0: int = div next.0.2 max.0;
+  val.0.1: int = mul val.0.0 max.0;
+  val.0.2: int = sub next.0.2 val.0.1;
+  ret val.0.2;
+}
+@randarray(size.0: int, rng.0: ptr<int>): ptr<int> {
+.randarray.b0:
+  size.1: int = id size.0;
+  rng.1: ptr<int> = id rng.0;
+.randarray.b1:
+  arr.0.0: ptr<int> = alloc size.0;
+  i.0.0: int = const 0;
+  max.0.0: int = const 1000;
+  one.0.0: int = const 1;
+.loop:
+  val.0.0: int = phi val.0.1 .loop_end;
+  loc.0.0: ptr<int> = phi loc.0.1 .loop_end;
+  i.0.1: int = phi i.0.0 i.0.2 .randarray.b1 .loop_end;
+  cond.0.0: bool = phi cond.0.1 .loop_end;
+  cond.0.1: bool = lt i.0.1 size.0;
+  br cond.0.1 .body .done;
+.body:
+  val.0.1: int = call @rand rng.0 max.0.0;
+  loc.0.1: ptr<int> = ptradd arr.0.0 i.0.1;
+  store loc.0.1 val.0.1;
+.loop_end:
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .loop;
+.done:
+  ret arr.0.0;
+}
+@printarray(size.0: int, arr.0: ptr<int>) {
+.printarray.b0:
+  size.1: int = id size.0;
+  arr.1: ptr<int> = id arr.0;
+.printarray.b1:
+  i.0.0: int = const 0;
+  one.0.0: int = const 1;
+.loop:
+  val.0.0: int = phi val.0.1 .loop_end;
+  loc.0.0: ptr<int> = phi loc.0.1 .loop_end;
+  i.0.1: int = phi i.0.0 i.0.2 .printarray.b1 .loop_end;
+  cond.0.0: bool = phi cond.0.1 .loop_end;
+  cond.0.1: bool = lt i.0.1 size.0;
+  br cond.0.1 .body .done;
+.body:
+  loc.0.1: ptr<int> = ptradd arr.0 i.0.1;
+  val.0.1: int = load loc.0.1;
+  print val.0.1;
+.loop_end:
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .loop;
+.done:
+  ret;
+}
+@matmul(size.0: int, arr1.0: ptr<int>, arr2.0: ptr<int>, dest.0: ptr<int>) {
+.matmul.b0:
+  size.1: int = id size.0;
+  arr1.1: ptr<int> = id arr1.0;
+  arr2.1: ptr<int> = id arr2.0;
+  dest.1: ptr<int> = id dest.0;
+.matmul.b1:
+  one.0.0: int = const 1;
+  row.0.0: int = const 0;
+.row.loop:
+  sum.0.0: int = phi sum.0.1 .row.loop_end;
+  rvalloc.0.0: ptr<int> = phi rvalloc.0.1 .row.loop_end;
+  rval.0.0: int = phi rval.0.1 .row.loop_end;
+  row.0.1: int = phi row.0.0 row.0.2 .matmul.b1 .row.loop_end;
+  ridx.0.0: int = phi ridx.0.1 .row.loop_end;
+  prod.0.0: int = phi prod.0.1 .row.loop_end;
+  lvalloc.0.0: ptr<int> = phi lvalloc.0.1 .row.loop_end;
+  lval.0.0: int = phi lval.0.1 .row.loop_end;
+  loc.0.0: ptr<int> = phi loc.0.1 .row.loop_end;
+  lidx.0.0: int = phi lidx.0.1 .row.loop_end;
+  idx.0.0: int = phi idx.0.1 .row.loop_end;
+  i.0.0: int = phi i.0.1 .row.loop_end;
+  cond.0.0: bool = phi cond.0.3 .row.loop_end;
+  col.0.0: int = phi col.0.2 .row.loop_end;
+  cond.0.1: bool = lt row.0.1 size.0;
+  br cond.0.1 .row.body .row.done;
+.row.body:
+  col.0.1: int = const 0;
+.col.loop:
+  sum.0.1: int = phi sum.0.0 sum.0.3 .row.body .col.loop_end;
+  rvalloc.0.1: ptr<int> = phi rvalloc.0.0 rvalloc.0.2 .row.body .col.loop_end;
+  rval.0.1: int = phi rval.0.0 rval.0.2 .row.body .col.loop_end;
+  ridx.0.1: int = phi ridx.0.0 ridx.0.2 .row.body .col.loop_end;
+  prod.0.1: int = phi prod.0.0 prod.0.2 .row.body .col.loop_end;
+  lvalloc.0.1: ptr<int> = phi lvalloc.0.0 lvalloc.0.2 .row.body .col.loop_end;
+  lval.0.1: int = phi lval.0.0 lval.0.2 .row.body .col.loop_end;
+  loc.0.1: ptr<int> = phi loc.0.0 loc.0.2 .row.body .col.loop_end;
+  lidx.0.1: int = phi lidx.0.0 lidx.0.2 .row.body .col.loop_end;
+  idx.0.1: int = phi idx.0.0 idx.0.3 .row.body .col.loop_end;
+  i.0.1: int = phi i.0.0 i.0.3 .row.body .col.loop_end;
+  cond.0.2: bool = phi cond.0.1 cond.0.5 .row.body .col.loop_end;
+  col.0.2: int = phi col.0.1 col.0.3 .row.body .col.loop_end;
+  cond.0.3: bool = lt col.0.2 size.0;
+  br cond.0.3 .col.body .col.done;
+.col.body:
+  sum.0.2: int = const 0;
+  i.0.2: int = const 0;
+.sum.loop:
+  sum.0.3: int = phi sum.0.2 sum.0.4 .col.body .sum.loop_end;
+  rvalloc.0.2: ptr<int> = phi rvalloc.0.1 rvalloc.0.3 .col.body .sum.loop_end;
+  rval.0.2: int = phi rval.0.1 rval.0.3 .col.body .sum.loop_end;
+  ridx.0.2: int = phi ridx.0.1 ridx.0.4 .col.body .sum.loop_end;
+  prod.0.2: int = phi prod.0.1 prod.0.3 .col.body .sum.loop_end;
+  lvalloc.0.2: ptr<int> = phi lvalloc.0.1 lvalloc.0.3 .col.body .sum.loop_end;
+  lval.0.2: int = phi lval.0.1 lval.0.3 .col.body .sum.loop_end;
+  lidx.0.2: int = phi lidx.0.1 lidx.0.4 .col.body .sum.loop_end;
+  i.0.3: int = phi i.0.2 i.0.4 .col.body .sum.loop_end;
+  cond.0.4: bool = phi cond.0.3 cond.0.5 .col.body .sum.loop_end;
+  cond.0.5: bool = lt i.0.3 size.0;
+  br cond.0.5 .sum.body .sum.done;
+.sum.body:
+  lidx.0.3: int = mul row.0.1 size.0;
+  lidx.0.4: int = add lidx.0.3 i.0.3;
+  ridx.0.3: int = mul i.0.3 size.0;
+  ridx.0.4: int = add ridx.0.3 col.0.2;
+  lvalloc.0.3: ptr<int> = ptradd arr1.0 lidx.0.4;
+  lval.0.3: int = load lvalloc.0.3;
+  rvalloc.0.3: ptr<int> = ptradd arr2.0 ridx.0.4;
+  rval.0.3: int = load rvalloc.0.3;
+  prod.0.3: int = mul lval.0.3 rval.0.3;
+  sum.0.4: int = add sum.0.3 prod.0.3;
+.sum.loop_end:
+  i.0.4: int = add i.0.3 one.0.0;
+  jmp .sum.loop;
+.sum.done:
+  idx.0.2: int = mul row.0.1 size.0;
+  idx.0.3: int = add idx.0.2 col.0.2;
+  loc.0.2: ptr<int> = ptradd dest.0 idx.0.3;
+  store loc.0.2 sum.0.3;
+.col.loop_end:
+  col.0.3: int = add col.0.2 one.0.0;
+  jmp .col.loop;
+.col.done:
+.row.loop_end:
+  row.0.2: int = add row.0.1 one.0.0;
+  jmp .row.loop;
+.row.done:
+  ret;
+}
+@main(size.0: int, seed.0: int) {
+.main.b0:
+  size.1: int = id size.0;
+  seed.1: int = id seed.0;
+.main.b1:
+  one.0.0: int = const 1;
+  rng.0.0: ptr<int> = alloc one.0.0;
+  store rng.0.0 seed.0;
+  sqsize.0.0: int = mul size.0 size.0;
+  arr1.0.0: ptr<int> = call @randarray sqsize.0.0 rng.0.0;
+  arr2.0.0: ptr<int> = call @randarray sqsize.0.0 rng.0.0;
+  dest.0.0: ptr<int> = call @randarray sqsize.0.0 rng.0.0;
+  call @matmul size.0 arr1.0.0 arr2.0.0 dest.0.0;
+  call @printarray sqsize.0.0 arr1.0.0;
+  call @printarray sqsize.0.0 arr2.0.0;
+  call @printarray sqsize.0.0 dest.0.0;
+  free arr1.0.0;
+  free arr2.0.0;
+  free dest.0.0;
+  free rng.0.0;
+  ret;
+}

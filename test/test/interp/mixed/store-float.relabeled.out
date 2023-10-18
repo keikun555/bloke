@@ -1,0 +1,9 @@
+@main {
+  one.0: int = const 1;
+  seed.0: float = const 109658.0;
+  rng.0: ptr<float> = alloc one.0;
+  store rng.0 seed.0;
+  x.0: float = load rng.0;
+  print x.0;
+  free rng.0;
+}

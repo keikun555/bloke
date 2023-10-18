@@ -1,0 +1,32 @@
+@main(input: int) {
+  n.0: int = id input.0;
+  v0.0: int = const 0;
+  v1.0: int = const 1;
+  v2.0: int = const 2;
+  sum.0: int = id v1.0;
+  i.0: int = id v2.0;
+  result.0: int = id v1.0;
+.for.cond.1:
+  ii.0: int = mul i.0 i.0;
+  comp.0: bool = gt ii.0 n.0;
+  br comp.0 .for.end .for.body;
+.for.body:
+  qut.0: int = div n.0 i.0;
+  mpt.0: int = mul qut.0 i.0;
+  dif.0: int = sub n.0 mpt.0;
+  comp1.0: bool = eq dif.0 v0.0;
+  br comp1.0 .if.body .for.incre;
+.if.body:
+  sum.0: int = add sum.0 i.0;
+  sum.0: int = add sum.0 qut.0;
+.for.incre:
+  i.0: int = add i.0 v1.0;
+  jmp .for.cond.1;
+.for.end:
+  comp2.0: bool = eq sum.0 n.0;
+  br comp2.0 .if.success .if.failure.end;
+.if.success:
+  result.0: int = id v0.0;
+.if.failure.end:
+  print result.0;
+}

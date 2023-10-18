@@ -1,0 +1,3 @@
+@main {
+  v.0: int = const 42;
+}

@@ -1,0 +1,29 @@
+@func: int {
+.func.b0:
+  n.0.0: int = const 5;
+  ret n.0.0;
+}
+@loop(infinite.0: bool, print.0: bool) {
+.loop.b0:
+  infinite.1: bool = id infinite.0;
+  print.1: bool = id print.0;
+.entry:
+.loop.header:
+  v.0.0: int = phi v.0.2 .loop.next;
+  br infinite.0 .loop.body .loop.end;
+.loop.body:
+  br print.0 .loop.print .loop.next;
+.loop.print:
+  v.0.1: int = call @func;
+  print v.0.1;
+.loop.next:
+  v.0.2: int = phi v.0.0 v.0.1 .loop.body .loop.print;
+  jmp .loop.header;
+.loop.end:
+}
+@main {
+.main.b0:
+  infinite.0.0: bool = const false;
+  print.0.0: bool = const true;
+  call @loop infinite.0.0 print.0.0;
+}

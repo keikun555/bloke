@@ -1,0 +1,9 @@
+@main {
+.main.b0:
+  a.0.0: int = const 4;
+  b.0.0: int = const 2;
+  sum1.0.0: int = add a.0.0 b.0.0;
+  sum2.0.0: int = add b.0.0 a.0.0;
+  prod.0.0: int = mul sum1.0.0 sum2.0.0;
+  print prod.0.0;
+}

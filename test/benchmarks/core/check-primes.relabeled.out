@@ -1,0 +1,75 @@
+@main(n: int) {
+  v2.0: int = const 1;
+  i.0: int = id v2.0;
+.for.cond.1:
+  v3.0: int = id i.0;
+  v4.0: int = id n.0;
+  v5.0: bool = lt v3.0 v4.0;
+  br v5.0 .for.body.1 .for.end.1;
+.for.body.1:
+  v6.0: int = id i.0;
+  isPrime.0: bool = call @checkPrime v6.0;
+  isPrime.0: bool = id isPrime.0;
+  v8.0: bool = id isPrime.0;
+  br v8.0 .then.7 .else.7;
+.then.7:
+  v9.0: int = const 1;
+  print v9.0;
+  v10.0: int = const 0;
+  jmp .endif.7;
+.else.7:
+  v11.0: int = const 0;
+  print v11.0;
+  v12.0: int = const 0;
+.endif.7:
+  v13.0: int = id i.0;
+  v14.0: int = const 1;
+  v15.0: int = add v13.0 v14.0;
+  i.0: int = id v15.0;
+  jmp .for.cond.1;
+.for.end.1:
+}
+@checkPrime(x: int): bool {
+  v1.0: int = id x.0;
+  v2.0: int = const 1;
+  v3.0: bool = le v1.0 v2.0;
+  br v3.0 .then.0 .else.0;
+.then.0:
+  v4.0: bool = const false;
+  ret v4.0;
+.else.0:
+.endif.0:
+  v6.0: int = const 2;
+  i.0: int = id v6.0;
+.for.cond.5:
+  v7.0: int = id i.0;
+  v8.0: int = id x.0;
+  v9.0: bool = lt v7.0 v8.0;
+  br v9.0 .for.body.5 .for.end.5;
+.for.body.5:
+  v10.0: int = id x.0;
+  v11.0: int = id i.0;
+  v12.0: int = div v10.0 v11.0;
+  div.0: int = id v12.0;
+  v13.0: int = id div.0;
+  v14.0: int = id i.0;
+  v15.0: int = mul v13.0 v14.0;
+  v16.0: int = id x.0;
+  v17.0: bool = eq v15.0 v16.0;
+  isDivisible.0: bool = id v17.0;
+  v19.0: bool = id isDivisible.0;
+  br v19.0 .then.18 .else.18;
+.then.18:
+  v20.0: bool = const false;
+  ret v20.0;
+.else.18:
+.endif.18:
+  v21.0: int = id i.0;
+  v22.0: int = const 1;
+  v23.0: int = add v21.0 v22.0;
+  i.0: int = id v23.0;
+  jmp .for.cond.5;
+.for.end.5:
+  v24.0: bool = const true;
+  ret v24.0;
+}

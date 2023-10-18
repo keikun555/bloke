@@ -1,0 +1,58 @@
+@dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int {
+  one.0: int = const 1;
+  index.0: int = const 0;
+  answer.0: int = const 0;
+.loop:
+  ptrA.0: ptr<int> = ptradd vectorA.0 index.0;
+  ptrB.0: ptr<int> = ptradd vectorB.0 index.0;
+  valA.0: int = load ptrA.0;
+  valB.0: int = load ptrB.0;
+  tmp.0: int = mul valA.0 valB.0;
+  answer.0: int = add answer.0 tmp.0;
+  index.0: int = add index.0 one.0;
+  cond.0: bool = lt index.0 size.0;
+  br cond.0 .loop .done;
+.done:
+  ret answer.0;
+}
+@main {
+  a.0: int = const 25;
+  b.0: int = const 50;
+  c.0: int = const 100;
+  d.0: int = const 150;
+  e.0: int = const 250;
+  f.0: int = const 2;
+  g.0: int = const 10;
+  h.0: int = const 20;
+  i.0: int = const 30;
+  j.0: int = const 40;
+  one.0: int = const 1;
+  zero.0: int = const 0;
+  size.0: int = const 5;
+  vectorA.0: ptr<int> = alloc size.0;
+  indexPtr.0: ptr<int> = ptradd vectorA.0 zero.0;
+  store indexPtr.0 a.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 b.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 c.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 d.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 e.0;
+  vectorB.0: ptr<int> = alloc size.0;
+  indexPtr.0: ptr<int> = ptradd vectorB.0 zero.0;
+  store indexPtr.0 f.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 g.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 h.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 i.0;
+  indexPtr.0: ptr<int> = ptradd indexPtr.0 one.0;
+  store indexPtr.0 j.0;
+  val.0: int = call @dot_product vectorA.0 vectorB.0 size.0;
+  print val.0;
+  free vectorA.0;
+  free vectorB.0;
+}

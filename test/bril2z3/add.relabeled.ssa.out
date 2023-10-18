@@ -1,0 +1,7 @@
+@main {
+.main.b0:
+  x.0.0: int = const 1;
+  y.0.0: int = const 2;
+  z.0.0: int = add x.0.0 y.0.0;
+  ret z.0.0;
+}

@@ -1,0 +1,46 @@
+@main(input.0: int) {
+.main.b0:
+  input.1: int = id input.0;
+.main.b1:
+  x.0.0: int = id input.0;
+  v1.0.0: int = id x.0.0;
+  f.0.0: int = call @fac v1.0.0;
+  f.0.1: int = id f.0.0;
+  v2.0.0: int = id f.0.1;
+  print v2.0.0;
+  v3.0.0: int = const 0;
+}
+@fac(x.0: int): int {
+.fac.b0:
+  x.1: int = id x.0;
+.fac.b1:
+  v1.0.0: int = id x.0;
+  v2.0.0: int = const 1;
+  v3.0.0: bool = le v1.0.0 v2.0.0;
+  br v3.0.0 .then.0 .else.0;
+.then.0:
+  v4.0.0: int = const 1;
+  ret v4.0.0;
+.fac.b2:
+  jmp .endif.0;
+.else.0:
+.endif.0:
+  v9.0.0: int = phi;
+  v8.0.0: int = phi;
+  v7.0.0: int = phi;
+  v6.0.0: int = phi;
+  v5.0.0: int = phi;
+  v4.0.1: int = phi;
+  v11.0.0: int = phi;
+  v10.0.0: int = phi;
+  result.0.0: int = phi;
+  v5.0.1: int = id x.0;
+  v6.0.1: int = id x.0;
+  v7.0.1: int = const 1;
+  v8.0.1: int = sub v6.0.1 v7.0.1;
+  v9.0.1: int = call @fac v8.0.1;
+  v10.0.1: int = mul v5.0.1 v9.0.1;
+  result.0.1: int = id v10.0.1;
+  v11.0.1: int = id result.0.1;
+  ret v11.0.1;
+}

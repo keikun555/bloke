@@ -1,0 +1,11 @@
+@main {
+.main.b0:
+  v.0.0: int = const 4;
+  bp.0.0: ptr<bool> = alloc v.0.0;
+  bp2.0.0: ptr<bool> = id bp.0.0;
+  b.0.0: bool = const true;
+  store bp2.0.0 b.0.0;
+  b.0.1: bool = load bp2.0.0;
+  print b.0.1;
+  free bp.0.0;
+}

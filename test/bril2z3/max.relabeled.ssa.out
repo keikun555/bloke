@@ -1,0 +1,12 @@
+@main(n.0: int, m.0: int): int {
+.main.b0:
+  n.1: int = id n.0;
+  m.1: int = id m.0;
+.main.b1:
+  condi.0.0: bool = lt n.0 m.0;
+  br condi.0.0 .less .biggereq;
+.less:
+  ret m.0;
+.biggereq:
+  ret n.0;
+}

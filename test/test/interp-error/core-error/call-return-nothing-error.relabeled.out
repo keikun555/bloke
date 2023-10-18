@@ -1,0 +1,6 @@
+@main {
+  v.0: int = call @print4;
+}
+@print4: int {
+  ret;
+}

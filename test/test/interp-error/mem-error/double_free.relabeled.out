@@ -1,0 +1,6 @@
+@main {
+  one.0: int = const 1;
+  p.0: ptr<int> = alloc one.0;
+  free p.0;
+  free p.0;
+}

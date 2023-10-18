@@ -1,0 +1,233 @@
+@main(n: int) {
+  one.0: int = const 1;
+  fone.0: float = const 1;
+  a.0: ptr<float> = call @get_sym n.0;
+  x0.0: ptr<float> = alloc n.0;
+  b.0: ptr<float> = alloc n.0;
+  i.0: int = const 0;
+  v.0: float = const 5;
+.for.set.cond:
+  cond.0: bool = lt i.0 n.0;
+  br cond.0 .for.set.body .for.set.end;
+.for.set.body:
+  idx_b.0: ptr<float> = ptradd b.0 i.0;
+  idx_x0.0: ptr<float> = ptradd x0.0 i.0;
+  store idx_b.0 v.0;
+  store idx_x0.0 fone.0;
+  i.0: int = add i.0 one.0;
+  v.0: float = fadd v.0 fone.0;
+  jmp .for.set.cond;
+.for.set.end:
+  x_sol.0: ptr<float> = call @cg n.0 a.0 x0.0 b.0;
+  call @disp_vec n.0 x_sol.0;
+  free x_sol.0;
+  free x0.0;
+  free b.0;
+  free a.0;
+}
+@vec_mul(size: int, c: float, v: ptr<float>): ptr<float> {
+  v_copy.0: ptr<float> = alloc size.0;
+  one.0: int = const 1;
+  i.0: int = const 0;
+.for.cond:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  v_ptr.0: ptr<float> = ptradd v.0 i.0;
+  v_copy_ptr.0: ptr<float> = ptradd v_copy.0 i.0;
+  v_val.0: float = load v_ptr.0;
+  cv_val.0: float = fmul c.0 v_val.0;
+  store v_copy_ptr.0 cv_val.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  ret v_copy.0;
+}
+@vec_copy(size: int, v: ptr<float>): ptr<float> {
+  fone.0: float = const 1;
+  v_copy.0: ptr<float> = call @vec_mul size.0 fone.0 v.0;
+  ret v_copy.0;
+}
+@dot_p(size: int, u: ptr<float>, v: ptr<float>): float {
+  one.0: int = const 1;
+  i.0: int = const 0;
+  acc.0: float = const 0;
+.for.cond:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  u_ptr.0: ptr<float> = ptradd u.0 i.0;
+  v_ptr.0: ptr<float> = ptradd v.0 i.0;
+  u_val.0: float = load u_ptr.0;
+  v_val.0: float = load v_ptr.0;
+  uv.0: float = fmul u_val.0 v_val.0;
+  acc.0: float = fadd uv.0 acc.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  ret acc.0;
+}
+@vec_sub(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+  fnegone.0: float = const -1;
+  minus_v.0: ptr<float> = call @vec_mul size.0 fnegone.0 v.0;
+  diff.0: ptr<float> = call @vec_add size.0 u.0 minus_v.0;
+  free minus_v.0;
+  ret diff.0;
+}
+@vec_add(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+  sum.0: ptr<float> = alloc size.0;
+  one.0: int = const 1;
+  i.0: int = const 0;
+.for.cond:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  u_ptr.0: ptr<float> = ptradd u.0 i.0;
+  v_ptr.0: ptr<float> = ptradd v.0 i.0;
+  sum_ptr.0: ptr<float> = ptradd sum.0 i.0;
+  u_val.0: float = load u_ptr.0;
+  v_val.0: float = load v_ptr.0;
+  u_add_v.0: float = fadd u_val.0 v_val.0;
+  store sum_ptr.0 u_add_v.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  ret sum.0;
+}
+@vec_add_inp(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+  sum.0: ptr<float> = call @vec_add size.0 u.0 v.0;
+  free u.0;
+  ret sum.0;
+}
+@vec_sub_inp(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+  diff.0: ptr<float> = call @vec_sub size.0 u.0 v.0;
+  free u.0;
+  ret diff.0;
+}
+@mat_vec(size: int, a: ptr<float>, v: ptr<float>): ptr<float> {
+  prod.0: ptr<float> = alloc size.0;
+  row.0: int = const 0;
+  one.0: int = const 1;
+.for.row.cond:
+  cond_row.0: bool = lt row.0 size.0;
+  br cond_row.0 .for.row.body .for.row.end;
+.for.row.body:
+  col.0: int = const 0;
+  acc.0: float = const 0;
+.for.col.cond:
+  cond_col.0: bool = lt col.0 size.0;
+  br cond_col.0 .for.col.body .for.col.end;
+.for.col.body:
+  a_row_idx.0: int = mul size.0 row.0;
+  a_col_idx.0: int = id col.0;
+  a_idx.0: int = add a_row_idx.0 a_col_idx.0;
+  a_val_ptr.0: ptr<float> = ptradd a.0 a_idx.0;
+  a_val.0: float = load a_val_ptr.0;
+  v_idx.0: int = id col.0;
+  v_val_ptr.0: ptr<float> = ptradd v.0 v_idx.0;
+  v_val.0: float = load v_val_ptr.0;
+  p.0: float = fmul a_val.0 v_val.0;
+  acc.0: float = fadd p.0 acc.0;
+  col.0: int = add col.0 one.0;
+  jmp .for.col.cond;
+.for.col.end:
+  prod_ptr.0: ptr<float> = ptradd prod.0 row.0;
+  store prod_ptr.0 acc.0;
+  row.0: int = add row.0 one.0;
+  jmp .for.row.cond;
+.for.row.end:
+  ret prod.0;
+}
+@get_sym(size: int): ptr<float> {
+  nnz.0: int = mul size.0 size.0;
+  a.0: ptr<float> = alloc nnz.0;
+  one.0: int = const 1;
+  fone.0: float = const 1;
+  fzero.0: float = const 0;
+  i.0: int = const 0;
+.for.zero.cond:
+  cond.0: bool = lt i.0 nnz.0;
+  br cond.0 .for.zero.body .for.zero.end;
+.for.zero.body:
+  idx.0: ptr<float> = ptradd a.0 i.0;
+  store idx.0 fzero.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.zero.cond;
+.for.zero.end:
+  i.0: int = const 0;
+  val.0: float = const 1;
+  loop_end.0: int = sub size.0 one.0;
+.for.cond:
+  cond.0: bool = le i.0 loop_end.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  row_offset.0: int = mul i.0 size.0;
+  col_offset.0: int = id i.0;
+  offset.0: int = add row_offset.0 col_offset.0;
+  idx.0: ptr<float> = ptradd a.0 offset.0;
+  store idx.0 val.0;
+  val.0: float = fadd val.0 fone.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  ret a.0;
+}
+@disp_vec(size: int, v: ptr<float>) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.for.cond:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  ptr.0: ptr<float> = ptradd v.0 i.0;
+  val.0: float = load ptr.0;
+  print val.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  ret;
+}
+@cg(size: int, a: ptr<float>, x0: ptr<float>, b: ptr<float>): ptr<float> {
+  max_iter.0: int = const 1000;
+  inv_tol.0: float = const 100;
+  fone.0: float = const 1;
+  tol.0: float = fdiv fone.0 inv_tol.0;
+  x.0: ptr<float> = call @vec_copy size.0 x0.0;
+  a_dot_x.0: ptr<float> = call @mat_vec size.0 a.0 x.0;
+  r.0: ptr<float> = call @vec_sub size.0 b.0 a_dot_x.0;
+  p.0: ptr<float> = call @vec_copy size.0 r.0;
+  rs_old.0: float = call @dot_p size.0 r.0 r.0;
+  i.0: int = const 0;
+  one.0: int = const 1;
+.for.cond:
+  cond.0: bool = lt i.0 max_iter.0;
+  br cond.0 .for.body .for.end;
+.for.body:
+  a_p.0: ptr<float> = call @mat_vec size.0 a.0 p.0;
+  p_ap.0: float = call @dot_p size.0 p.0 a_p.0;
+  alpha.0: float = fdiv rs_old.0 p_ap.0;
+  alpha_p.0: ptr<float> = call @vec_mul size.0 alpha.0 p.0;
+  alpha_ap.0: ptr<float> = call @vec_mul size.0 alpha.0 a_p.0;
+  x.0: ptr<float> = call @vec_add_inp size.0 x.0 alpha_p.0;
+  r.0: ptr<float> = call @vec_sub_inp size.0 r.0 alpha_ap.0;
+  free a_p.0;
+  free alpha_p.0;
+  free alpha_ap.0;
+  rs_new.0: float = call @dot_p size.0 r.0 r.0;
+  tol_cond.0: bool = flt rs_new.0 tol.0;
+  br tol_cond.0 .for.end .cont;
+.cont:
+  r_new_old.0: float = fdiv rs_new.0 rs_old.0;
+  r_p.0: ptr<float> = call @vec_mul size.0 r_new_old.0 p.0;
+  free p.0;
+  p.0: ptr<float> = call @vec_add size.0 r.0 r_p.0;
+  rs_old.0: float = id rs_new.0;
+  free r_p.0;
+  i.0: int = add i.0 one.0;
+  jmp .for.cond;
+.for.end:
+  free a_dot_x.0;
+  free r.0;
+  free p.0;
+  ret x.0;
+}

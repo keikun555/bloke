@@ -1,0 +1,84 @@
+@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int): ptr<int> {
+  one.0: int = const 1;
+  i.0: int = const 0;
+  array.0: ptr<int> = alloc size.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n1.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n2.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n3.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n4.0;
+  i.0: int = add i.0 one.0;
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  store loc.0 n5.0;
+  ret array.0;
+}
+@print_array(array: ptr<int>, size: int) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<int> = ptradd array.0 i.0;
+  val.0: int = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}
+@binary_search(array: ptr<int>, target: int, left: int, right: int): int {
+  negone.0: int = const -1;
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  two.0: int = const 2;
+.check_valid:
+  end_cond.0: bool = gt left.0 right.0;
+  br end_cond.0 .end .body;
+.body:
+  mid.0: int = add left.0 right.0;
+  mid.0: int = div mid.0 two.0;
+.check_equal:
+  midloc.0: ptr<int> = ptradd array.0 mid.0;
+  midval.0: int = load midloc.0;
+  equal_cond.0: bool = eq target.0 midval.0;
+  br equal_cond.0 .found .check_gt;
+.found:
+  ret mid.0;
+.check_gt:
+  gt_cond.0: bool = gt target.0 midval.0;
+  br gt_cond.0 .call_gt .call_lt;
+.call_gt:
+  newleft.0: int = add left.0 one.0;
+  output.0: int = call @binary_search array.0 target.0 newleft.0 right.0;
+  ret output.0;
+.call_lt:
+  newright.0: int = sub right.0 one.0;
+  output.0: int = call @binary_search array.0 target.0 left.0 newright.0;
+  ret output.0;
+.end:
+  output.0: int = id negone.0;
+  ret output.0;
+}
+@main {
+  target.0: int = const 7;
+  size.0: int = const 5;
+  e1.0: int = const 1;
+  e2.0: int = const 2;
+  e3.0: int = const 6;
+  e4.0: int = const 7;
+  e5.0: int = const 11;
+  zero.0: int = const 0;
+  four.0: int = const 4;
+  array.0: ptr<int> = call @pack size.0 e1.0 e2.0 e3.0 e4.0 e5.0;
+  output.0: int = call @binary_search array.0 target.0 zero.0 four.0;
+  print output.0;
+  free array.0;
+}

@@ -1,0 +1,13 @@
+@main {
+  a.0: int = const 47;
+  cond.0: bool = const true;
+  br cond.0 .left .right;
+.left:
+  a.0: int = const 1;
+  jmp .end;
+.right:
+  a.0: int = const 2;
+  jmp .end;
+.end:
+  print a.0;
+}

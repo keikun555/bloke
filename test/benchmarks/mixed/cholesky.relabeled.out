@@ -1,0 +1,302 @@
+@fillarray: ptr<float> {
+  a00.0: float = const 34;
+  a01.0: float = const 28;
+  a02.0: float = const 38;
+  a03.0: float = const 29;
+  a10.0: float = const 26;
+  a11.0: float = const 78;
+  a12.0: float = const 91;
+  a13.0: float = const 83;
+  a20.0: float = const 67;
+  a21.0: float = const 92;
+  a22.0: float = const 56;
+  a23.0: float = const 92;
+  a30.0: float = const 67;
+  a31.0: float = const 826;
+  a32.0: float = const 38;
+  a33.0: float = const 43;
+  size.0: int = const 16;
+  return_ptr.0: ptr<float> = alloc size.0;
+  arr.0: ptr<float> = id return_ptr.0;
+  one.0: int = const 1;
+  store arr.0 a00.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a01.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a02.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a03.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a10.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a11.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a12.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a13.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a20.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a21.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a22.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a23.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a30.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a31.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a32.0;
+  arr.0: ptr<float> = ptradd arr.0 one.0;
+  store arr.0 a33.0;
+  ret return_ptr.0;
+}
+@zeros(sqsize: int): ptr<float> {
+  arr.0: ptr<float> = alloc sqsize.0;
+  i.0: int = const 0;
+  one.0: int = const 1;
+  zero.0: float = const 0;
+.loop:
+  cond.0: bool = lt i.0 sqsize.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<float> = ptradd arr.0 i.0;
+  store loc.0 zero.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret arr.0;
+}
+@printarray(size: int, arr: ptr<float>) {
+  i.0: int = const 0;
+  one.0: int = const 1;
+.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .body .done;
+.body:
+  loc.0: ptr<float> = ptradd arr.0 i.0;
+  val.0: float = load loc.0;
+  print val.0;
+.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .loop;
+.done:
+  ret;
+}
+@matmul(size: int, arr1: ptr<float>, arr2: ptr<float>, dest: ptr<float>) {
+  one.0: int = const 1;
+  row.0: int = const 0;
+.row.loop:
+  cond.0: bool = lt row.0 size.0;
+  br cond.0 .row.body .row.done;
+.row.body:
+  col.0: int = const 0;
+.col.loop:
+  cond.0: bool = lt col.0 size.0;
+  br cond.0 .col.body .col.done;
+.col.body:
+  sum.0: float = const 0.0;
+  i.0: int = const 0;
+.sum.loop:
+  cond.0: bool = lt i.0 size.0;
+  br cond.0 .sum.body .sum.done;
+.sum.body:
+  lidx.0: int = mul row.0 size.0;
+  lidx.0: int = add lidx.0 i.0;
+  ridx.0: int = mul i.0 size.0;
+  ridx.0: int = add ridx.0 col.0;
+  lvalloc.0: ptr<float> = ptradd arr1.0 lidx.0;
+  lval.0: float = load lvalloc.0;
+  rvalloc.0: ptr<float> = ptradd arr2.0 ridx.0;
+  rval.0: float = load rvalloc.0;
+  prod.0: float = fmul lval.0 rval.0;
+  sum.0: float = fadd sum.0 prod.0;
+.sum.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .sum.loop;
+.sum.done:
+  idx.0: int = mul row.0 size.0;
+  idx.0: int = add idx.0 col.0;
+  loc.0: ptr<float> = ptradd dest.0 idx.0;
+  store loc.0 sum.0;
+.col.loop_end:
+  col.0: int = add col.0 one.0;
+  jmp .col.loop;
+.col.done:
+.row.loop_end:
+  row.0: int = add row.0 one.0;
+  jmp .row.loop;
+.row.done:
+  ret;
+}
+@transpose(size: int, input: ptr<float>, output: ptr<float>) {
+  one.0: int = const 1;
+  row.0: int = const 0;
+.row.loop:
+  cond.0: bool = lt row.0 size.0;
+  br cond.0 .row.body .row.done;
+.row.body:
+  col.0: int = const 0;
+.col.loop:
+  cond.0: bool = lt col.0 size.0;
+  br cond.0 .col.body .col.done;
+.col.body:
+  srcidx.0: int = mul row.0 size.0;
+  srcidx.0: int = add srcidx.0 col.0;
+  dstidx.0: int = mul col.0 size.0;
+  dstidx.0: int = add dstidx.0 row.0;
+  srcptr.0: ptr<float> = ptradd input.0 srcidx.0;
+  dstptr.0: ptr<float> = ptradd output.0 dstidx.0;
+  value.0: float = load srcptr.0;
+  store dstptr.0 value.0;
+.col.loop_end:
+  col.0: int = add col.0 one.0;
+  jmp .col.loop;
+.col.done:
+.row.loop_end:
+  row.0: int = add row.0 one.0;
+  jmp .row.loop;
+.row.done:
+  ret;
+}
+@sqrt(input: float): float {
+  n.0: float = id input.0;
+  v1.0: float = const 1e-05;
+  precision.0: float = id v1.0;
+  v2.0: float = id n.0;
+  x.0: float = id v2.0;
+  v3.0: bool = const true;
+  notdone.0: bool = id v3.0;
+.for.cond.4:
+  v5.0: bool = id notdone.0;
+  br v5.0 .for.body.4 .for.end.4;
+.for.body.4:
+  v6.0: float = id n.0;
+  v7.0: float = id x.0;
+  v8.0: float = fdiv v6.0 v7.0;
+  root.0: float = id v8.0;
+  v9.0: float = id x.0;
+  v10.0: float = id root.0;
+  v11.0: float = fadd v9.0 v10.0;
+  root.0: float = id v11.0;
+  v12.0: float = const 0.5;
+  v13.0: float = id root.0;
+  v14.0: float = fmul v12.0 v13.0;
+  root.0: float = id v14.0;
+  v15.0: float = id root.0;
+  v16.0: float = id x.0;
+  v17.0: float = fsub v15.0 v16.0;
+  diff.0: float = id v17.0;
+  v19.0: float = id diff.0;
+  v20.0: float = const 0;
+  v21.0: bool = flt v19.0 v20.0;
+  br v21.0 .then.18 .else.18;
+.then.18:
+  v22.0: float = const 0;
+  v23.0: float = id diff.0;
+  v24.0: float = fsub v22.0 v23.0;
+  diff.0: float = id v24.0;
+  jmp .endif.18;
+.else.18:
+.endif.18:
+  v26.0: float = id diff.0;
+  v27.0: float = id precision.0;
+  v28.0: bool = flt v26.0 v27.0;
+  br v28.0 .then.25 .else.25;
+.then.25:
+  v29.0: bool = const false;
+  notdone.0: bool = id v29.0;
+  jmp .endif.25;
+.else.25:
+.endif.25:
+  v30.0: float = id root.0;
+  x.0: float = id v30.0;
+  jmp .for.cond.4;
+.for.end.4:
+  ret x.0;
+}
+@cholesky(size: int, arr1: ptr<float>, arr2: ptr<float>) {
+  one.0: int = const 1;
+  i.0: int = const 0;
+.i.loop:
+  condi.0: bool = lt i.0 size.0;
+  br condi.0 .i.body .i.done;
+.i.body:
+  j.0: int = const 0;
+.j.loop:
+  condj.0: bool = le j.0 i.0;
+  br condj.0 .j.body .j.done;
+.j.body:
+  k.0: int = const 0;
+.k.loop:
+  condk.0: bool = lt k.0 j.0;
+  br condk.0 .k.body .k.done;
+.k.body:
+  ik_index.0: int = mul i.0 size.0;
+  ik_index.0: int = add ik_index.0 k.0;
+  jk_index.0: int = mul j.0 size.0;
+  jk_index.0: int = add jk_index.0 k.0;
+  ij_index.0: int = mul i.0 size.0;
+  ij_index.0: int = add ij_index.0 j.0;
+  ik_ptr.0: ptr<float> = ptradd arr2.0 ik_index.0;
+  b_ik.0: float = load ik_ptr.0;
+  jk_ptr.0: ptr<float> = ptradd arr2.0 jk_index.0;
+  b_jk.0: float = load jk_ptr.0;
+  ij_ptr.0: ptr<float> = ptradd arr1.0 ij_index.0;
+  a_ij.0: float = load ij_ptr.0;
+  value.0: float = fmul b_ik.0 b_jk.0;
+  value.0: float = fsub a_ij.0 value.0;
+  store ij_ptr.0 value.0;
+.k.loop_end:
+  k.0: int = add k.0 one.0;
+  jmp .k.loop;
+.k.done:
+  ij_index.0: int = mul i.0 size.0;
+  ij_index.0: int = add ij_index.0 j.0;
+  jj_index.0: int = mul j.0 size.0;
+  jj_index.0: int = add jj_index.0 j.0;
+  a_ij_ptr.0: ptr<float> = ptradd arr1.0 ij_index.0;
+  b_ij_ptr.0: ptr<float> = ptradd arr2.0 ij_index.0;
+  jj_ptr.0: ptr<float> = ptradd arr2.0 jj_index.0;
+  a_ij.0: float = load a_ij_ptr.0;
+  b_ij.0: float = load b_ij_ptr.0;
+  b_jj.0: float = load jj_ptr.0;
+  value.0: float = fdiv a_ij.0 b_jj.0;
+  store b_ij_ptr.0 value.0;
+.j.loop_end:
+  j.0: int = add j.0 one.0;
+  jmp .j.loop;
+.j.done:
+  ii_index.0: int = mul i.0 size.0;
+  ii_index.0: int = add ii_index.0 i.0;
+  a_ii_ptr.0: ptr<float> = ptradd arr1.0 ii_index.0;
+  b_ii_ptr.0: ptr<float> = ptradd arr2.0 ii_index.0;
+  value.0: float = load a_ii_ptr.0;
+  sqrt_value.0: float = call @sqrt value.0;
+  store b_ii_ptr.0 sqrt_value.0;
+.i.loop_end:
+  i.0: int = add i.0 one.0;
+  jmp .i.loop;
+.i.done:
+  ret;
+}
+@main {
+  one.0: int = const 1;
+  size.0: int = const 4;
+  sqsize.0: int = mul size.0 size.0;
+  arr1.0: ptr<float> = call @fillarray;
+  arr1_transposed.0: ptr<float> = call @fillarray;
+  hermitian.0: ptr<float> = call @fillarray;
+  res.0: ptr<float> = call @zeros sqsize.0;
+  call @transpose size.0 arr1.0 arr1_transposed.0;
+  call @matmul size.0 arr1.0 arr1_transposed.0 hermitian.0;
+  call @cholesky size.0 hermitian.0 res.0;
+  call @printarray sqsize.0 res.0;
+  free arr1.0;
+  free arr1_transposed.0;
+  free hermitian.0;
+  free res.0;
+  ret;
+}

@@ -1,0 +1,11 @@
+@main {
+  c1.0: char = const '\a';
+  c2.0: char = const '\b';
+  c3.0: char = const '\f';
+  c4.0: char = const '\n';
+  c5.0: char = const '\r';
+  c6.0: char = const '\t';
+  c7.0: char = const '\v';
+  c8.0: char = const '\0';
+  print c1.0 c2.0 c3.0 c4.0 c5.0 c6.0 c7.0 c8.0;
+}

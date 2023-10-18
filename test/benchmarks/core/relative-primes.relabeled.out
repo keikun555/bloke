@@ -1,0 +1,92 @@
+@main {
+  v0.0: int = const 20;
+  a.0: int = id v0.0;
+  v1.0: int = id a.0;
+  call @relative_primes v1.0;
+  v2.0: int = const 0;
+}
+@mod(a: int, b: int): int {
+  v0.0: int = id a.0;
+  v1.0: int = id b.0;
+  v2.0: int = div v0.0 v1.0;
+  v3.0: int = mul v2.0 v1.0;
+  v4.0: int = sub v0.0 v3.0;
+  ret v4.0;
+}
+@gcd(a: int, b: int): int {
+  v1.0: int = id b.0;
+  v2.0: int = id a.0;
+  v3.0: bool = gt v1.0 v2.0;
+  br v3.0 .then.0 .else.0;
+.then.0:
+  v4.0: int = id a.0;
+  tmp.0: int = id v4.0;
+  v5.0: int = id b.0;
+  a.0: int = id v5.0;
+  v6.0: int = id tmp.0;
+  b.0: int = id v6.0;
+  jmp .endif.0;
+.else.0:
+.endif.0:
+  v8.0: int = id a.0;
+  v9.0: int = const 0;
+  v10.0: bool = eq v8.0 v9.0;
+  br v10.0 .then.7 .else.7;
+.then.7:
+  v11.0: int = id b.0;
+  ret v11.0;
+  jmp .endif.7;
+.else.7:
+  v13.0: int = id b.0;
+  v14.0: int = const 0;
+  v15.0: bool = eq v13.0 v14.0;
+  br v15.0 .then.12 .else.12;
+.then.12:
+  v16.0: int = id a.0;
+  ret v16.0;
+  jmp .endif.12;
+.else.12:
+.endif.12:
+.endif.7:
+  v17.0: int = id a.0;
+  v18.0: int = id b.0;
+  remainder.0: int = call @mod v17.0 v18.0;
+  remainder.0: int = id remainder.0;
+  v19.0: int = id b.0;
+  v20.0: int = id remainder.0;
+  g.0: int = call @gcd v19.0 v20.0;
+  g.0: int = id g.0;
+  v21.0: int = id g.0;
+  ret v21.0;
+}
+@relative_primes(a: int) {
+  v1.0: int = id a.0;
+  b.0: int = id v1.0;
+.for.cond.0:
+  v2.0: int = id b.0;
+  v3.0: int = const 1;
+  v4.0: bool = ge v2.0 v3.0;
+  br v4.0 .for.body.0 .for.end.0;
+.for.body.0:
+  v5.0: int = id a.0;
+  v6.0: int = id b.0;
+  g.0: int = call @gcd v5.0 v6.0;
+  g.0: int = id g.0;
+  v8.0: int = id g.0;
+  v9.0: int = const 1;
+  v10.0: bool = eq v8.0 v9.0;
+  br v10.0 .then.7 .else.7;
+.then.7:
+  v11.0: int = id b.0;
+  print v11.0;
+  v12.0: int = const 0;
+  jmp .endif.7;
+.else.7:
+.endif.7:
+  v13.0: int = id b.0;
+  v14.0: int = const 1;
+  v15.0: int = sub v13.0 v14.0;
+  b.0: int = id v15.0;
+  jmp .for.cond.0;
+.for.end.0:
+}

@@ -1,0 +1,17 @@
+@main {
+.a:
+  x.0.0: int = const 4;
+  jmp .c;
+.b:
+  y.0: int = const 2;
+  jmp .c;
+.c:
+  z3.0.0: int = phi;
+  z2.0.0: float = phi;
+  z1.0.0: int = phi;
+  y.0.0: int = phi;
+  z1.0.1: int = phi x.0.0 y.0.0 .a .b;
+  z2.0.1: float = phi x.0.0 y.0.0 .a .b;
+  z3.0.1: int = phi x.0.0 y.0.0 .a;
+  z3.0.2: int = phi x.0.0 .a .b;
+}

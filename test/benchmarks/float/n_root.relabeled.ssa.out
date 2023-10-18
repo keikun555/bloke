@@ -1,0 +1,62 @@
+@pow(x.0: float, k.0: int): float {
+.pow.b0:
+  x.1: float = id x.0;
+  k.1: int = id k.0;
+.pow.b1:
+  xx.0.0: float = const 1.0;
+  one.0.0: int = const 1;
+  i.0.0: int = const 0;
+.while:
+  xx.0.1: float = phi xx.0.0 xx.0.2 .pow.b1 .continue;
+  i.0.1: int = phi i.0.0 i.0.2 .pow.b1 .continue;
+  b.0.0: bool = phi b.0.1 .continue;
+  b.0.1: bool = lt i.0.1 k.0;
+  br b.0.1 .continue .endwhile;
+.continue:
+  xx.0.2: float = fmul xx.0.1 x.0;
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .while;
+.endwhile:
+  ret xx.0.1;
+}
+@n_root(x.0: float, n.0: int): float {
+.n_root.b0:
+  x.1: float = id x.0;
+  n.1: int = id n.0;
+.n_root.b1:
+  one.0.0: int = const 1;
+  two_f.0.0: float = const 2.0;
+  xxx.0.0: float = fdiv x.0 two_f.0.0;
+  n_minus_one.0.0: int = sub n.0 one.0.0;
+  i.0.0: int = const 0;
+  num_iter.0.0: int = const 20;
+.while:
+  xxx.0.1: float = phi xxx.0.0 xxx.0.2 .n_root.b1 .continue;
+  pow_n_minus_one.0.0: float = phi pow_n_minus_one.0.1 .continue;
+  pow_n.0.0: float = phi pow_n.0.1 .continue;
+  numerator.0.0: float = phi numerator.0.1 .continue;
+  i.0.1: int = phi i.0.0 i.0.2 .n_root.b1 .continue;
+  frac.0.0: float = phi frac.0.1 .continue;
+  denominator.0.0: float = phi denominator.0.1 .continue;
+  b.0.0: bool = phi b.0.1 .continue;
+  b.0.1: bool = lt i.0.1 num_iter.0.0;
+  br b.0.1 .continue .endwhile;
+.continue:
+  pow_n_minus_one.0.1: float = call @pow xxx.0.1 n_minus_one.0.0;
+  pow_n.0.1: float = fmul pow_n_minus_one.0.1 xxx.0.1;
+  numerator.0.1: float = fsub pow_n.0.1 x.0;
+  denominator.0.1: float = fmul x.0 pow_n_minus_one.0.1;
+  frac.0.1: float = fdiv numerator.0.1 denominator.0.1;
+  xxx.0.2: float = fsub xxx.0.1 frac.0.1;
+  i.0.2: int = add i.0.1 one.0.0;
+  jmp .while;
+.endwhile:
+  ret xxx.0.1;
+}
+@main {
+.main.b0:
+  x.0.0: float = const 8.0;
+  n.0.0: int = const 5;
+  result.0.0: float = call @n_root x.0.0 n.0.0;
+  print result.0.0;
+}

@@ -1,0 +1,83 @@
+@main {
+  a.0: float = const 2.0;
+  b.0: float = const 10.0;
+  n.0: float = const 8.0;
+  left.0: float = call @left_riemann a.0 b.0 n.0;
+  print left.0;
+  midpoint.0: float = call @midpoint_riemann a.0 b.0 n.0;
+  print midpoint.0;
+  right.0: float = call @right_riemann a.0 b.0 n.0;
+  print right.0;
+}
+@square_function(x: float): float {
+  square.0: float = fmul x.0 x.0;
+  ret square.0;
+}
+@left_riemann(a: float, b: float, n: float): float {
+  zero.0: float = const 0.0;
+  one.0: float = const 1.0;
+  negative_one.0: float = fsub zero.0 one.0;
+  diff.0: float = fsub b.0 a.0;
+  delta.0: float = fdiv diff.0 n.0;
+  i.0: float = fsub n.0 one.0;
+  sum.0: float = const 0.0;
+.while.header:
+  cond.0: bool = feq i.0 negative_one.0;
+  br cond.0 .while.end .while.body;
+.while.body:
+  offset.0: float = fmul delta.0 i.0;
+  x.0: float = fadd a.0 offset.0;
+  f_x.0: float = call @square_function x.0;
+  sum.0: float = fadd sum.0 f_x.0;
+  i.0: float = fsub i.0 one.0;
+  jmp .while.header;
+.while.end:
+  sum.0: float = fmul sum.0 delta.0;
+  ret sum.0;
+}
+@right_riemann(a: float, b: float, n: float): float {
+  zero.0: float = const 0.0;
+  one.0: float = const 1.0;
+  diff.0: float = fsub b.0 a.0;
+  delta.0: float = fdiv diff.0 n.0;
+  i.0: float = id n.0;
+  sum.0: float = const 0.0;
+.while.header:
+  cond.0: bool = feq i.0 zero.0;
+  br cond.0 .while.end .while.body;
+.while.body:
+  offset.0: float = fmul delta.0 i.0;
+  x.0: float = fadd a.0 offset.0;
+  f_x.0: float = call @square_function x.0;
+  sum.0: float = fadd sum.0 f_x.0;
+  i.0: float = fsub i.0 one.0;
+  jmp .while.header;
+.while.end:
+  sum.0: float = fmul sum.0 delta.0;
+  ret sum.0;
+}
+@midpoint_riemann(a: float, b: float, n: float): float {
+  zero.0: float = const 0.0;
+  one.0: float = const 1.0;
+  negative_one.0: float = fsub zero.0 one.0;
+  two.0: float = const 2.0;
+  diff.0: float = fsub b.0 a.0;
+  delta.0: float = fdiv diff.0 n.0;
+  i.0: float = fsub n.0 one.0;
+  sum.0: float = const 0.0;
+.while.header:
+  cond.0: bool = feq i.0 negative_one.0;
+  br cond.0 .while.end .while.body;
+.while.body:
+  offset.0: float = fmul delta.0 i.0;
+  half_delta.0: float = fdiv delta.0 two.0;
+  offset.0: float = fadd offset.0 half_delta.0;
+  x.0: float = fadd a.0 offset.0;
+  f_x.0: float = call @square_function x.0;
+  sum.0: float = fadd sum.0 f_x.0;
+  i.0: float = fsub i.0 one.0;
+  jmp .while.header;
+.while.end:
+  sum.0: float = fmul sum.0 delta.0;
+  ret sum.0;
+}

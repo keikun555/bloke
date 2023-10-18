@@ -1,0 +1,14 @@
+[envs.variable-relabeler]
+command = "bril2json < {filename} | python3 ../src/bril/bril_variable_labeler.py | bril2txt"
+output."relabeled.out" = "-"
+output."relabeled.err" = "2"
+
+[envs.relabeled-ssa]
+command = "bril2json < {filename} | python3 ../src/bril/bril_variable_labeler.py | python3 ../src/bril/bril2ssa.py | bril2txt"
+output."relabeled.ssa.out" = "-"
+output."relabeled.ssa.err" = "2"
+
+[envs.bril2z3]
+command = "bril2json < {filename} | python3 ../src/bril/bril_variable_labeler.py | python3 ../src/bril/bril2ssa.py | python3 ../src/bril/bril2z3.py"
+output."z3.out" = "-"
+output."z3.err" = "2"

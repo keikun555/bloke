@@ -1,0 +1,165 @@
+@main {
+  v12.0: int = const 1;
+  space.0: int = id v12.0;
+  v13.0: int = const 8;
+  value.0: int = id v13.0;
+  v14.0: float = const 0;
+  v15.0: float = const 1;
+  v16.0: float = fsub v14.0 v15.0;
+  neg_1.0: float = id v16.0;
+  v17.0: float = const 0;
+  v18.0: float = const 2;
+  v19.0: float = fsub v17.0 v18.0;
+  neg_2.0: float = id v19.0;
+  v21.0: float = const 1;
+  j.0: float = id v21.0;
+.for.cond.20:
+  v22.0: float = id j.0;
+  v23.0: float = id neg_1.0;
+  v24.0: bool = fge v22.0 v23.0;
+  br v24.0 .for.body.20 .for.end.20;
+.for.body.20:
+  v25.0: int = const 0;
+  num.0: int = id v25.0;
+  v26.0: int = const 0;
+  cnt.0: int = id v26.0;
+  v28.0: float = id neg_2.0;
+  i.0: float = id v28.0;
+.for.cond.27:
+  v29.0: float = id i.0;
+  v30.0: float = const 0.5;
+  v31.0: bool = fle v29.0 v30.0;
+  br v31.0 .for.body.27 .for.end.27;
+.for.body.27:
+  v32.0: float = id i.0;
+  v33.0: float = id j.0;
+  v34.0: float = const 0;
+  v35.0: float = const 0;
+  v36.0: int = const 0;
+  x.0: int = call @f v32.0 v33.0 v34.0 v35.0 v36.0;
+  x.0: int = id x.0;
+  v38.0: int = id x.0;
+  v39.0: int = const 50;
+  v40.0: bool = lt v38.0 v39.0;
+  br v40.0 .then.37 .else.37;
+.then.37:
+  v41.0: int = id space.0;
+  v42.0: int = id cnt.0;
+  v.0: int = call @pow10 v41.0 v42.0;
+  v.0: int = id v.0;
+  v43.0: int = id num.0;
+  v44.0: int = id v.0;
+  v45.0: int = add v43.0 v44.0;
+  num.0: int = id v45.0;
+  jmp .endif.37;
+.else.37:
+  v46.0: int = id value.0;
+  v47.0: int = id cnt.0;
+  v.0: int = call @pow10 v46.0 v47.0;
+  v.0: int = id v.0;
+  v48.0: int = id num.0;
+  v49.0: int = id v.0;
+  v50.0: int = add v48.0 v49.0;
+  num.0: int = id v50.0;
+.endif.37:
+  v51.0: int = id cnt.0;
+  v52.0: int = const 1;
+  v53.0: int = add v51.0 v52.0;
+  cnt.0: int = id v53.0;
+  v54.0: float = id i.0;
+  v55.0: float = const 0.225;
+  v56.0: float = fadd v54.0 v55.0;
+  i.0: float = id v56.0;
+  jmp .for.cond.27;
+.for.end.27:
+  v57.0: int = id num.0;
+  print v57.0;
+  v58.0: int = const 0;
+  v59.0: float = id j.0;
+  v60.0: float = const 0.015;
+  v61.0: float = fsub v59.0 v60.0;
+  j.0: float = id v61.0;
+  jmp .for.cond.20;
+.for.end.20:
+}
+@f(X: float, Y: float, x: float, y: float, n: int): int {
+  v0.0: float = id x.0;
+  v1.0: float = id x.0;
+  v2.0: float = fmul v0.0 v1.0;
+  v3.0: float = id y.0;
+  v4.0: float = id y.0;
+  v5.0: float = fmul v3.0 v4.0;
+  v6.0: float = fadd v2.0 v5.0;
+  r.0: float = id v6.0;
+  v8.0: float = id r.0;
+  v9.0: float = const 4;
+  v10.0: bool = flt v8.0 v9.0;
+  br v10.0 .then.7 .else.7;
+.then.7:
+  v12.0: int = id n.0;
+  v13.0: int = const 100;
+  v14.0: bool = lt v12.0 v13.0;
+  br v14.0 .then.11 .else.11;
+.then.11:
+  v15.0: float = id x.0;
+  v16.0: float = id x.0;
+  v17.0: float = fmul v15.0 v16.0;
+  v18.0: float = id y.0;
+  v19.0: float = id y.0;
+  v20.0: float = fmul v18.0 v19.0;
+  v21.0: float = fsub v17.0 v20.0;
+  v22.0: float = id X.0;
+  v23.0: float = fadd v21.0 v22.0;
+  x2.0: float = id v23.0;
+  v24.0: float = const 2;
+  v25.0: float = id x.0;
+  v26.0: float = fmul v24.0 v25.0;
+  v27.0: float = id y.0;
+  v28.0: float = fmul v26.0 v27.0;
+  v29.0: float = id Y.0;
+  v30.0: float = fadd v28.0 v29.0;
+  y2.0: float = id v30.0;
+  v31.0: int = const 1;
+  v32.0: float = id X.0;
+  v33.0: float = id Y.0;
+  v34.0: float = id x2.0;
+  v35.0: float = id y2.0;
+  v36.0: int = id n.0;
+  v37.0: int = const 1;
+  v38.0: int = add v36.0 v37.0;
+  v39.0: int = call @f v32.0 v33.0 v34.0 v35.0 v38.0;
+  v40.0: int = add v31.0 v39.0;
+  fv.0: int = id v40.0;
+  v41.0: int = id fv.0;
+  ret v41.0;
+  jmp .endif.11;
+.else.11:
+.endif.11:
+  jmp .endif.7;
+.else.7:
+.endif.7:
+  v42.0: int = const 0;
+  ret v42.0;
+}
+@pow10(n: int, e: int): int {
+  v1.0: int = id e.0;
+  i.0: int = id v1.0;
+.for.cond.0:
+  v2.0: int = id i.0;
+  v3.0: int = const 0;
+  v4.0: bool = gt v2.0 v3.0;
+  br v4.0 .for.body.0 .for.end.0;
+.for.body.0:
+  v5.0: int = id n.0;
+  v6.0: int = const 10;
+  v7.0: int = mul v5.0 v6.0;
+  n.0: int = id v7.0;
+  v8.0: int = id i.0;
+  v9.0: int = const 1;
+  v10.0: int = sub v8.0 v9.0;
+  i.0: int = id v10.0;
+  jmp .for.cond.0;
+.for.end.0:
+  v11.0: int = id n.0;
+  ret v11.0;
+}

@@ -1,0 +1,26 @@
+@ack(m: int, n: int): int {
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  cond_m.0: bool = eq m.0 zero.0;
+  br cond_m.0 .m_zero .m_nonzero;
+.m_zero:
+  tmp.0: int = add n.0 one.0;
+  ret tmp.0;
+.m_nonzero:
+  cond_n.0: bool = eq n.0 zero.0;
+  br cond_n.0 .n_zero .n_nonzero;
+.n_zero:
+  m1.0: int = sub m.0 one.0;
+  tmp.0: int = call @ack m1.0 one.0;
+  ret tmp.0;
+.n_nonzero:
+  m1.0: int = sub m.0 one.0;
+  n1.0: int = sub n.0 one.0;
+  t1.0: int = call @ack m.0 n1.0;
+  t2.0: int = call @ack m1.0 t1.0;
+  ret t2.0;
+}
+@main(m: int, n: int) {
+  tmp.0: int = call @ack m.0 n.0;
+  print tmp.0;
+}

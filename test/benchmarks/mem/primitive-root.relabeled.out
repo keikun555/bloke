@@ -1,0 +1,165 @@
+@rem(a: int, b: int): int {
+  quotient.0: int = div a.0 b.0;
+  guess.0: int = mul b.0 quotient.0;
+  rem.0: int = sub a.0 guess.0;
+  ret rem.0;
+}
+@divides(m: int, n: int): bool {
+  zero.0: int = const 0;
+  quotient.0: int = div n.0 m.0;
+  guess.0: int = mul m.0 quotient.0;
+  rem.0: int = sub n.0 guess.0;
+  res.0: bool = eq rem.0 zero.0;
+  ret res.0;
+}
+@prepend(n: int, ns: ptr<int>, l: int): ptr<int> {
+  one.0: int = const 1;
+  new.0: int = add l.0 one.0;
+  out.0: ptr<int> = alloc new.0;
+  i.0: int = const 0;
+  store out.0 n.0;
+  curr.0: ptr<int> = id ns.0;
+  curr2.0: ptr<int> = ptradd out.0 one.0;
+.repeat:
+  stop.0: bool = lt i.0 l.0;
+  br stop.0 .next .exit;
+.next:
+  tmp.0: int = load curr.0;
+  store curr2.0 tmp.0;
+  i.0: int = add i.0 one.0;
+  curr.0: ptr<int> = ptradd curr.0 one.0;
+  curr2.0: ptr<int> = ptradd curr2.0 one.0;
+  jmp .repeat;
+.exit:
+  free ns.0;
+  ret out.0;
+}
+@prime_factor(n: int): int {
+  guess.0: int = const 2;
+  inc.0: int = const 1;
+.continue:
+  square.0: int = mul guess.0 guess.0;
+  continue.0: bool = lt square.0 n.0;
+  works.0: bool = call @divides guess.0 n.0;
+  br works.0 .yay .inc;
+.yay:
+  ret guess.0;
+.inc:
+  guess.0: int = add guess.0 inc.0;
+  br continue.0 .continue .giveup;
+.giveup:
+  ret n.0;
+}
+@prime_factors(n: int, num_factors: ptr<int>): ptr<int> {
+  count.0: int = const 1;
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  ans.0: ptr<int> = alloc count.0;
+  store ans.0 zero.0;
+.continue:
+  exit.0: bool = eq n.0 one.0;
+  br exit.0 .exit .next;
+.next:
+  prime.0: int = call @prime_factor n.0;
+.repeat:
+  n.0: int = div n.0 prime.0;
+  divides.0: bool = call @divides prime.0 n.0;
+  br divides.0 .repeat .divided;
+.divided:
+  tmp.0: int = sub count.0 one.0;
+  ans.0: ptr<int> = call @prepend prime.0 ans.0 count.0;
+  count.0: int = add count.0 one.0;
+  jmp .continue;
+.exit:
+  store num_factors.0 count.0;
+  ret ans.0;
+}
+@modexp(a: int, k: int, m: int): int {
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  two.0: int = const 2;
+  a.0: int = call @rem a.0 m.0;
+  eq_zero.0: bool = eq zero.0 k.0;
+  br eq_zero.0 .exp_zero .not_zero;
+.exp_zero:
+  ret one.0;
+.not_zero:
+  eq_one.0: bool = eq one.0 k.0;
+  br eq_one.0 .exp_one .not_one;
+.exp_one:
+  ret a.0;
+.not_one:
+  rem_two.0: int = call @rem k.0 two.0;
+  post_mul.0: bool = eq rem_two.0 one.0;
+  half_exp.0: int = div k.0 two.0;
+  sqrt.0: int = call @modexp a.0 half_exp.0 m.0;
+  res.0: int = mul sqrt.0 sqrt.0;
+  res.0: int = call @rem res.0 m.0;
+  br post_mul.0 .post_multiply .no_post;
+.post_multiply:
+  res.0: int = mul res.0 a.0;
+  res.0: int = call @rem res.0 m.0;
+.no_post:
+.exit:
+  ret res.0;
+}
+@check_ord(p: int, phi_p: int, factors: ptr<int>, guess: int): bool {
+  count.0: int = const 0;
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  ptr.0: ptr<int> = id factors.0;
+.check_power:
+  factor.0: int = load ptr.0;
+  stop.0: bool = eq factor.0 zero.0;
+  br stop.0 .ret_true .next1;
+.next1:
+  power.0: int = div phi_p.0 factor.0;
+  exp.0: int = call @modexp guess.0 power.0 p.0;
+  is_one.0: bool = eq exp.0 one.0;
+  br is_one.0 .ret_false .next2;
+.next2:
+  ptr.0: ptr<int> = ptradd ptr.0 one.0;
+  count.0: int = add count.0 one.0;
+  jmp .check_power;
+.ret_true:
+  t.0: bool = const true;
+  ret t.0;
+.ret_false:
+  t.0: bool = const false;
+  ret t.0;
+}
+@search_primitive(p: int, phi_p: int, factors: ptr<int>, start: int): int {
+  fallback.0: int = const -999;
+  one.0: int = const 1;
+  guess.0: int = id start.0;
+.eval:
+  too_big.0: bool = ge guess.0 p.0;
+  br too_big.0 .done_guess .keep_trying;
+.keep_trying:
+  works.0: bool = call @check_ord p.0 phi_p.0 factors.0 guess.0;
+  br works.0 .ret .inc;
+.ret:
+  ret guess.0;
+.inc:
+  guess.0: int = add guess.0 one.0;
+  jmp .eval;
+.done_guess:
+  ret fallback.0;
+}
+@phi(p: int): int {
+  one.0: int = const 1;
+  q.0: int = sub p.0 one.0;
+  ret q.0;
+}
+@main(p: int) {
+  zero.0: int = const 0;
+  one.0: int = const 1;
+  phi_p.0: int = call @phi p.0;
+  count_result.0: ptr<int> = alloc one.0;
+  prime_factors.0: ptr<int> = call @prime_factors phi_p.0 count_result.0;
+  num_factors.0: int = load count_result.0;
+  res.0: int = call @search_primitive p.0 phi_p.0 prime_factors.0 one.0;
+  print res.0;
+  free count_result.0;
+  free prime_factors.0;
+}

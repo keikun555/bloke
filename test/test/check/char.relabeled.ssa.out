@@ -1,0 +1,12 @@
+@main {
+.main.b0:
+  c.0.0: char = const 'a';
+  n.0.0: int = id c.0.0;
+  b1.0.0: bool = ceq c.0.0 c.0.0;
+  b2.0.0: bool = clt c.0.0 b1.0.0;
+  b3.0.0: bool = cle n.0.0 c.0.0;
+  b4.0.0: bool = cgt c.0.0;
+  b5.0.0: char = cge c.0.0 c.0.0;
+  c2.0.0: char = int2char c.0.0;
+  i2.0.0: int = char2int b1.0.0;
+}

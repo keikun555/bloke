@@ -1,0 +1,56 @@
+@main(input.0: int) {
+.main.b0:
+  input.1: int = id input.0;
+.main.b1:
+  zero.0.0: int = const 0;
+  ten.0.0: int = const 10;
+  result.0.0: int = const 0;
+.begin:
+  result.0.1: int = phi result.0.0 result.0.3 .main.b1 .check_done;
+  r0.0.0: int = phi r0.0.1 .check_done;
+  processed.0.0: bool = phi processed.0.2 .check_done;
+  input.0.0: int = phi input.0.1 .check_done;
+  done.0.0: bool = phi done.0.1 .check_done;
+  digit.0.0: int = phi digit.0.1 .check_done;
+  digit.0.1: int = call @peel_last_digit input.0.0;
+  input.0.1: int = div input.0.0 ten.0.0;
+  result.0.2: int = add result.0.1 digit.0.1;
+.check_result:
+  result.0.3: int = phi result.0.2 result.0.5 .begin .process_result;
+  r0.0.1: int = phi r0.0.0 r0.0.2 .begin .process_result;
+  processed.0.1: bool = phi processed.0.0 processed.0.2 .begin .process_result;
+  print result.0.3;
+  processed.0.2: bool = call @is_single_digit result.0.3;
+  br processed.0.2 .check_done .process_result;
+.process_result:
+  r0.0.2: int = call @peel_last_digit result.0.3;
+  result.0.4: int = div result.0.3 ten.0.0;
+  result.0.5: int = add result.0.4 r0.0.2;
+  jmp .check_result;
+.check_done:
+  done.0.1: bool = eq input.0.1 zero.0.0;
+  br done.0.1 .done .begin;
+.done:
+  print result.0.3;
+}
+@is_single_digit(input.0: int): bool {
+.is_single_digit.b0:
+  input.1: int = id input.0;
+.is_single_digit.b1:
+  ten.0.0: int = const 10;
+  zero.0.0: int = const 0;
+  divided.0.0: int = div input.0 ten.0.0;
+  mul_by_ten.0.0: int = mul divided.0.0 ten.0.0;
+  result.0.0: bool = eq mul_by_ten.0.0 zero.0.0;
+  ret result.0.0;
+}
+@peel_last_digit(input.0: int): int {
+.peel_last_digit.b0:
+  input.1: int = id input.0;
+.peel_last_digit.b1:
+  ten.0.0: int = const 10;
+  div_by_ten.0.0: int = div input.0 ten.0.0;
+  mul_by_ten.0.0: int = mul div_by_ten.0.0 ten.0.0;
+  last_digit.0.0: int = sub input.0 mul_by_ten.0.0;
+  ret last_digit.0.0;
+}

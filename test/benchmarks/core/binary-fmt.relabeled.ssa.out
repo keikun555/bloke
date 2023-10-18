@@ -1,0 +1,34 @@
+@main(n.0: int) {
+.main.b0:
+  n.1: int = id n.0;
+.main.b1:
+  call @printBinary n.0;
+}
+@printBinary(n.0: int) {
+.printBinary.b0:
+  n.1: int = id n.0;
+.printBinary.b1:
+  zero.0.0: int = const 0;
+  cond.0.0: bool = eq n.0 zero.0.0;
+  br cond.0.0 .end .rec;
+.rec:
+  two.0.0: int = const 2;
+  v0.0.0: int = call @mod n.0 two.0.0;
+  v1.0.0: int = div n.0 two.0.0;
+  call @printBinary v1.0.0;
+  print v0.0.0;
+.end:
+  v1.0.1: int = phi v1.0.0 .rec;
+  v0.0.1: int = phi v0.0.0 .rec;
+  two.0.1: int = phi two.0.0 .rec;
+}
+@mod(a0.0: int, a1.0: int): int {
+.mod.b0:
+  a0.1: int = id a0.0;
+  a1.1: int = id a1.0;
+.mod.b1:
+  v0.0.0: int = div a0.0 a1.0;
+  v1.0.0: int = mul v0.0.0 a1.0;
+  v2.0.0: int = sub a0.0 v1.0.0;
+  ret v2.0.0;
+}

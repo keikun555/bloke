@@ -1,0 +1,6 @@
+@main {
+  v0.0: int = const 9;
+  v1.0: int = const -20;
+  res.0: int = div v0.0 v1.0;
+  print res.0;
+}

@@ -1,0 +1,4 @@
+@main {
+.main.b0:
+  v.0.0: int = const 42;
+}

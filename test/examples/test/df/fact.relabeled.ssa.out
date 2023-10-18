@@ -1,0 +1,21 @@
+@main {
+.main.b0:
+  result.0.0: int = const 1;
+  i.0.0: int = const 8;
+.header:
+  zero.0.0: int = phi zero.0.1 .body;
+  result.0.1: int = phi result.0.0 result.0.2 .main.b0 .body;
+  one.0.0: int = phi one.0.1 .body;
+  i.0.1: int = phi i.0.0 i.0.2 .main.b0 .body;
+  cond.0.0: bool = phi cond.0.1 .body;
+  zero.0.1: int = const 0;
+  cond.0.1: bool = gt i.0.1 zero.0.1;
+  br cond.0.1 .body .end;
+.body:
+  result.0.2: int = mul result.0.1 i.0.1;
+  one.0.1: int = const 1;
+  i.0.2: int = sub i.0.1 one.0.1;
+  jmp .header;
+.end:
+  print result.0.1;
+}

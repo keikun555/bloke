@@ -1,0 +1,8 @@
+@main(float_one.0: float, float_two.0: float, float_three.0: float) {
+.main.b0:
+  float_one.1: float = id float_one.0;
+  float_two.1: float = id float_two.0;
+  float_three.1: float = id float_three.0;
+.main.b1:
+  print float_one.0 float_two.0 float_three.0;
+}

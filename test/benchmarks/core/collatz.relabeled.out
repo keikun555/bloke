@@ -1,0 +1,25 @@
+@main(x: int) {
+  one.0: int = const 1;
+  two.0: int = const 2;
+  three.0: int = const 3;
+  jmp .print;
+.cond:
+  eq_one.0: bool = eq x.0 one.0;
+  br eq_one.0 .end .loop;
+.loop:
+  half.0: int = div x.0 two.0;
+  doublehalf.0: int = mul half.0 two.0;
+  even.0: bool = eq x.0 doublehalf.0;
+  br even.0 .even .odd;
+.even:
+  x.0: int = div x.0 two.0;
+  jmp .print;
+.odd:
+  x.0: int = mul x.0 three.0;
+  x.0: int = add x.0 one.0;
+.print:
+  print x.0;
+  jmp .cond;
+.end:
+  ret;
+}

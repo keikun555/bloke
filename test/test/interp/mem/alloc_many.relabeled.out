@@ -1,0 +1,13 @@
+@main {
+  v.0: int = const 1;
+  max.0: int = const 1000000;
+  count.0: int = const 0;
+.lbl:
+  count.0: int = add count.0 v.0;
+  p.0: ptr<int> = alloc v.0;
+  free p.0;
+  loop.0: bool = ge count.0 max.0;
+  br loop.0 .end .lbl;
+.end:
+  print count.0;
+}
