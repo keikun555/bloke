@@ -5,9 +5,9 @@
   x.0.0: int = const 5;
   ret x.0.0;
 }
-@argint(x.0: int) {
+@argint(x.0.0: int) {
 .argint.b0:
-  x.1: int = id x.0;
+  x.0.1: int = id x.0.0;
 }
 @noret {
 .noret.b0:

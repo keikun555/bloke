@@ -1,0 +1,104 @@
+@main(input.0.0: int) {
+.main.b0:
+  input.0.1: int = id input.0.0;
+.main.b1:
+  n.0.0: int = id input.0.1;
+  zero.0.0: int = const 0;
+  icount.0.0: int = id zero.0.0;
+  site.0.0: ptr<int> = alloc n.0.0;
+  result.0.0: int = call @queen zero.0.0 n.0.0 icount.0.0 site.0.0;
+  print result.0.0;
+  free site.0.0;
+}
+@queen(n.0.0: int, queens.0.0: int, icount.0.0: int, site.0.0: ptr<int>): int {
+.queen.b0:
+  n.0.1: int = id n.0.0;
+  queens.0.1: int = id queens.0.0;
+  icount.0.1: int = id icount.0.0;
+  site.0.1: ptr<int> = id site.0.0;
+.queen.b1:
+  one.0.0: int = const 1;
+  ite.0.0: int = id one.0.0;
+  ret_cond.0.0: bool = eq n.0.1 queens.0.1;
+  br ret_cond.0.0 .next.ret .for.cond;
+.next.ret:
+  icount.0.2: int = add icount.0.1 one.0.0;
+  ret icount.0.2;
+.for.cond:
+  nptr.0.0: ptr<int> = phi nptr.0.1 .next.loop;
+  n_1.0.0: int = phi n_1.0.2 .next.loop;
+  ite.0.1: int = phi ite.0.0 ite.0.2 .queen.b1 .next.loop;
+  is_valid.0.0: bool = phi is_valid.0.1 .next.loop;
+  icount.0.3: int = phi icount.0.1 icount.0.5 .queen.b1 .next.loop;
+  for_cond_0.0.0: bool = phi for_cond_0.0.1 .next.loop;
+  for_cond_0.0.1: bool = le ite.0.1 queens.0.1;
+  br for_cond_0.0.1 .for.body .next.ret.1;
+.for.body:
+  nptr.0.1: ptr<int> = ptradd site.0.1 n.0.1;
+  store nptr.0.1 ite.0.1;
+  is_valid.0.1: bool = call @valid n.0.1 site.0.1;
+  br is_valid.0.1 .rec.func .next.loop;
+.rec.func:
+  n_1.0.1: int = add n.0.1 one.0.0;
+  icount.0.4: int = call @queen n_1.0.1 queens.0.1 icount.0.3 site.0.1;
+.next.loop:
+  n_1.0.2: int = phi n_1.0.0 n_1.0.1 .for.body .rec.func;
+  icount.0.5: int = phi icount.0.3 icount.0.4 .for.body .rec.func;
+  ite.0.2: int = add ite.0.1 one.0.0;
+  jmp .for.cond;
+.next.ret.1:
+  ret icount.0.3;
+}
+@valid(n.0.0: int, site.0.0: ptr<int>): bool {
+.valid.b0:
+  n.0.1: int = id n.0.0;
+  site.0.1: ptr<int> = id site.0.0;
+.valid.b1:
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  true.0.0: bool = eq one.0.0 one.0.0;
+  false.0.0: bool = eq zero.0.0 one.0.0;
+  ite.0.0: int = id zero.0.0;
+.for.cond:
+  valn.0.0: int = phi valn.0.1 .false.loop;
+  vali.0.0: int = phi vali.0.1 .false.loop;
+  sub_2.0.0: int = phi sub_2.0.1 .false.loop;
+  sub_1.0.0: int = phi sub_1.0.1 .false.loop;
+  sub_0.0.0: int = phi sub_0.0.1 .false.loop;
+  nptr.0.0: ptr<int> = phi nptr.0.1 .false.loop;
+  ite.0.1: int = phi ite.0.0 ite.0.2 .valid.b1 .false.loop;
+  iptr.0.0: ptr<int> = phi iptr.0.1 .false.loop;
+  help_0.0.0: int = phi help_0.0.1 .false.loop;
+  for_cond.0.0: bool = phi for_cond.0.1 .false.loop;
+  eq_cond_2.0.0: bool = phi eq_cond_2.0.1 .false.loop;
+  eq_cond_12.0.0: bool = phi eq_cond_12.0.1 .false.loop;
+  eq_cond_1.0.0: bool = phi eq_cond_1.0.1 .false.loop;
+  eq_cond_0.0.0: bool = phi eq_cond_0.0.1 .false.loop;
+  for_cond.0.1: bool = lt ite.0.1 n.0.1;
+  br for_cond.0.1 .for.body .ret.end;
+.for.body:
+  iptr.0.1: ptr<int> = ptradd site.0.1 ite.0.1;
+  nptr.0.1: ptr<int> = ptradd site.0.1 n.0.1;
+  help_0.0.1: int = const 500;
+  vali.0.1: int = load iptr.0.1;
+  valn.0.1: int = load nptr.0.1;
+  eq_cond_0.0.1: bool = eq vali.0.1 valn.0.1;
+  br eq_cond_0.0.1 .true.ret.0 .false.else;
+.true.ret.0:
+  ret false.0.0;
+.false.else:
+  sub_0.0.1: int = sub vali.0.1 valn.0.1;
+  sub_1.0.1: int = sub valn.0.1 vali.0.1;
+  sub_2.0.1: int = sub n.0.1 ite.0.1;
+  eq_cond_1.0.1: bool = eq sub_0.0.1 sub_2.0.1;
+  eq_cond_2.0.1: bool = eq sub_1.0.1 sub_2.0.1;
+  eq_cond_12.0.1: bool = or eq_cond_1.0.1 eq_cond_2.0.1;
+  br eq_cond_12.0.1 .true.ret.1 .false.loop;
+.true.ret.1:
+  ret false.0.0;
+.false.loop:
+  ite.0.2: int = add ite.0.1 one.0.0;
+  jmp .for.cond;
+.ret.end:
+  ret true.0.0;
+}

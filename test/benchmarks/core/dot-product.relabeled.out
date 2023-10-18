@@ -1,4 +1,4 @@
-@dot_product(vectorA: ptr<int>, vectorB: ptr<int>, size: int): int {
+@dot_product(vectorA.0: ptr<int>, vectorB.0: ptr<int>, size.0: int): int {
   one.0: int = const 1;
   index.0: int = const 0;
   answer.0: int = const 0;

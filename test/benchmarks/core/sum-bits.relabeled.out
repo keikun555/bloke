@@ -1,4 +1,4 @@
-@main(input: int) {
+@main(input.0: int) {
   sum.0: int = const 0;
   two.0: int = const 2;
   zero.0: int = const 0;
@@ -14,7 +14,7 @@
   print sum.0;
   ret;
 }
-@mod(dividend: int, divisor: int): int {
+@mod(dividend.0: int, divisor.0: int): int {
   quotient.0: int = div dividend.0 divisor.0;
   two.0: int = const 2;
   prod.0: int = mul two.0 quotient.0;

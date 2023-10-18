@@ -1,4 +1,4 @@
-@main(cond: bool) {
+@main(cond.0: bool) {
 .entry:
   a.0: int = const 47;
   br cond.0 .left .right;

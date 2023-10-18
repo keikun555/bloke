@@ -1,18 +1,18 @@
-@main(a.0: int) {
+@main(a.0.0: int) {
 .main.b0:
-  a.1: int = id a.0;
+  a.0.1: int = id a.0.0;
 .while.cond:
   zero.0.0: int = phi zero.0.1 .while.body;
   one.0.0: int = phi one.0.1 .while.body;
   is_term.0.0: bool = phi is_term.0.1 .while.body;
-  a.0.0: int = phi a.0.1 .while.body;
+  a.0.2: int = phi a.0.1 a.0.3 .main.b0 .while.body;
   zero.0.1: int = const 0;
-  is_term.0.1: bool = eq a.0.0 zero.0.1;
+  is_term.0.1: bool = eq a.0.2 zero.0.1;
   br is_term.0.1 .while.finish .while.body;
 .while.body:
   one.0.1: int = const 1;
-  a.0.1: int = sub a.0.0 one.0.1;
+  a.0.3: int = sub a.0.2 one.0.1;
   jmp .while.cond;
 .while.finish:
-  print a.0.0;
+  print a.0.2;
 }

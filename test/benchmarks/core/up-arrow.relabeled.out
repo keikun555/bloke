@@ -1,8 +1,8 @@
-@main(n: int, arrows: int, repeats: int) {
+@main(n.0: int, arrows.0: int, repeats.0: int) {
   ans.0: int = call @up_arrow n.0 arrows.0 repeats.0;
   print ans.0;
 }
-@up_arrow(num: int, arrows: int, repeats: int): int {
+@up_arrow(num.0: int, arrows.0: int, repeats.0: int): int {
   one.0: int = const 1;
   ans.0: int = id num.0;
   i.0: int = const 1;

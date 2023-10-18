@@ -1,9 +1,9 @@
-@main(cond.0: bool) {
+@main(cond.0.0: bool) {
 .main.b0:
-  cond.1: bool = id cond.0;
+  cond.0.1: bool = id cond.0.0;
 .top:
   a.0.0: int = const 5;
-  br cond.0 .here .there;
+  br cond.0.1 .here .there;
 .here:
   b.0.0: int = const 7;
 .there:

@@ -1,4 +1,4 @@
-@main(x: int) {
+@main(x.0: int) {
   one.0: int = const 1;
   two.0: int = const 2;
   three.0: int = const 3;

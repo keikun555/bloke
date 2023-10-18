@@ -1,8 +1,8 @@
-@main(input.0: int) {
+@main(input.0.0: int) {
 .main.b0:
-  input.1: int = id input.0;
+  input.0.1: int = id input.0.0;
 .main.b1:
-  value.0.0: int = id input.0;
+  value.0.0: int = id input.0.1;
   v1.0.0: int = const 1;
   result.0.0: int = id v1.0.0;
   v3.0.0: int = id value.0.0;

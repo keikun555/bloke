@@ -1,4 +1,4 @@
-@main(x: int, b: bool) {
+@main(x.0: int, b.0: bool) {
   speculate;
   commit;
   guard b.0 .l;

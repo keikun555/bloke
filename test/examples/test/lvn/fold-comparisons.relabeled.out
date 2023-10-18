@@ -1,4 +1,4 @@
-@main(arg1: int, arg2: int) {
+@main(arg1.0: int, arg2.0: int) {
   a.0: int = const 4;
   b.0: int = const 3;
   constant_fold2.0: bool = eq a.0 b.0;

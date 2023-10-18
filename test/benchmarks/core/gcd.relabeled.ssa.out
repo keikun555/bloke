@@ -1,11 +1,11 @@
-@main(op1.0: int, op2.0: int) {
+@main(op1.0.0: int, op2.0.0: int) {
 .main.b0:
-  op1.1: int = id op1.0;
-  op2.1: int = id op2.0;
+  op1.0.1: int = id op1.0.0;
+  op2.0.1: int = id op2.0.0;
 .main.b1:
   vc0.0.0: int = const 0;
-  v0.0.0: int = id op1.0;
-  v1.0.0: int = id op2.0;
+  v0.0.0: int = id op1.0.1;
+  v1.0.0: int = id op2.0.1;
 .cmp.val:
   v4.0.0: bool = phi v4.0.1 v4.0.1 .else.2 .if.2;
   v3.0.0: int = phi v3.0.3 v3.0.3 .else.2 .if.2;

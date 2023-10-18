@@ -1,4 +1,4 @@
-@main(input: int) {
+@main(input.0: int) {
   zero.0: int = const 0;
   ten.0: int = const 10;
   sum.0: int = const 0;
@@ -17,7 +17,7 @@
   res.0: bool = eq input.0 sum.0;
   print res.0;
 }
-@getDigits(n: int): int {
+@getDigits(n.0: int): int {
   ten.0: int = const 10;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -31,13 +31,13 @@
   res.0: int = add rec.0 one.0;
   ret res.0;
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   q.0: int = div a.0 b.0;
   aq.0: int = mul b.0 q.0;
   mod.0: int = sub a.0 aq.0;
   ret mod.0;
 }
-@power(base: int, exp: int): int {
+@power(base.0: int, exp.0: int): int {
   ten.0: int = const 10;
   zero.0: int = const 0;
   one.0: int = const 1;

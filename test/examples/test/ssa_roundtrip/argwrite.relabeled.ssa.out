@@ -1,12 +1,12 @@
-@main(a.0: int) {
+@main(a.0.0: int) {
 .main.b0:
-  a.1: int = id a.0;
+  a.0.1: int = id a.0.0;
 .main.b1:
   cond.0.0: bool = const true;
   br cond.0.0 .here .there;
 .here:
-  a.0.0: int = const 5;
+  a.0.2: int = const 5;
 .there:
-  a.0.1: int = phi a.0.0 .here;
-  print a.0.1;
+  a.0.3: int = phi a.0.1 a.0.2 .main.b1 .here;
+  print a.0.3;
 }

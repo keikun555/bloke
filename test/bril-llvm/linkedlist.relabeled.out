@@ -1,4 +1,4 @@
-@cons(head: int, tail: ptr<int_list>): ptr<int_list> {
+@cons(head.0: int, tail.0: ptr<int_list>): ptr<int_list> {
   one.0: int = const 1;
   p.0: ptr<int_list> = alloc one.0;
   phead.0: ptr<int> = getmbr p.0 elt.0;
@@ -7,7 +7,7 @@
   store ptail.0 tail.0;
   ret p.0;
 }
-@print_list(list: ptr<int_list>) {
+@print_list(list.0: ptr<int_list>) {
   empty.0: bool = isnull list.0;
   br empty.0 .end .print;
 .print:
@@ -20,7 +20,7 @@
 .end:
   ret;
 }
-@free_list(list: ptr<int_list>) {
+@free_list(list.0: ptr<int_list>) {
   empty.0: bool = isnull list.0;
   br empty.0 .end .freetail;
 .freetail:

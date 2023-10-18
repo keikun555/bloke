@@ -1,2 +1,2 @@
-And(And(a.1 == a.0, b.1 == b.0),
-    And(And(c.0.0 == a.0 + b.0), True))
+And(And(a.0.1 == a.0.0, b.0.1 == b.0.0),
+    And(And(c.0.0 == a.0.1 + b.0.1), True))

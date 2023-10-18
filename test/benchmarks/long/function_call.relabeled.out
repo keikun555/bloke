@@ -1,4 +1,4 @@
-@main(starting_m: int) {
+@main(starting_m.0: int) {
   m.0: int = id starting_m.0;
   zero.0: int = const 0;
   one.0: int = const 1;

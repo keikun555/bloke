@@ -1,9 +1,9 @@
-@main(n.0: int) {
+@main(n.0.0: int) {
 .main.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .main.b1:
   one.0.0: int = const 1;
-  n_sq.0.0: int = mul n.0 n.0;
+  n_sq.0.0: int = mul n.0.1 n.0.1;
   a.0.0: int = id one.0.0;
 .outer_loop:
   sum.0.0: int = phi sum.0.2 .outer_continue;
@@ -34,7 +34,7 @@
   br done.0.2 .outer_continue .inner_loop;
 .outer_continue:
   a.0.2: int = add a.0.1 one.0.0;
-  done.0.3: bool = ge a.0.2 n.0;
+  done.0.3: bool = ge a.0.2 n.0.1;
   br done.0.3 .finish .outer_loop;
 .finish:
 }

@@ -20,30 +20,30 @@
 .for.end.1:
   print x.0.1;
 }
-@sqrt(x.0: float, n.0: float): float {
+@sqrt(x.0.0: float, n.0.0: float): float {
 .sqrt.b0:
-  x.1: float = id x.0;
-  n.1: float = id n.0;
+  x.0.1: float = id x.0.0;
+  n.0.1: float = id n.0.0;
 .sqrt.b1:
   two.0.0: float = const 2;
-  v0.0.0: float = fmul x.0 x.0;
-  v1.0.0: float = fsub v0.0.0 n.0;
-  v2.0.0: float = fmul two.0.0 x.0;
+  v0.0.0: float = fmul x.0.1 x.0.1;
+  v1.0.0: float = fsub v0.0.0 n.0.1;
+  v2.0.0: float = fmul two.0.0 x.0.1;
   v3.0.0: float = fdiv v1.0.0 v2.0.0;
-  v4.0.0: float = fsub x.0 v3.0.0;
+  v4.0.0: float = fsub x.0.1 v3.0.0;
   ret v4.0.0;
 }
-@diff(a.0: float, b.0: float): float {
+@diff(a.0.0: float, b.0.0: float): float {
 .diff.b0:
-  a.1: float = id a.0;
-  b.1: float = id b.0;
+  a.0.1: float = id a.0.0;
+  b.0.1: float = id b.0.0;
 .diff.b1:
-  c.0.0: bool = fgt a.0 b.0;
+  c.0.0: bool = fgt a.0.1 b.0.1;
   br c.0.0 .then.1 .else.1;
 .then.1:
-  v5.0.0: float = fsub a.0 b.0;
+  v5.0.0: float = fsub a.0.1 b.0.1;
   ret v5.0.0;
 .else.1:
-  v5.0.1: float = fsub b.0 a.0;
+  v5.0.1: float = fsub b.0.1 a.0.1;
   ret v5.0.1;
 }

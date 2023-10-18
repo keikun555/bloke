@@ -1,4 +1,4 @@
-@rand(seq: ptr<int>, max: int): int {
+@rand(seq.0: ptr<int>, max.0: int): int {
   a.0: int = const 25214903917;
   c.0: int = const 11;
   m.0: int = const 281474976710656;
@@ -14,7 +14,7 @@
   val.0: int = sub next.0 val.0;
   ret val.0;
 }
-@randarray(size: int, rng: ptr<int>): ptr<int> {
+@randarray(size.0: int, rng.0: ptr<int>): ptr<int> {
   arr.0: ptr<int> = alloc size.0;
   i.0: int = const 0;
   max.0: int = const 1000;
@@ -32,7 +32,7 @@
 .done:
   ret arr.0;
 }
-@main(size: int, seed: int) {
+@main(size.0: int, seed.0: int) {
   two.0: int = const 2;
   rng.0: ptr<int> = alloc seed.0;
   store rng.0 seed.0;

@@ -1,4 +1,4 @@
-@main(theta: float) {
+@main(theta.0: float) {
   v0.0: float = id theta.0;
   x.0: float = call @cordic v0.0;
   x.0: float = id x.0;
@@ -6,7 +6,7 @@
   print v1.0;
   v2.0: int = const 0;
 }
-@cordic(theta: float): float {
+@cordic(theta.0: float): float {
   v0.0: float = const 0.7853981633974483;
   cstab0.0: float = id v0.0;
   v1.0: float = const 0.4636476090008061;

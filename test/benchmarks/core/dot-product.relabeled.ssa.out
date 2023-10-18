@@ -1,8 +1,8 @@
-@dot_product(vectorA.0: ptr<int>, vectorB.0: ptr<int>, size.0: int): int {
+@dot_product(vectorA.0.0: ptr<int>, vectorB.0.0: ptr<int>, size.0.0: int): int {
 .dot_product.b0:
-  vectorA.1: ptr<int> = id vectorA.0;
-  vectorB.1: ptr<int> = id vectorB.0;
-  size.1: int = id size.0;
+  vectorA.0.1: ptr<int> = id vectorA.0.0;
+  vectorB.0.1: ptr<int> = id vectorB.0.0;
+  size.0.1: int = id size.0.0;
 .dot_product.b1:
   one.0.0: int = const 1;
   index.0.0: int = const 0;
@@ -16,14 +16,14 @@
   index.0.1: int = phi index.0.0 index.0.2 .dot_product.b1 .loop;
   cond.0.0: bool = phi cond.0.1 .loop;
   answer.0.1: int = phi answer.0.0 answer.0.2 .dot_product.b1 .loop;
-  ptrA.0.1: ptr<int> = ptradd vectorA.0 index.0.1;
-  ptrB.0.1: ptr<int> = ptradd vectorB.0 index.0.1;
+  ptrA.0.1: ptr<int> = ptradd vectorA.0.1 index.0.1;
+  ptrB.0.1: ptr<int> = ptradd vectorB.0.1 index.0.1;
   valA.0.1: int = load ptrA.0.1;
   valB.0.1: int = load ptrB.0.1;
   tmp.0.1: int = mul valA.0.1 valB.0.1;
   answer.0.2: int = add answer.0.1 tmp.0.1;
   index.0.2: int = add index.0.1 one.0.0;
-  cond.0.1: bool = lt index.0.2 size.0;
+  cond.0.1: bool = lt index.0.2 size.0.1;
   br cond.0.1 .loop .done;
 .done:
   ret answer.0.2;

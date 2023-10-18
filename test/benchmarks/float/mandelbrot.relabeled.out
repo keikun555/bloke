@@ -82,7 +82,7 @@
   jmp .for.cond.20;
 .for.end.20:
 }
-@f(X: float, Y: float, x: float, y: float, n: int): int {
+@f(X.0: float, Y.0: float, x.0: float, y.0: float, n.0: int): int {
   v0.0: float = id x.0;
   v1.0: float = id x.0;
   v2.0: float = fmul v0.0 v1.0;
@@ -141,7 +141,7 @@
   v42.0: int = const 0;
   ret v42.0;
 }
-@pow10(n: int, e: int): int {
+@pow10(n.0: int, e.0: int): int {
   v1.0: int = id e.0;
   i.0: int = id v1.0;
 .for.cond.0:

@@ -1,10 +1,10 @@
-@main(cond.0: bool) {
+@main(cond.0.0: bool) {
 .main.b0:
-  cond.1: bool = id cond.0;
+  cond.0.1: bool = id cond.0.0;
 .main.b1:
   a.0.0: int = const 47;
   b.0.0: int = const 42;
-  br cond.0 .left .right;
+  br cond.0.1 .left .right;
 .left:
   b.0.1: int = const 1;
   c.0.0: int = const 5;

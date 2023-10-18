@@ -1,42 +1,42 @@
-@RaySphereIntersection(rayOriginX.0: float, rayOriginY.0: float, rayOriginZ.0: float, rayDirectionX.0: float, rayDirectionY.0: float, rayDirectionZ.0: float, circleCenterX.0: float, circleCenterY.0: float, circleCenterZ.0: float, radius.0: float): bool {
+@RaySphereIntersection(rayOriginX.0.0: float, rayOriginY.0.0: float, rayOriginZ.0.0: float, rayDirectionX.0.0: float, rayDirectionY.0.0: float, rayDirectionZ.0.0: float, circleCenterX.0.0: float, circleCenterY.0.0: float, circleCenterZ.0.0: float, radius.0.0: float): bool {
 .RaySphereIntersection.b0:
-  rayOriginX.1: float = id rayOriginX.0;
-  rayOriginY.1: float = id rayOriginY.0;
-  rayOriginZ.1: float = id rayOriginZ.0;
-  rayDirectionX.1: float = id rayDirectionX.0;
-  rayDirectionY.1: float = id rayDirectionY.0;
-  rayDirectionZ.1: float = id rayDirectionZ.0;
-  circleCenterX.1: float = id circleCenterX.0;
-  circleCenterY.1: float = id circleCenterY.0;
-  circleCenterZ.1: float = id circleCenterZ.0;
-  radius.1: float = id radius.0;
+  rayOriginX.0.1: float = id rayOriginX.0.0;
+  rayOriginY.0.1: float = id rayOriginY.0.0;
+  rayOriginZ.0.1: float = id rayOriginZ.0.0;
+  rayDirectionX.0.1: float = id rayDirectionX.0.0;
+  rayDirectionY.0.1: float = id rayDirectionY.0.0;
+  rayDirectionZ.0.1: float = id rayDirectionZ.0.0;
+  circleCenterX.0.1: float = id circleCenterX.0.0;
+  circleCenterY.0.1: float = id circleCenterY.0.0;
+  circleCenterZ.0.1: float = id circleCenterZ.0.0;
+  radius.0.1: float = id radius.0.0;
 .RaySphereIntersection.b1:
-  v0.0.0: float = id rayOriginX.0;
-  v1.0.0: float = id circleCenterX.0;
+  v0.0.0: float = id rayOriginX.0.1;
+  v1.0.0: float = id circleCenterX.0.1;
   v2.0.0: float = fsub v0.0.0 v1.0.0;
   OC_x.0.0: float = id v2.0.0;
-  v3.0.0: float = id rayOriginY.0;
-  v4.0.0: float = id circleCenterY.0;
+  v3.0.0: float = id rayOriginY.0.1;
+  v4.0.0: float = id circleCenterY.0.1;
   v5.0.0: float = fsub v3.0.0 v4.0.0;
   OC_y.0.0: float = id v5.0.0;
-  v6.0.0: float = id rayOriginZ.0;
-  v7.0.0: float = id circleCenterZ.0;
+  v6.0.0: float = id rayOriginZ.0.1;
+  v7.0.0: float = id circleCenterZ.0.1;
   v8.0.0: float = fsub v6.0.0 v7.0.0;
   OC_z.0.0: float = id v8.0.0;
-  v9.0.0: float = id rayDirectionX.0;
-  v10.0.0: float = id rayDirectionY.0;
-  v11.0.0: float = id rayDirectionZ.0;
-  v12.0.0: float = id rayDirectionX.0;
-  v13.0.0: float = id rayDirectionY.0;
-  v14.0.0: float = id rayDirectionZ.0;
+  v9.0.0: float = id rayDirectionX.0.1;
+  v10.0.0: float = id rayDirectionY.0.1;
+  v11.0.0: float = id rayDirectionZ.0.1;
+  v12.0.0: float = id rayDirectionX.0.1;
+  v13.0.0: float = id rayDirectionY.0.1;
+  v14.0.0: float = id rayDirectionZ.0.1;
   a.0.0: float = call @DotProduct v9.0.0 v10.0.0 v11.0.0 v12.0.0 v13.0.0 v14.0.0;
   a.0.1: float = id a.0.0;
   v15.0.0: float = id OC_x.0.0;
   v16.0.0: float = id OC_y.0.0;
   v17.0.0: float = id OC_z.0.0;
-  v18.0.0: float = id rayDirectionX.0;
-  v19.0.0: float = id rayDirectionY.0;
-  v20.0.0: float = id rayDirectionZ.0;
+  v18.0.0: float = id rayDirectionX.0.1;
+  v19.0.0: float = id rayDirectionY.0.1;
+  v20.0.0: float = id rayDirectionZ.0.1;
   bInitial.0.0: float = call @DotProduct v15.0.0 v16.0.0 v17.0.0 v18.0.0 v19.0.0 v20.0.0;
   bInitial.0.1: float = id bInitial.0.0;
   v21.0.0: float = const 2;
@@ -51,8 +51,8 @@
   v29.0.0: float = id OC_z.0.0;
   cInitial.0.0: float = call @DotProduct v24.0.0 v25.0.0 v26.0.0 v27.0.0 v28.0.0 v29.0.0;
   cInitial.0.1: float = id cInitial.0.0;
-  v30.0.0: float = id radius.0;
-  v31.0.0: float = id radius.0;
+  v30.0.0: float = id radius.0.1;
+  v31.0.0: float = id radius.0.1;
   v32.0.0: float = fmul v30.0.0 v31.0.0;
   radiusSquared.0.0: float = id v32.0.0;
   v33.0.0: float = id cInitial.0.1;
@@ -78,25 +78,25 @@
   v49.0.0: bool = fgt v47.0.0 v48.0.0;
   ret v49.0.0;
 }
-@DotProduct(a.0: float, b.0: float, c.0: float, x.0: float, y.0: float, z.0: float): float {
+@DotProduct(a.0.0: float, b.0.0: float, c.0.0: float, x.0.0: float, y.0.0: float, z.0.0: float): float {
 .DotProduct.b0:
-  a.1: float = id a.0;
-  b.1: float = id b.0;
-  c.1: float = id c.0;
-  x.1: float = id x.0;
-  y.1: float = id y.0;
-  z.1: float = id z.0;
+  a.0.1: float = id a.0.0;
+  b.0.1: float = id b.0.0;
+  c.0.1: float = id c.0.0;
+  x.0.1: float = id x.0.0;
+  y.0.1: float = id y.0.0;
+  z.0.1: float = id z.0.0;
 .DotProduct.b1:
-  v0.0.0: float = id a.0;
-  v1.0.0: float = id x.0;
+  v0.0.0: float = id a.0.1;
+  v1.0.0: float = id x.0.1;
   v2.0.0: float = fmul v0.0.0 v1.0.0;
   A.0.0: float = id v2.0.0;
-  v3.0.0: float = id b.0;
-  v4.0.0: float = id y.0;
+  v3.0.0: float = id b.0.1;
+  v4.0.0: float = id y.0.1;
   v5.0.0: float = fmul v3.0.0 v4.0.0;
   B.0.0: float = id v5.0.0;
-  v6.0.0: float = id c.0;
-  v7.0.0: float = id z.0;
+  v6.0.0: float = id c.0.1;
+  v7.0.0: float = id z.0.1;
   v8.0.0: float = fmul v6.0.0 v7.0.0;
   C.0.0: float = id v8.0.0;
   v9.0.0: float = id A.0.0;

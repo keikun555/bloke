@@ -1,10 +1,10 @@
-@rem(a: int, b: int): int {
+@rem(a.0: int, b.0: int): int {
   quotient.0: int = div a.0 b.0;
   guess.0: int = mul b.0 quotient.0;
   rem.0: int = sub a.0 guess.0;
   ret rem.0;
 }
-@divides(m: int, n: int): bool {
+@divides(m.0: int, n.0: int): bool {
   zero.0: int = const 0;
   quotient.0: int = div n.0 m.0;
   guess.0: int = mul m.0 quotient.0;
@@ -12,7 +12,7 @@
   res.0: bool = eq rem.0 zero.0;
   ret res.0;
 }
-@prepend(n: int, ns: ptr<int>, l: int): ptr<int> {
+@prepend(n.0: int, ns.0: ptr<int>, l.0: int): ptr<int> {
   one.0: int = const 1;
   new.0: int = add l.0 one.0;
   out.0: ptr<int> = alloc new.0;
@@ -34,7 +34,7 @@
   free ns.0;
   ret out.0;
 }
-@prime_factor(n: int): int {
+@prime_factor(n.0: int): int {
   guess.0: int = const 2;
   inc.0: int = const 1;
 .continue:
@@ -50,7 +50,7 @@
 .giveup:
   ret n.0;
 }
-@prime_factors(n: int, num_factors: ptr<int>): ptr<int> {
+@prime_factors(n.0: int, num_factors.0: ptr<int>): ptr<int> {
   count.0: int = const 1;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -74,7 +74,7 @@
   store num_factors.0 count.0;
   ret ans.0;
 }
-@modexp(a: int, k: int, m: int): int {
+@modexp(a.0: int, k.0: int, m.0: int): int {
   zero.0: int = const 0;
   one.0: int = const 1;
   two.0: int = const 2;
@@ -103,7 +103,7 @@
 .exit:
   ret res.0;
 }
-@check_ord(p: int, phi_p: int, factors: ptr<int>, guess: int): bool {
+@check_ord(p.0: int, phi_p.0: int, factors.0: ptr<int>, guess.0: int): bool {
   count.0: int = const 0;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -128,7 +128,7 @@
   t.0: bool = const false;
   ret t.0;
 }
-@search_primitive(p: int, phi_p: int, factors: ptr<int>, start: int): int {
+@search_primitive(p.0: int, phi_p.0: int, factors.0: ptr<int>, start.0: int): int {
   fallback.0: int = const -999;
   one.0: int = const 1;
   guess.0: int = id start.0;
@@ -146,12 +146,12 @@
 .done_guess:
   ret fallback.0;
 }
-@phi(p: int): int {
+@phi(p.0: int): int {
   one.0: int = const 1;
   q.0: int = sub p.0 one.0;
   ret q.0;
 }
-@main(p: int) {
+@main(p.0: int) {
   zero.0: int = const 0;
   one.0: int = const 1;
   phi_p.0: int = call @phi p.0;

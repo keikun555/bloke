@@ -1,4 +1,4 @@
-@sumOfSquares(n: int): int {
+@sumOfSquares(n.0: int): int {
   v0.0: int = const 0;
   res.0: int = id v0.0;
   v2.0: int = const 1;
@@ -26,7 +26,7 @@
   v15.0: int = id res.0;
   ret v15.0;
 }
-@squareOfSum(n: int): int {
+@squareOfSum(n.0: int): int {
   v0.0: int = const 0;
   res.0: int = id v0.0;
   v2.0: int = const 1;
@@ -54,7 +54,7 @@
   v15.0: int = id square.0;
   ret v15.0;
 }
-@main(n: int) {
+@main(n.0: int) {
   v0.0: int = id n.0;
   sum.0: int = call @sumOfSquares v0.0;
   sum.0: int = id sum.0;

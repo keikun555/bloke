@@ -1,4 +1,4 @@
-@main(a: int) {
+@main(a.0: int) {
 .while.cond:
   zero.0: int = const 0;
   is_term.0: bool = eq a.0 zero.0;

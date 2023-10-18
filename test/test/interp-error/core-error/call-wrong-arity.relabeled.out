@@ -4,7 +4,7 @@
   z.0: int = const 3;
   call @addboth x.0 y.0 z.0;
 }
-@addboth(x: int, y: int) {
+@addboth(x.0: int, y.0: int) {
   w.0: int = add x.0 y.0;
   print w.0;
 }

@@ -1,7 +1,7 @@
-@printUnmarked(table.0: ptr<bool>, tableSize.0: int) {
+@printUnmarked(table.0.0: ptr<bool>, tableSize.0.0: int) {
 .printUnmarked.b0:
-  table.1: ptr<bool> = id table.0;
-  tableSize.1: int = id tableSize.0;
+  table.0.1: ptr<bool> = id table.0.0;
+  tableSize.0.1: int = id tableSize.0.0;
 .printUnmarked.b1:
   idx.0.0: int = const 0;
   zero.0.0: int = const 0;
@@ -12,10 +12,10 @@
   marked.0.0: bool = phi marked.0.1 .print.unmarked.skip.print;
   idx.0.1: int = phi idx.0.0 idx.0.2 .printUnmarked.b1 .print.unmarked.skip.print;
   continue.0.0: bool = phi continue.0.1 .print.unmarked.skip.print;
-  continue.0.1: bool = lt idx.0.1 tableSize.0;
+  continue.0.1: bool = lt idx.0.1 tableSize.0.1;
   br continue.0.1 .print.unmarked.for.body .print.unmarked.for.end;
 .print.unmarked.for.body:
-  offsetTable.0.1: ptr<bool> = ptradd table.0 idx.0.1;
+  offsetTable.0.1: ptr<bool> = ptradd table.0.1 idx.0.1;
   marked.0.1: bool = load offsetTable.0.1;
   br marked.0.1 .print.unmarked.skip.print .print.unmarked.print;
 .print.unmarked.print:
@@ -27,25 +27,25 @@
 .print.unmarked.for.end:
   ret;
 }
-@findNextP(table.0: ptr<bool>, tableSize.0: int, currentP.0: int): int {
+@findNextP(table.0.0: ptr<bool>, tableSize.0.0: int, currentP.0.0: int): int {
 .findNextP.b0:
-  table.1: ptr<bool> = id table.0;
-  tableSize.1: int = id tableSize.0;
-  currentP.1: int = id currentP.0;
+  table.0.1: ptr<bool> = id table.0.0;
+  tableSize.0.1: int = id tableSize.0.0;
+  currentP.0.1: int = id currentP.0.0;
 .findNextP.b1:
   zero.0.0: int = const 0;
   one.0.0: int = const 1;
-  p.0.0: int = id currentP.0;
+  p.0.0: int = id currentP.0.1;
 .find.next.p.continue:
   p.0.1: int = phi p.0.0 p.0.2 .findNextP.b1 .find.next.p.in.bounds;
   offsetTable.0.0: ptr<bool> = phi offsetTable.0.1 .find.next.p.in.bounds;
   marked.0.0: bool = phi marked.0.1 .find.next.p.in.bounds;
   inBounds.0.0: bool = phi inBounds.0.1 .find.next.p.in.bounds;
   p.0.2: int = add p.0.1 one.0.0;
-  inBounds.0.1: bool = lt p.0.2 tableSize.0;
+  inBounds.0.1: bool = lt p.0.2 tableSize.0.1;
   br inBounds.0.1 .find.next.p.in.bounds .find.next.p.not.in.bounds;
 .find.next.p.in.bounds:
-  offsetTable.0.1: ptr<bool> = ptradd table.0 p.0.2;
+  offsetTable.0.1: ptr<bool> = ptradd table.0.1 p.0.2;
   marked.0.1: bool = load offsetTable.0.1;
   br marked.0.1 .find.next.p.continue .find.next.p.done;
 .find.next.p.done:
@@ -53,11 +53,11 @@
 .find.next.p.not.in.bounds:
   ret zero.0.0;
 }
-@markMultiples(table.0: ptr<bool>, tableSize.0: int, p.0: int) {
+@markMultiples(table.0.0: ptr<bool>, tableSize.0.0: int, p.0.0: int) {
 .markMultiples.b0:
-  table.1: ptr<bool> = id table.0;
-  tableSize.1: int = id tableSize.0;
-  p.1: int = id p.0;
+  table.0.1: ptr<bool> = id table.0.0;
+  tableSize.0.1: int = id tableSize.0.0;
+  p.0.1: int = id p.0.0;
 .markMultiples.b1:
   zero.0.0: int = const 0;
   one.0.0: int = const 1;
@@ -69,9 +69,9 @@
   m.0.1: int = phi m.0.0 m.0.2 .markMultiples.b1 .mark.multiples.store;
   finished.0.0: bool = phi finished.0.1 .mark.multiples.store;
   m.0.2: int = add m.0.1 one.0.0;
-  mTimesP.0.1: int = mul m.0.2 p.0;
-  offsetTable.0.1: ptr<bool> = ptradd table.0 mTimesP.0.1;
-  finished.0.1: bool = ge mTimesP.0.1 tableSize.0;
+  mTimesP.0.1: int = mul m.0.2 p.0.1;
+  offsetTable.0.1: ptr<bool> = ptradd table.0.1 mTimesP.0.1;
+  finished.0.1: bool = ge mTimesP.0.1 tableSize.0.1;
   br finished.0.1 .mark.multiples.done .mark.multiples.store;
 .mark.multiples.store:
   store offsetTable.0.1 t.0.0;
@@ -79,57 +79,57 @@
 .mark.multiples.done:
   ret;
 }
-@populateTable(table.0: ptr<bool>, tableSize.0: int) {
+@populateTable(table.0.0: ptr<bool>, tableSize.0.0: int) {
 .populateTable.b0:
-  table.1: ptr<bool> = id table.0;
-  tableSize.1: int = id tableSize.0;
+  table.0.1: ptr<bool> = id table.0.0;
+  tableSize.0.1: int = id tableSize.0.0;
 .populateTable.b1:
   zero.0.0: int = const 0;
   one.0.0: int = const 1;
   two.0.0: int = const 2;
   f.0.0: bool = const false;
   t.0.0: bool = const true;
-  store table.0 t.0.0;
-  offsetTable.0.0: ptr<bool> = ptradd table.0 one.0.0;
+  store table.0.1 t.0.0;
+  offsetTable.0.0: ptr<bool> = ptradd table.0.1 one.0.0;
   store offsetTable.0.0 t.0.0;
   idx.0.0: int = id two.0.0;
 .populate.table.for.cond:
   offsetTable.0.1: ptr<bool> = phi offsetTable.0.0 offsetTable.0.2 .populateTable.b1 .populate.table.for.body;
   idx.0.1: int = phi idx.0.0 idx.0.2 .populateTable.b1 .populate.table.for.body;
   continue.0.0: bool = phi continue.0.1 .populate.table.for.body;
-  continue.0.1: bool = lt idx.0.1 tableSize.0;
+  continue.0.1: bool = lt idx.0.1 tableSize.0.1;
   br continue.0.1 .populate.table.for.body .populate.table.for.end;
 .populate.table.for.body:
-  offsetTable.0.2: ptr<bool> = ptradd table.0 idx.0.1;
+  offsetTable.0.2: ptr<bool> = ptradd table.0.1 idx.0.1;
   store offsetTable.0.2 f.0.0;
   idx.0.2: int = add idx.0.1 one.0.0;
   jmp .populate.table.for.cond;
 .populate.table.for.end:
   ret;
 }
-@printPrimesUpTo(n.0: int) {
+@printPrimesUpTo(n.0.0: int) {
 .printPrimesUpTo.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .printPrimesUpTo.b1:
   zero.0.0: int = const 0;
   two.0.0: int = const 2;
-  table.0.0: ptr<bool> = alloc n.0;
-  call @populateTable table.0.0 n.0;
+  table.0.0: ptr<bool> = alloc n.0.1;
+  call @populateTable table.0.0 n.0.1;
   p.0.0: int = id two.0.0;
 .print.primes.up.to.continue:
   p.0.1: int = phi p.0.0 p.0.2 .printPrimesUpTo.b1 .print.primes.up.to.continue;
   finished.0.0: bool = phi finished.0.1 .print.primes.up.to.continue;
-  call @markMultiples table.0.0 n.0 p.0.1;
-  p.0.2: int = call @findNextP table.0.0 n.0 p.0.1;
+  call @markMultiples table.0.0 n.0.1 p.0.1;
+  p.0.2: int = call @findNextP table.0.0 n.0.1 p.0.1;
   finished.0.1: bool = eq p.0.2 zero.0.0;
   br finished.0.1 .print.primes.up.to.done .print.primes.up.to.continue;
 .print.primes.up.to.done:
-  call @printUnmarked table.0.0 n.0;
+  call @printUnmarked table.0.0 n.0.1;
   free table.0.0;
 }
-@main(input.0: int) {
+@main(input.0.0: int) {
 .main.b0:
-  input.1: int = id input.0;
+  input.0.1: int = id input.0.0;
 .main.b1:
-  call @printPrimesUpTo input.0;
+  call @printPrimesUpTo input.0.1;
 }

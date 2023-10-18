@@ -1,4 +1,4 @@
-@matget(matrix: ptr<float>, r: int, c: int): float {
+@matget(matrix.0: ptr<float>, r.0: int, c.0: int): float {
   three.0: int = const 3;
   trip_r.0: int = mul three.0 r.0;
   index.0: int = add c.0 trip_r.0;
@@ -6,13 +6,13 @@
   res.0: float = load ptr.0;
   ret res.0;
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   acc.0: int = div a.0 b.0;
   acc.0: int = mul b.0 acc.0;
   acc.0: int = sub a.0 acc.0;
   ret acc.0;
 }
-@determinant(matrix: ptr<float>): float {
+@determinant(matrix.0: ptr<float>): float {
   two.0: int = const 2;
   one.0: int = const 1;
   zero.0: int = const 0;
@@ -42,7 +42,7 @@
 .done:
   ret det.0;
 }
-@inverse(matrix: ptr<float>): ptr<float> {
+@inverse(matrix.0: ptr<float>): ptr<float> {
   det.0: float = call @determinant matrix.0;
   nine.0: int = const 9;
   result.0: ptr<float> = alloc nine.0;
@@ -118,7 +118,7 @@
   free inv.0;
   free matrix.0;
 }
-@printarray(size: int, arr: ptr<float>) {
+@printarray(size.0: int, arr.0: ptr<float>) {
   i.0: int = const 0;
   one.0: int = const 1;
 .loop:

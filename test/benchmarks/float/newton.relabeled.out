@@ -15,7 +15,7 @@
 .for.end.1:
   print x.0;
 }
-@sqrt(x: float, n: float): float {
+@sqrt(x.0: float, n.0: float): float {
   two.0: float = const 2;
   v0.0: float = fmul x.0 x.0;
   v1.0: float = fsub v0.0 n.0;
@@ -24,7 +24,7 @@
   v4.0: float = fsub x.0 v3.0;
   ret v4.0;
 }
-@diff(a: float, b: float): float {
+@diff(a.0: float, b.0: float): float {
   c.0: bool = fgt a.0 b.0;
   br c.0 .then.1 .else.1;
 .then.1:

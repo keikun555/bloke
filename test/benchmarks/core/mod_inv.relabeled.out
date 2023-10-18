@@ -1,4 +1,4 @@
-@main(n: int, p: int) {
+@main(n.0: int, p.0: int) {
   v0.0: int = const 2;
   two.0: int = id v0.0;
   v1.0: int = id p.0;
@@ -51,7 +51,7 @@
   print v32.0;
   v33.0: int = const 0;
 }
-@mod(n: int, p: int): int {
+@mod(n.0: int, p.0: int): int {
   v0.0: int = id n.0;
   v1.0: int = id n.0;
   v2.0: int = id p.0;

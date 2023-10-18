@@ -1,0 +1,54 @@
+@main(n.0.0: int) {
+.main.b0:
+  n.0.1: int = id n.0.0;
+.main.b1:
+  i.0.0: int = const 0;
+  res.0.0: int = const 0;
+  one.0.0: int = const 1;
+  non.0.0: int = const -1;
+  zer.0.0: int = const 0;
+  nlz.0.0: bool = lt n.0.1 zer.0.0;
+  br nlz.0.0 .neg .begin;
+.neg:
+  n.0.2: int = mul n.0.1 non.0.0;
+.begin:
+  sqgt.0.0: bool = phi sqgt.0.1 sqgt.0.1 sqgt.0.1 .check .body .then;
+  res.0.1: int = phi res.0.0 res.0.0 res.0.1 res.0.2 res.0.3 .main.b1 .neg .check .body .then;
+  n.0.3: int = phi n.0.1 n.0.2 n.0.3 n.0.3 n.0.3 .main.b1 .neg .check .body .then;
+  m.0.0: int = phi m.0.1 m.0.1 m.0.1 .check .body .then;
+  isq.0.0: int = phi isq.0.1 isq.0.1 isq.0.1 .check .body .then;
+  i.0.1: int = phi i.0.0 i.0.0 i.0.2 i.0.2 i.0.2 .main.b1 .neg .check .body .then;
+  eqz.0.0: bool = phi eqz.0.1 eqz.0.1 eqz.0.1 .check .body .then;
+  deqi.0.0: bool = phi deqi.0.0 deqi.0.1 deqi.0.1 .check .body .then;
+  d.0.0: int = phi d.0.0 d.0.1 d.0.1 .check .body .then;
+  i.0.2: int = add i.0.1 one.0.0;
+  isq.0.1: int = mul i.0.2 i.0.2;
+  sqgt.0.1: bool = gt isq.0.1 n.0.3;
+  br sqgt.0.1 .end .check;
+.check:
+  m.0.1: int = call @mod n.0.3 i.0.2;
+  eqz.0.1: bool = eq m.0.1 zer.0.0;
+  br eqz.0.1 .body .begin;
+.body:
+  print i.0.2;
+  res.0.2: int = add res.0.1 i.0.2;
+  d.0.1: int = div n.0.3 i.0.2;
+  deqi.0.1: bool = eq d.0.1 i.0.2;
+  br deqi.0.1 .begin .then;
+.then:
+  print d.0.1;
+  res.0.3: int = add res.0.2 d.0.1;
+  jmp .begin;
+.end:
+  print res.0.1;
+}
+@mod(dividend.0.0: int, divisor.0.0: int): int {
+.mod.b0:
+  dividend.0.1: int = id dividend.0.0;
+  divisor.0.1: int = id divisor.0.0;
+.mod.b1:
+  quot.0.0: int = div dividend.0.1 divisor.0.1;
+  prod.0.0: int = mul divisor.0.1 quot.0.0;
+  diff.0.0: int = sub dividend.0.1 prod.0.0;
+  ret diff.0.0;
+}

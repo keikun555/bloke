@@ -1,19 +1,19 @@
-@pow(base.0: int, exp.0: int): int {
+@pow(base.0.0: int, exp.0.0: int): int {
 .pow.b0:
-  base.1: int = id base.0;
-  exp.1: int = id exp.0;
+  base.0.1: int = id base.0.0;
+  exp.0.1: int = id exp.0.0;
 .pow.b1:
   out.0.0: int = const 1;
   one.0.0: int = const 1;
 .loop:
   out.0.1: int = phi out.0.0 out.0.2 .pow.b1 .body;
-  exp.0.0: int = phi exp.0.1 .body;
+  exp.0.2: int = phi exp.0.1 exp.0.3 .pow.b1 .body;
   end.0.0: bool = phi end.0.1 .body;
-  end.0.1: bool = lt exp.0.0 one.0.0;
+  end.0.1: bool = lt exp.0.2 one.0.0;
   br end.0.1 .ret .body;
 .body:
-  out.0.2: int = mul out.0.1 base.0;
-  exp.0.1: int = sub exp.0.0 one.0.0;
+  out.0.2: int = mul out.0.1 base.0.1;
+  exp.0.3: int = sub exp.0.2 one.0.0;
   jmp .loop;
 .ret:
   ret out.0.1;

@@ -1,7 +1,7 @@
-@main(arg1.0: int, arg2.0: int) {
+@main(arg1.0.0: int, arg2.0.0: int) {
 .main.b0:
-  arg1.1: int = id arg1.0;
-  arg2.1: int = id arg2.0;
+  arg1.0.1: int = id arg1.0.0;
+  arg2.0.1: int = id arg2.0.0;
 .main.b1:
   a.0.0: int = const 4;
   b.0.0: int = const 3;
@@ -10,12 +10,12 @@
   constant_fold4.0.0: bool = lt b.0.0 a.0.0;
   constant_fold5.0.0: bool = gt b.0.0 a.0.0;
   constant_fold6.0.0: bool = ge b.0.0 a.0.0;
-  should_fold1.0.0: bool = eq arg1.0 arg1.0;
-  should_fold2.0.0: bool = le arg1.0 arg1.0;
-  should_fold3.0.0: bool = ge arg1.0 arg1.0;
-  no_fold1.0.0: bool = eq arg1.0 arg2.0;
-  no_fold2.0.0: bool = le arg1.0 arg2.0;
-  no_fold3.0.0: bool = ge arg1.0 arg2.0;
-  no_fold4.0.0: bool = lt arg1.0 arg1.0;
-  no_fold5.0.0: bool = gt arg2.0 arg2.0;
+  should_fold1.0.0: bool = eq arg1.0.1 arg1.0.1;
+  should_fold2.0.0: bool = le arg1.0.1 arg1.0.1;
+  should_fold3.0.0: bool = ge arg1.0.1 arg1.0.1;
+  no_fold1.0.0: bool = eq arg1.0.1 arg2.0.1;
+  no_fold2.0.0: bool = le arg1.0.1 arg2.0.1;
+  no_fold3.0.0: bool = ge arg1.0.1 arg2.0.1;
+  no_fold4.0.0: bool = lt arg1.0.1 arg1.0.1;
+  no_fold5.0.0: bool = gt arg2.0.1 arg2.0.1;
 }

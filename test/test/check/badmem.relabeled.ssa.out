@@ -1,0 +1,15 @@
+@main(i.0.0: int, f.0.0: float) {
+.main.b0:
+  i.0.1: int = id i.0.0;
+  f.0.1: float = id f.0.0;
+.main.b1:
+  p.0.0: ptr<int> = alloc f.0.1;
+  p2.0.0: int = alloc i.0.1;
+  store p.0.0 f.0.1;
+  store i.0.1 p.0.0;
+  j.0.0: float = load p.0.0;
+  i.0.2: int = load i.0.1;
+  q.0.0: ptr<float> = ptradd p.0.0 i.0.2;
+  q2.0.0: ptr<int> = ptradd i.0.2 p.0.0;
+  free i.0.2;
+}

@@ -5,11 +5,11 @@
   c.0.0: bool = eq a.0.0 b.0.0;
   d.0.0: bool = id c.0.0;
 }
-@f(i.0: int): bool {
+@f(i.0.0: int): bool {
 .f.b0:
-  i.1: int = id i.0;
+  i.0.1: int = id i.0.0;
 .f.b1:
   zero.0.0: int = const 0;
-  b.0.0: bool = eq i.0 zero.0.0;
+  b.0.0: bool = eq i.0.1 zero.0.0;
   ret b.0.0;
 }

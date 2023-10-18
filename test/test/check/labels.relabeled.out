@@ -1,4 +1,4 @@
-@main(b: bool) {
+@main(b.0: bool) {
   jmp .bad;
   br b.0 .foo;
   br b.0 .foo .foo .foo;

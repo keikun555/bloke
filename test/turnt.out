@@ -15,10 +15,8 @@ ok 13 - ./benchmarks/core/bitwise-ops.bril variable-relabeler
 ok 14 - ./benchmarks/core/bitwise-ops.bril relabeled-ssa
 ok 15 - ./benchmarks/core/bitwise-ops.bril bril2z3
 ok 16 - ./benchmarks/core/catalan.bril variable-relabeler
-not ok 17 - ./benchmarks/core/catalan.bril relabeled-ssa
-# exit code: 1
-not ok 18 - ./benchmarks/core/catalan.bril bril2z3
-# exit code: 1
+ok 17 - ./benchmarks/core/catalan.bril relabeled-ssa
+ok 18 - ./benchmarks/core/catalan.bril bril2z3
 ok 19 - ./benchmarks/core/check-primes.bril variable-relabeler
 ok 20 - ./benchmarks/core/check-primes.bril relabeled-ssa
 ok 21 - ./benchmarks/core/check-primes.bril bril2z3
@@ -32,10 +30,8 @@ ok 28 - ./benchmarks/core/dot-product.bril variable-relabeler
 ok 29 - ./benchmarks/core/dot-product.bril relabeled-ssa
 ok 30 - ./benchmarks/core/dot-product.bril bril2z3
 ok 31 - ./benchmarks/core/euclid.bril variable-relabeler
-not ok 32 - ./benchmarks/core/euclid.bril relabeled-ssa
-# exit code: 1
-not ok 33 - ./benchmarks/core/euclid.bril bril2z3
-# exit code: 1
+ok 32 - ./benchmarks/core/euclid.bril relabeled-ssa
+ok 33 - ./benchmarks/core/euclid.bril bril2z3
 ok 34 - ./benchmarks/core/fact.bril variable-relabeler
 ok 35 - ./benchmarks/core/fact.bril relabeled-ssa
 ok 36 - ./benchmarks/core/fact.bril bril2z3
@@ -58,10 +54,8 @@ ok 52 - ./benchmarks/core/mod_inv.bril variable-relabeler
 ok 53 - ./benchmarks/core/mod_inv.bril relabeled-ssa
 ok 54 - ./benchmarks/core/mod_inv.bril bril2z3
 ok 55 - ./benchmarks/core/orders.bril variable-relabeler
-not ok 56 - ./benchmarks/core/orders.bril relabeled-ssa
-# exit code: 1
-not ok 57 - ./benchmarks/core/orders.bril bril2z3
-# exit code: 1
+ok 56 - ./benchmarks/core/orders.bril relabeled-ssa
+ok 57 - ./benchmarks/core/orders.bril bril2z3
 ok 58 - ./benchmarks/core/palindrome.bril variable-relabeler
 ok 59 - ./benchmarks/core/palindrome.bril relabeled-ssa
 ok 60 - ./benchmarks/core/palindrome.bril bril2z3
@@ -87,10 +81,8 @@ ok 79 - ./benchmarks/core/rectangles-area-difference.bril variable-relabeler
 ok 80 - ./benchmarks/core/rectangles-area-difference.bril relabeled-ssa
 ok 81 - ./benchmarks/core/rectangles-area-difference.bril bril2z3
 ok 82 - ./benchmarks/core/relative-primes.bril variable-relabeler
-not ok 83 - ./benchmarks/core/relative-primes.bril relabeled-ssa
-# exit code: 1
-not ok 84 - ./benchmarks/core/relative-primes.bril bril2z3
-# exit code: 1
+ok 83 - ./benchmarks/core/relative-primes.bril relabeled-ssa
+ok 84 - ./benchmarks/core/relative-primes.bril bril2z3
 ok 85 - ./benchmarks/core/reverse.bril variable-relabeler
 ok 86 - ./benchmarks/core/reverse.bril relabeled-ssa
 ok 87 - ./benchmarks/core/reverse.bril bril2z3
@@ -98,18 +90,14 @@ ok 88 - ./benchmarks/core/sum-bits.bril variable-relabeler
 ok 89 - ./benchmarks/core/sum-bits.bril relabeled-ssa
 ok 90 - ./benchmarks/core/sum-bits.bril bril2z3
 ok 91 - ./benchmarks/core/sum-divisors.bril variable-relabeler
-not ok 92 - ./benchmarks/core/sum-divisors.bril relabeled-ssa
-# exit code: 1
-not ok 93 - ./benchmarks/core/sum-divisors.bril bril2z3
-# exit code: 1
+ok 92 - ./benchmarks/core/sum-divisors.bril relabeled-ssa
+ok 93 - ./benchmarks/core/sum-divisors.bril bril2z3
 ok 94 - ./benchmarks/core/sum-sq-diff.bril variable-relabeler
 ok 95 - ./benchmarks/core/sum-sq-diff.bril relabeled-ssa
 ok 96 - ./benchmarks/core/sum-sq-diff.bril bril2z3
 ok 97 - ./benchmarks/core/totient.bril variable-relabeler
-not ok 98 - ./benchmarks/core/totient.bril relabeled-ssa
-# exit code: 1
-not ok 99 - ./benchmarks/core/totient.bril bril2z3
-# exit code: 1
+ok 98 - ./benchmarks/core/totient.bril relabeled-ssa
+ok 99 - ./benchmarks/core/totient.bril bril2z3
 ok 100 - ./benchmarks/core/up-arrow.bril variable-relabeler
 ok 101 - ./benchmarks/core/up-arrow.bril relabeled-ssa
 ok 102 - ./benchmarks/core/up-arrow.bril bril2z3
@@ -162,10 +150,8 @@ ok 148 - ./benchmarks/mem/bubblesort.bril variable-relabeler
 ok 149 - ./benchmarks/mem/bubblesort.bril relabeled-ssa
 ok 150 - ./benchmarks/mem/bubblesort.bril bril2z3
 ok 151 - ./benchmarks/mem/eight-queens.bril variable-relabeler
-not ok 152 - ./benchmarks/mem/eight-queens.bril relabeled-ssa
-# exit code: 1
-not ok 153 - ./benchmarks/mem/eight-queens.bril bril2z3
-# exit code: 1
+ok 152 - ./benchmarks/mem/eight-queens.bril relabeled-ssa
+ok 153 - ./benchmarks/mem/eight-queens.bril bril2z3
 ok 154 - ./benchmarks/mem/fib.bril variable-relabeler
 ok 155 - ./benchmarks/mem/fib.bril relabeled-ssa
 ok 156 - ./benchmarks/mem/fib.bril bril2z3
@@ -176,10 +162,8 @@ ok 160 - ./benchmarks/mem/max-subarray.bril variable-relabeler
 ok 161 - ./benchmarks/mem/max-subarray.bril relabeled-ssa
 ok 162 - ./benchmarks/mem/max-subarray.bril bril2z3
 ok 163 - ./benchmarks/mem/primitive-root.bril variable-relabeler
-not ok 164 - ./benchmarks/mem/primitive-root.bril relabeled-ssa
-# exit code: 1
-not ok 165 - ./benchmarks/mem/primitive-root.bril bril2z3
-# exit code: 1
+ok 164 - ./benchmarks/mem/primitive-root.bril relabeled-ssa
+ok 165 - ./benchmarks/mem/primitive-root.bril bril2z3
 ok 166 - ./benchmarks/mem/quicksort.bril variable-relabeler
 ok 167 - ./benchmarks/mem/quicksort.bril relabeled-ssa
 ok 168 - ./benchmarks/mem/quicksort.bril bril2z3
@@ -399,10 +383,8 @@ ok 368 - ./test/check/badid.bril relabeled-ssa
 not ok 369 - ./test/check/badid.bril bril2z3
 # exit code: 1
 ok 370 - ./test/check/badmem.bril variable-relabeler
-not ok 371 - ./test/check/badmem.bril relabeled-ssa
-# exit code: 1
-not ok 372 - ./test/check/badmem.bril bril2z3
-# exit code: 1
+ok 371 - ./test/check/badmem.bril relabeled-ssa
+ok 372 - ./test/check/badmem.bril bril2z3
 ok 373 - ./test/check/char.bril variable-relabeler
 ok 374 - ./test/check/char.bril relabeled-ssa
 ok 375 - ./test/check/char.bril bril2z3
@@ -478,10 +460,8 @@ ok 436 - ./test/interp/core/call.bril variable-relabeler
 ok 437 - ./test/interp/core/call.bril relabeled-ssa
 ok 438 - ./test/interp/core/call.bril bril2z3
 ok 439 - ./test/interp/core/call-with-args.bril variable-relabeler
-not ok 440 - ./test/interp/core/call-with-args.bril relabeled-ssa
-# exit code: 1
-not ok 441 - ./test/interp/core/call-with-args.bril bril2z3
-# exit code: 1
+ok 440 - ./test/interp/core/call-with-args.bril relabeled-ssa
+ok 441 - ./test/interp/core/call-with-args.bril bril2z3
 ok 442 - ./test/interp/core/div.bril variable-relabeler
 ok 443 - ./test/interp/core/div.bril relabeled-ssa
 ok 444 - ./test/interp/core/div.bril bril2z3
@@ -507,10 +487,8 @@ ok 463 - ./test/interp-error/char-error/badconversion.bril variable-relabeler
 ok 464 - ./test/interp-error/char-error/badconversion.bril relabeled-ssa
 ok 465 - ./test/interp-error/char-error/badconversion.bril bril2z3
 ok 466 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril variable-relabeler
-not ok 467 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril relabeled-ssa
-# exit code: 1
-not ok 468 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril bril2z3
-# exit code: 1
+ok 467 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril relabeled-ssa
+ok 468 - ./test/interp-error/core-error/call-nonvoid-return-nothing-error.bril bril2z3
 ok 469 - ./test/interp-error/core-error/call-return-nothing-error.bril variable-relabeler
 ok 470 - ./test/interp-error/core-error/call-return-nothing-error.bril relabeled-ssa
 ok 471 - ./test/interp-error/core-error/call-return-nothing-error.bril bril2z3
@@ -527,10 +505,8 @@ ok 481 - ./test/interp-error/core-error/call-wrong-arity.bril variable-relabeler
 ok 482 - ./test/interp-error/core-error/call-wrong-arity.bril relabeled-ssa
 ok 483 - ./test/interp-error/core-error/call-wrong-arity.bril bril2z3
 ok 484 - ./test/interp-error/core-error/call-wrong-declared-type.bril variable-relabeler
-not ok 485 - ./test/interp-error/core-error/call-wrong-declared-type.bril relabeled-ssa
-# exit code: 1
-not ok 486 - ./test/interp-error/core-error/call-wrong-declared-type.bril bril2z3
-# exit code: 1
+ok 485 - ./test/interp-error/core-error/call-wrong-declared-type.bril relabeled-ssa
+ok 486 - ./test/interp-error/core-error/call-wrong-declared-type.bril bril2z3
 ok 487 - ./test/interp-error/core-error/divide_by_zero.bril variable-relabeler
 ok 488 - ./test/interp-error/core-error/divide_by_zero.bril relabeled-ssa
 ok 489 - ./test/interp-error/core-error/divide_by_zero.bril bril2z3
@@ -707,10 +683,8 @@ ok 647 - ./test/print/char.bril relabeled-ssa
 not ok 648 - ./test/print/char.bril bril2z3
 # exit code: 1
 ok 649 - ./test/print/eight-queens.bril variable-relabeler
-not ok 650 - ./test/print/eight-queens.bril relabeled-ssa
-# exit code: 1
-not ok 651 - ./test/print/eight-queens.bril bril2z3
-# exit code: 1
+ok 650 - ./test/print/eight-queens.bril relabeled-ssa
+ok 651 - ./test/print/eight-queens.bril bril2z3
 ok 652 - ./test/print/ptr.bril variable-relabeler
 ok 653 - ./test/print/ptr.bril relabeled-ssa
 ok 654 - ./test/print/ptr.bril bril2z3
@@ -769,8 +743,8 @@ not ok 689 - ./type-infer/tests/fail-infer/tricky-jump.bril relabeled-ssa
 not ok 690 - ./type-infer/tests/fail-infer/tricky-jump.bril bril2z3
 # exit code: 1
 not ok 691 - ./type-infer/tests/fail-typecheck/add.bril variable-relabeler # differing: type-infer/tests/fail-typecheck/add.err
-not ok 692 - ./type-infer/tests/fail-typecheck/add.bril relabeled-ssa # differing: type-infer/tests/fail-typecheck/add.err
-ok 693 - ./type-infer/tests/fail-typecheck/add.bril bril2z3
+ok 692 - ./type-infer/tests/fail-typecheck/add.bril relabeled-ssa
+not ok 693 - ./type-infer/tests/fail-typecheck/add.bril bril2z3 # differing: type-infer/tests/fail-typecheck/add.err
 ok 694 - ./type-infer/tests/fail-typecheck/arith_ops.bril variable-relabeler
 ok 695 - ./type-infer/tests/fail-typecheck/arith_ops.bril relabeled-ssa
 ok 696 - ./type-infer/tests/fail-typecheck/arith_ops.bril bril2z3

@@ -1,4 +1,4 @@
-@main(n: int, m: int): int {
+@main(n.0: int, m.0: int): int {
   condi.0: bool = lt n.0 m.0;
   br condi.0 .less .biggereq;
 .less:

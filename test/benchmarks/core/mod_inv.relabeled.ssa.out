@@ -1,17 +1,17 @@
-@main(n.0: int, p.0: int) {
+@main(n.0.0: int, p.0.0: int) {
 .main.b0:
-  n.1: int = id n.0;
-  p.1: int = id p.0;
+  n.0.1: int = id n.0.0;
+  p.0.1: int = id p.0.0;
 .main.b1:
   v0.0.0: int = const 2;
   two.0.0: int = id v0.0.0;
-  v1.0.0: int = id p.0;
+  v1.0.0: int = id p.0.1;
   v2.0.0: int = id two.0.0;
   v3.0.0: int = sub v1.0.0 v2.0.0;
   m.0.0: int = id v3.0.0;
   v4.0.0: int = const 1;
   ans.0.0: int = id v4.0.0;
-  v5.0.0: int = id n.0;
+  v5.0.0: int = id n.0.1;
   a.0.0: int = id v5.0.0;
   v7.0.0: int = const 1;
   i.0.0: int = id v7.0.0;
@@ -61,7 +61,7 @@
   v19.0.1: int = id ans.0.1;
   v20.0.1: int = id a.0.1;
   v21.0.1: int = mul v19.0.1 v20.0.1;
-  v22.0.1: int = id p.0;
+  v22.0.1: int = id p.0.1;
   v23.0.1: int = call @mod v21.0.1 v22.0.1;
   ans.0.2: int = id v23.0.1;
 .endif.11:
@@ -74,7 +74,7 @@
   v24.0.1: int = id a.0.1;
   v25.0.1: int = id a.0.1;
   v26.0.1: int = mul v24.0.1 v25.0.1;
-  v27.0.1: int = id p.0;
+  v27.0.1: int = id p.0.1;
   v28.0.1: int = call @mod v26.0.1 v27.0.1;
   a.0.2: int = id v28.0.1;
   v29.0.1: int = id m.0.1;
@@ -87,16 +87,16 @@
   print v32.0.0;
   v33.0.0: int = const 0;
 }
-@mod(n.0: int, p.0: int): int {
+@mod(n.0.0: int, p.0.0: int): int {
 .mod.b0:
-  n.1: int = id n.0;
-  p.1: int = id p.0;
+  n.0.1: int = id n.0.0;
+  p.0.1: int = id p.0.0;
 .mod.b1:
-  v0.0.0: int = id n.0;
-  v1.0.0: int = id n.0;
-  v2.0.0: int = id p.0;
+  v0.0.0: int = id n.0.1;
+  v1.0.0: int = id n.0.1;
+  v2.0.0: int = id p.0.1;
   v3.0.0: int = div v1.0.0 v2.0.0;
-  v4.0.0: int = id p.0;
+  v4.0.0: int = id p.0.1;
   v5.0.0: int = mul v3.0.0 v4.0.0;
   v6.0.0: int = sub v0.0.0 v5.0.0;
   ret v6.0.0;

@@ -5,7 +5,7 @@
   call @generateNthRow v1.0;
   v2.0: int = const 0;
 }
-@generateNthRow(x: int) {
+@generateNthRow(x.0: int) {
   v0.0: int = const 1;
   prev.0: int = id v0.0;
   v1.0: int = id prev.0;

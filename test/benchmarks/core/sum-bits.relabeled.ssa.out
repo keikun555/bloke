@@ -1,34 +1,34 @@
-@main(input.0: int) {
+@main(input.0.0: int) {
 .main.b0:
-  input.1: int = id input.0;
+  input.0.1: int = id input.0.0;
 .main.b1:
   sum.0.0: int = const 0;
   two.0.0: int = const 2;
   zero.0.0: int = const 0;
 .loop:
   sum.0.1: int = phi sum.0.0 sum.0.2 .main.b1 .body;
-  input.0.0: int = phi input.0.1 .body;
+  input.0.2: int = phi input.0.1 input.0.3 .main.b1 .body;
   cond.0.0: bool = phi cond.0.1 .body;
   bit.0.0: int = phi bit.0.1 .body;
-  cond.0.1: bool = eq input.0.0 zero.0.0;
+  cond.0.1: bool = eq input.0.2 zero.0.0;
   br cond.0.1 .done .body;
 .body:
-  bit.0.1: int = call @mod input.0.0 two.0.0;
-  input.0.1: int = div input.0.0 two.0.0;
+  bit.0.1: int = call @mod input.0.2 two.0.0;
+  input.0.3: int = div input.0.2 two.0.0;
   sum.0.2: int = add sum.0.1 bit.0.1;
   jmp .loop;
 .done:
   print sum.0.1;
   ret;
 }
-@mod(dividend.0: int, divisor.0: int): int {
+@mod(dividend.0.0: int, divisor.0.0: int): int {
 .mod.b0:
-  dividend.1: int = id dividend.0;
-  divisor.1: int = id divisor.0;
+  dividend.0.1: int = id dividend.0.0;
+  divisor.0.1: int = id divisor.0.0;
 .mod.b1:
-  quotient.0.0: int = div dividend.0 divisor.0;
+  quotient.0.0: int = div dividend.0.1 divisor.0.1;
   two.0.0: int = const 2;
   prod.0.0: int = mul two.0.0 quotient.0.0;
-  diff.0.0: int = sub dividend.0 prod.0.0;
+  diff.0.0: int = sub dividend.0.1 prod.0.0;
   ret diff.0.0;
 }

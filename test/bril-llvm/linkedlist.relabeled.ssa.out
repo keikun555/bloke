@@ -1,27 +1,27 @@
-@cons(head.0: int, tail.0: ptr<int_list>): ptr<int_list> {
+@cons(head.0.0: int, tail.0.0: ptr<int_list>): ptr<int_list> {
 .cons.b0:
-  head.1: int = id head.0;
-  tail.1: ptr<int_list> = id tail.0;
+  head.0.1: int = id head.0.0;
+  tail.0.1: ptr<int_list> = id tail.0.0;
 .cons.b1:
   one.0.0: int = const 1;
   p.0.0: ptr<int_list> = alloc one.0.0;
   phead.0.0: ptr<int> = getmbr p.0.0 elt.0;
   ptail.0.0: ptr<ptr<int_list>> = getmbr p.0.0 next.0;
-  store phead.0.0 head.0;
-  store ptail.0.0 tail.0;
+  store phead.0.0 head.0.1;
+  store ptail.0.0 tail.0.1;
   ret p.0.0;
 }
-@print_list(list.0: ptr<int_list>) {
+@print_list(list.0.0: ptr<int_list>) {
 .print_list.b0:
-  list.1: ptr<int_list> = id list.0;
+  list.0.1: ptr<int_list> = id list.0.0;
 .print_list.b1:
-  empty.0.0: bool = isnull list.0;
+  empty.0.0: bool = isnull list.0.1;
   br empty.0.0 .end .print;
 .print:
-  xp.0.0: ptr<int> = getmbr list.0 elt.0;
+  xp.0.0: ptr<int> = getmbr list.0.1 elt.0;
   x.0.0: int = load xp.0.0;
   print x.0.0;
-  tp.0.0: ptr<ptr<int_list>> = getmbr list.0 next.0;
+  tp.0.0: ptr<ptr<int_list>> = getmbr list.0.1 next.0;
   t.0.0: ptr<int_list> = load tp.0.0;
   call @print_list t.0.0;
 .end:
@@ -31,17 +31,17 @@
   t.0.1: ptr<int_list> = phi t.0.0 .print;
   ret;
 }
-@free_list(list.0: ptr<int_list>) {
+@free_list(list.0.0: ptr<int_list>) {
 .free_list.b0:
-  list.1: ptr<int_list> = id list.0;
+  list.0.1: ptr<int_list> = id list.0.0;
 .free_list.b1:
-  empty.0.0: bool = isnull list.0;
+  empty.0.0: bool = isnull list.0.1;
   br empty.0.0 .end .freetail;
 .freetail:
-  tp.0.0: ptr<ptr<int_list>> = getmbr list.0 next.0;
+  tp.0.0: ptr<ptr<int_list>> = getmbr list.0.1 next.0;
   t.0.0: ptr<int_list> = load tp.0.0;
   call @free_list t.0.0;
-  free list.0;
+  free list.0.1;
 .end:
   tp.0.1: ptr<ptr<int_list>> = phi tp.0.0 .freetail;
   t.0.1: ptr<int_list> = phi t.0.0 .freetail;

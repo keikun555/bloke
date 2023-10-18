@@ -1,32 +1,32 @@
-@main(x.0: int) {
+@main(x.0.0: int) {
 .main.b0:
-  x.1: int = id x.0;
+  x.0.1: int = id x.0.0;
 .main.b1:
   one.0.0: int = const 1;
   two.0.0: int = const 2;
   three.0.0: int = const 3;
   jmp .print;
 .cond:
-  eq_one.0.1: bool = eq x.0.0 one.0.0;
+  eq_one.0.1: bool = eq x.0.2 one.0.0;
   br eq_one.0.1 .end .loop;
 .loop:
-  half.0.1: int = div x.0.0 two.0.0;
+  half.0.1: int = div x.0.2 two.0.0;
   doublehalf.0.1: int = mul half.0.1 two.0.0;
-  even.0.1: bool = eq x.0.0 doublehalf.0.1;
+  even.0.1: bool = eq x.0.2 doublehalf.0.1;
   br even.0.1 .even .odd;
 .even:
-  x.0.1: int = div x.0.0 two.0.0;
+  x.0.3: int = div x.0.2 two.0.0;
   jmp .print;
 .odd:
-  x.0.2: int = mul x.0.0 three.0.0;
-  x.0.3: int = add x.0.2 one.0.0;
+  x.0.4: int = mul x.0.2 three.0.0;
+  x.0.5: int = add x.0.4 one.0.0;
 .print:
-  x.0.0: int = phi x.0.1 x.0.3 .even .odd;
+  x.0.2: int = phi x.0.1 x.0.3 x.0.5 .main.b1 .even .odd;
   half.0.0: int = phi half.0.1 half.0.1 .even .odd;
   even.0.0: bool = phi even.0.1 even.0.1 .even .odd;
   eq_one.0.0: bool = phi eq_one.0.1 eq_one.0.1 .even .odd;
   doublehalf.0.0: int = phi doublehalf.0.1 doublehalf.0.1 .even .odd;
-  print x.0.0;
+  print x.0.2;
   jmp .cond;
 .end:
   ret;

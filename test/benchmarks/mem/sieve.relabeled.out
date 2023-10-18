@@ -1,4 +1,4 @@
-@printUnmarked(table: ptr<bool>, tableSize: int) {
+@printUnmarked(table.0: ptr<bool>, tableSize.0: int) {
   idx.0: int = const 0;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -18,7 +18,7 @@
 .print.unmarked.for.end:
   ret;
 }
-@findNextP(table: ptr<bool>, tableSize: int, currentP: int): int {
+@findNextP(table.0: ptr<bool>, tableSize.0: int, currentP.0: int): int {
   zero.0: int = const 0;
   one.0: int = const 1;
   p.0: int = id currentP.0;
@@ -35,7 +35,7 @@
 .find.next.p.not.in.bounds:
   ret zero.0;
 }
-@markMultiples(table: ptr<bool>, tableSize: int, p: int) {
+@markMultiples(table.0: ptr<bool>, tableSize.0: int, p.0: int) {
   zero.0: int = const 0;
   one.0: int = const 1;
   t.0: bool = const true;
@@ -52,7 +52,7 @@
 .mark.multiples.done:
   ret;
 }
-@populateTable(table: ptr<bool>, tableSize: int) {
+@populateTable(table.0: ptr<bool>, tableSize.0: int) {
   zero.0: int = const 0;
   one.0: int = const 1;
   two.0: int = const 2;
@@ -73,7 +73,7 @@
 .populate.table.for.end:
   ret;
 }
-@printPrimesUpTo(n: int) {
+@printPrimesUpTo(n.0: int) {
   zero.0: int = const 0;
   two.0: int = const 2;
   table.0: ptr<bool> = alloc n.0;
@@ -88,6 +88,6 @@
   call @printUnmarked table.0 n.0;
   free table.0;
 }
-@main(input: int) {
+@main(input.0: int) {
   call @printPrimesUpTo input.0;
 }

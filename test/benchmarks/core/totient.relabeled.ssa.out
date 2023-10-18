@@ -1,0 +1,80 @@
+@main(n.0.0: int) {
+.main.b0:
+  n.0.1: int = id n.0.0;
+.main.b1:
+  print n.0.1;
+  tot.0.0: int = call @totient n.0.1;
+  print tot.0.0;
+}
+@totient(n.0.0: int): int {
+.totient.b0:
+  n.0.1: int = id n.0.0;
+.totient.b1:
+  result.0.0: int = id n.0.1;
+  p.0.0: int = const 2;
+  one.0.0: int = const 1;
+  zero.0.0: int = const 0;
+.for.set.cond:
+  while_cond.0.0: bool = phi while_cond.0.1 .else_lbl;
+  result.0.1: int = phi result.0.0 result.0.4 .totient.b1 .else_lbl;
+  resdiv.0.0: int = phi resdiv.0.3 .else_lbl;
+  pp.0.0: int = phi pp.0.1 .else_lbl;
+  p.0.1: int = phi p.0.0 p.0.2 .totient.b1 .else_lbl;
+  npmod.0.0: int = phi npmod.0.2 .else_lbl;
+  npdiv.0.0: int = phi npdiv.0.1 .else_lbl;
+  n.0.2: int = phi n.0.1 n.0.3 .totient.b1 .else_lbl;
+  if_cond.0.0: bool = phi if_cond.0.1 .else_lbl;
+  cond.0.0: bool = phi cond.0.1 .else_lbl;
+  pp.0.1: int = mul p.0.1 p.0.1;
+  cond.0.1: bool = le pp.0.1 n.0.2;
+  br cond.0.1 .for.set.body .for.set.end;
+.for.set.body:
+  npmod.0.1: int = call @mod n.0.2 p.0.1;
+  if_cond.0.1: bool = eq npmod.0.1 zero.0.0;
+  br if_cond.0.1 .if_lbl .else_lbl;
+.if_lbl:
+.while.set.cond:
+  while_cond.0.2: bool = phi while_cond.0.0 while_cond.0.3 .if_lbl .while.body;
+  npmod.0.3: int = phi npmod.0.1 npmod.0.4 .if_lbl .while.body;
+  npdiv.0.2: int = phi npdiv.0.0 npdiv.0.3 .if_lbl .while.body;
+  n.0.4: int = phi n.0.2 n.0.5 .if_lbl .while.body;
+  npmod.0.4: int = call @mod n.0.4 p.0.1;
+  while_cond.0.3: bool = eq npmod.0.4 zero.0.0;
+  br while_cond.0.3 .while.body .while.end;
+.while.body:
+  npdiv.0.3: int = div n.0.4 p.0.1;
+  n.0.5: int = id npdiv.0.3;
+  jmp .while.set.cond;
+.while.end:
+  resdiv.0.4: int = div result.0.1 p.0.1;
+  result.0.5: int = sub result.0.1 resdiv.0.4;
+.else_lbl:
+  while_cond.0.1: bool = phi while_cond.0.0 while_cond.0.3 .for.set.body .while.end;
+  result.0.4: int = phi result.0.1 result.0.5 .for.set.body .while.end;
+  resdiv.0.3: int = phi resdiv.0.0 resdiv.0.4 .for.set.body .while.end;
+  npmod.0.2: int = phi npmod.0.1 npmod.0.4 .for.set.body .while.end;
+  npdiv.0.1: int = phi npdiv.0.0 npdiv.0.2 .for.set.body .while.end;
+  n.0.3: int = phi n.0.2 n.0.4 .for.set.body .while.end;
+  p.0.2: int = add p.0.1 one.0.0;
+  jmp .for.set.cond;
+.for.set.end:
+  final_if_cond.0.0: bool = gt n.0.2 one.0.0;
+  br final_if_cond.0.0 .final_if_label .final_else_label;
+.final_if_label:
+  resdiv.0.1: int = div result.0.1 n.0.2;
+  result.0.2: int = sub result.0.1 resdiv.0.1;
+.final_else_label:
+  result.0.3: int = phi result.0.1 result.0.2 .for.set.end .final_if_label;
+  resdiv.0.2: int = phi resdiv.0.0 resdiv.0.1 .for.set.end .final_if_label;
+  ret result.0.3;
+}
+@mod(a.0.0: int, b.0.0: int): int {
+.mod.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.mod.b1:
+  ad.0.0: int = div a.0.1 b.0.1;
+  mad.0.0: int = mul b.0.1 ad.0.0;
+  ans.0.0: int = sub a.0.1 mad.0.0;
+  ret ans.0.0;
+}

@@ -1,4 +1,4 @@
-@main(x1: int, y1: int, x2: int, y2: int) {
+@main(x1.0: int, y1.0: int, x2.0: int, y2.0: int) {
   a1.0: int = call @area x1.0 y1.0;
   a2.0: int = call @area x2.0 y2.0;
   res.0: int = sub a1.0 a2.0;
@@ -10,7 +10,7 @@
 .end:
   print res.0;
 }
-@area(x: int, y: int): int {
+@area(x.0: int, y.0: int): int {
   area.0: int = mul x.0 y.0;
   print area.0;
   ret area.0;

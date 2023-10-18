@@ -1,4 +1,4 @@
-@main(x: int, y: int) {
+@main(x.0: int, y.0: int) {
   v.0: int = add x.0 y.0;
   print v.0;
 }

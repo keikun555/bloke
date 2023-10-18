@@ -9,12 +9,12 @@
   call @pow v2.0.0 v3.0.0;
   v4.0.0: int = const 0;
 }
-@pow(x.0: float, n.0: int) {
+@pow(x.0.0: float, n.0.0: int) {
 .pow.b0:
-  x.1: float = id x.0;
-  n.1: int = id n.0;
+  x.0.1: float = id x.0.0;
+  n.0.1: int = id n.0.0;
 .pow.b1:
-  v0.0.0: float = id x.0;
+  v0.0.0: float = id x.0.1;
   res.0.0: float = id v0.0.0;
   v2.0.0: int = const 0;
   _i.0.0: int = id v2.0.0;
@@ -33,14 +33,14 @@
   res.0.1: float = phi res.0.0 res.0.2 .pow.b1 .for.body.1;
   _i.0.1: int = phi _i.0.0 _i.0.2 .pow.b1 .for.body.1;
   v3.0.1: int = id _i.0.1;
-  v4.0.1: int = id n.0;
+  v4.0.1: int = id n.0.1;
   v5.0.1: int = const 1;
   v6.0.1: int = sub v4.0.1 v5.0.1;
   v7.0.1: bool = lt v3.0.1 v6.0.1;
   br v7.0.1 .for.body.1 .for.end.1;
 .for.body.1:
   v8.0.1: float = id res.0.1;
-  v9.0.1: float = id x.0;
+  v9.0.1: float = id x.0.1;
   v10.0.1: float = fmul v8.0.1 v9.0.1;
   res.0.2: float = id v10.0.1;
   v11.0.1: int = id _i.0.1;

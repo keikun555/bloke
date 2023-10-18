@@ -5,11 +5,11 @@
   z.0.0: int = const 3;
   call @addboth x.0.0 y.0.0 z.0.0;
 }
-@addboth(x.0: int, y.0: int) {
+@addboth(x.0.0: int, y.0.0: int) {
 .addboth.b0:
-  x.1: int = id x.0;
-  y.1: int = id y.0;
+  x.0.1: int = id x.0.0;
+  y.0.1: int = id y.0.0;
 .addboth.b1:
-  w.0.0: int = add x.0 y.0;
+  w.0.0: int = add x.0.1 y.0.1;
   print w.0.0;
 }

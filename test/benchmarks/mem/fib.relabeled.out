@@ -1,4 +1,4 @@
-@main(input: int) {
+@main(input.0: int) {
   zero.0: int = const 0;
   one.0: int = const 1;
   neg_one.0: int = const -1;

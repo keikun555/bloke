@@ -1,4 +1,4 @@
-@RaySphereIntersection(rayOriginX: float, rayOriginY: float, rayOriginZ: float, rayDirectionX: float, rayDirectionY: float, rayDirectionZ: float, circleCenterX: float, circleCenterY: float, circleCenterZ: float, radius: float): bool {
+@RaySphereIntersection(rayOriginX.0: float, rayOriginY.0: float, rayOriginZ.0: float, rayDirectionX.0: float, rayDirectionY.0: float, rayDirectionZ.0: float, circleCenterX.0: float, circleCenterY.0: float, circleCenterZ.0: float, radius.0: float): bool {
   v0.0: float = id rayOriginX.0;
   v1.0: float = id circleCenterX.0;
   v2.0: float = fsub v0.0 v1.0;
@@ -66,7 +66,7 @@
   v49.0: bool = fgt v47.0 v48.0;
   ret v49.0;
 }
-@DotProduct(a: float, b: float, c: float, x: float, y: float, z: float): float {
+@DotProduct(a.0: float, b.0: float, c.0: float, x.0: float, y.0: float, z.0: float): float {
   v0.0: float = id a.0;
   v1.0: float = id x.0;
   v2.0: float = fmul v0.0 v1.0;

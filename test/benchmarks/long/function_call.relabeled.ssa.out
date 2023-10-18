@@ -1,8 +1,8 @@
-@main(starting_m.0: int) {
+@main(starting_m.0.0: int) {
 .main.b0:
-  starting_m.1: int = id starting_m.0;
+  starting_m.0.1: int = id starting_m.0.0;
 .main.b1:
-  m.0.0: int = id starting_m.0;
+  m.0.0: int = id starting_m.0.1;
   zero.0.0: int = const 0;
   one.0.0: int = const 1;
   two.0.0: int = const 2;
@@ -24,5 +24,5 @@
 .end:
   m.0.4: int = phi m.0.0 m.0.1 m.0.2 m.0.3 .main.b1 .m_nonzero .m_nonzero2 .m_nonzero3;
   cond_m.0.3: bool = phi cond_m.0.0 cond_m.0.1 cond_m.0.2 cond_m.0.2 .main.b1 .m_nonzero .m_nonzero2 .m_nonzero3;
-  print starting_m.0;
+  print starting_m.0.1;
 }

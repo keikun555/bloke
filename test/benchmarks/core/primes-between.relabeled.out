@@ -1,4 +1,4 @@
-@main(a: int, b: int) {
+@main(a.0: int, b.0: int) {
 .for.outer.init:
   t0.0: int = const 2;
   t1.0: bool = lt a.0 t0.0;
@@ -47,7 +47,7 @@
   jmp .for.outer.cond;
 .for.outer.end:
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   t1.0: int = div a.0 b.0;
   t2.0: int = mul b.0 t1.0;
   t3.0: int = sub a.0 t2.0;

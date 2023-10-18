@@ -1,7 +1,7 @@
-@main(a: int, b: int, c: int) {
+@main(a.0: int, b.0: int, c.0: int) {
   call @quadratic a.0 b.0 c.0;
 }
-@sqrt(x: int): int {
+@sqrt(x.0: int): int {
   v1.0: int = const 1;
   i.0: int = id v1.0;
 .for.cond.0:
@@ -32,7 +32,7 @@
   v17.0: int = const 0;
   ret v17.0;
 }
-@quadratic(a: int, b: int, c: int) {
+@quadratic(a.0: int, b.0: int, c.0: int) {
   v0.0: int = id b.0;
   v1.0: int = id b.0;
   v2.0: int = mul v0.0 v1.0;

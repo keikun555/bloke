@@ -1,4 +1,4 @@
-@pow(x: float, k: int): float {
+@pow(x.0: float, k.0: int): float {
   xx.0: float = const 1.0;
   one.0: int = const 1;
   i.0: int = const 0;
@@ -12,7 +12,7 @@
 .endwhile:
   ret xx.0;
 }
-@n_root(x: float, n: int): float {
+@n_root(x.0: float, n.0: int): float {
   one.0: int = const 1;
   two_f.0: float = const 2.0;
   xxx.0: float = fdiv x.0 two_f.0;

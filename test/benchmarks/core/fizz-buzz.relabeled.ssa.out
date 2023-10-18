@@ -1,6 +1,6 @@
-@main(input.0: int) {
+@main(input.0.0: int) {
 .main.b0:
-  input.1: int = id input.0;
+  input.0.1: int = id input.0.0;
 .main.b1:
   v1.0.0: int = const 1;
   index.0.0: int = id v1.0.0;
@@ -49,7 +49,7 @@
   div5.0.0: int = phi div5.0.1 .endif.21;
   div3.0.0: int = phi div3.0.1 .endif.21;
   v2.0.1: int = id index.0.1;
-  v4.0.1: bool = lt v2.0.1 input.0;
+  v4.0.1: bool = lt v2.0.1 input.0.1;
   br v4.0.1 .for.body.0 .for.end.0;
 .for.body.0:
   v5.0.1: int = id index.0.1;

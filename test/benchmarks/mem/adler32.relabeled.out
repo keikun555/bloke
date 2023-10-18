@@ -6,13 +6,13 @@
   print checksum.0;
   free arr.0;
 }
-@mod(r: int, s: int): int {
+@mod(r.0: int, s.0: int): int {
   x.0: int = div r.0 s.0;
   y.0: int = mul x.0 s.0;
   result.0: int = sub r.0 y.0;
   ret result.0;
 }
-@fill_array(arr: ptr<int>, size: int) {
+@fill_array(arr.0: ptr<int>, size.0: int) {
   one.0: int = const 1;
   curr.0: int = const 0;
   loc.0: ptr<int> = id arr.0;
@@ -25,7 +25,7 @@
 .exit:
   nop;
 }
-@bitwise_or(x: int, y: int): int {
+@bitwise_or(x.0: int, y.0: int): int {
   one.0: int = const 1;
   two.0: int = const 2;
   val.0: int = const 1;
@@ -51,7 +51,7 @@
 .exit:
   ret result.0;
 }
-@adler32(arr: ptr<int>, size: int): int {
+@adler32(arr.0: ptr<int>, size.0: int): int {
   a.0: int = const 1;
   b.0: int = const 0;
   one.0: int = const 1;

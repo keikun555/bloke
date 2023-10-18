@@ -1,6 +1,6 @@
-@helloBR(end.0: char): ptr<char> {
+@helloBR(end.0.0: char): ptr<char> {
 .helloBR.b0:
-  end.1: char = id end.0;
+  end.0.1: char = id end.0.0;
 .helloBR.b1:
   c1.0.0: char = const 'o';
   c2.0.0: char = const 'i';
@@ -12,7 +12,7 @@
   charvec3.0.0: ptr<char> = ptradd charvec.0.0 pos2.0.0;
   store charvec.0.0 c1.0.0;
   store charvec2.0.0 c2.0.0;
-  store charvec3.0.0 end.0;
+  store charvec3.0.0 end.0.1;
   ret charvec.0.0;
 }
 @main {

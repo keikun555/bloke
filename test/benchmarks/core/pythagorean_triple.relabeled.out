@@ -1,4 +1,4 @@
-@main(n: int) {
+@main(n.0: int) {
   one.0: int = const 1;
   n_sq.0: int = mul n.0 n.0;
   a.0: int = id one.0;

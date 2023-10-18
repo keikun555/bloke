@@ -53,11 +53,11 @@
   store arr.0.15 a33.0.0;
   ret return_ptr.0.0;
 }
-@zeros(sqsize.0: int): ptr<float> {
+@zeros(sqsize.0.0: int): ptr<float> {
 .zeros.b0:
-  sqsize.1: int = id sqsize.0;
+  sqsize.0.1: int = id sqsize.0.0;
 .zeros.b1:
-  arr.0.0: ptr<float> = alloc sqsize.0;
+  arr.0.0: ptr<float> = alloc sqsize.0.1;
   i.0.0: int = const 0;
   one.0.0: int = const 1;
   zero.0.0: float = const 0;
@@ -65,7 +65,7 @@
   loc.0.0: ptr<float> = phi loc.0.1 .loop_end;
   i.0.1: int = phi i.0.0 i.0.2 .zeros.b1 .loop_end;
   cond.0.0: bool = phi cond.0.1 .loop_end;
-  cond.0.1: bool = lt i.0.1 sqsize.0;
+  cond.0.1: bool = lt i.0.1 sqsize.0.1;
   br cond.0.1 .body .done;
 .body:
   loc.0.1: ptr<float> = ptradd arr.0.0 i.0.1;
@@ -76,10 +76,10 @@
 .done:
   ret arr.0.0;
 }
-@printarray(size.0: int, arr.0: ptr<float>) {
+@printarray(size.0.0: int, arr.0.0: ptr<float>) {
 .printarray.b0:
-  size.1: int = id size.0;
-  arr.1: ptr<float> = id arr.0;
+  size.0.1: int = id size.0.0;
+  arr.0.1: ptr<float> = id arr.0.0;
 .printarray.b1:
   i.0.0: int = const 0;
   one.0.0: int = const 1;
@@ -88,10 +88,10 @@
   loc.0.0: ptr<float> = phi loc.0.1 .loop_end;
   i.0.1: int = phi i.0.0 i.0.2 .printarray.b1 .loop_end;
   cond.0.0: bool = phi cond.0.1 .loop_end;
-  cond.0.1: bool = lt i.0.1 size.0;
+  cond.0.1: bool = lt i.0.1 size.0.1;
   br cond.0.1 .body .done;
 .body:
-  loc.0.1: ptr<float> = ptradd arr.0 i.0.1;
+  loc.0.1: ptr<float> = ptradd arr.0.1 i.0.1;
   val.0.1: float = load loc.0.1;
   print val.0.1;
 .loop_end:
@@ -100,12 +100,12 @@
 .done:
   ret;
 }
-@matmul(size.0: int, arr1.0: ptr<float>, arr2.0: ptr<float>, dest.0: ptr<float>) {
+@matmul(size.0.0: int, arr1.0.0: ptr<float>, arr2.0.0: ptr<float>, dest.0.0: ptr<float>) {
 .matmul.b0:
-  size.1: int = id size.0;
-  arr1.1: ptr<float> = id arr1.0;
-  arr2.1: ptr<float> = id arr2.0;
-  dest.1: ptr<float> = id dest.0;
+  size.0.1: int = id size.0.0;
+  arr1.0.1: ptr<float> = id arr1.0.0;
+  arr2.0.1: ptr<float> = id arr2.0.0;
+  dest.0.1: ptr<float> = id dest.0.0;
 .matmul.b1:
   one.0.0: int = const 1;
   row.0.0: int = const 0;
@@ -124,7 +124,7 @@
   i.0.0: int = phi i.0.1 .row.loop_end;
   cond.0.0: bool = phi cond.0.3 .row.loop_end;
   col.0.0: int = phi col.0.2 .row.loop_end;
-  cond.0.1: bool = lt row.0.1 size.0;
+  cond.0.1: bool = lt row.0.1 size.0.1;
   br cond.0.1 .row.body .row.done;
 .row.body:
   col.0.1: int = const 0;
@@ -142,7 +142,7 @@
   i.0.1: int = phi i.0.0 i.0.3 .row.body .col.loop_end;
   cond.0.2: bool = phi cond.0.1 cond.0.5 .row.body .col.loop_end;
   col.0.2: int = phi col.0.1 col.0.3 .row.body .col.loop_end;
-  cond.0.3: bool = lt col.0.2 size.0;
+  cond.0.3: bool = lt col.0.2 size.0.1;
   br cond.0.3 .col.body .col.done;
 .col.body:
   sum.0.2: float = const 0.0;
@@ -158,16 +158,16 @@
   lidx.0.2: int = phi lidx.0.1 lidx.0.4 .col.body .sum.loop_end;
   i.0.3: int = phi i.0.2 i.0.4 .col.body .sum.loop_end;
   cond.0.4: bool = phi cond.0.3 cond.0.5 .col.body .sum.loop_end;
-  cond.0.5: bool = lt i.0.3 size.0;
+  cond.0.5: bool = lt i.0.3 size.0.1;
   br cond.0.5 .sum.body .sum.done;
 .sum.body:
-  lidx.0.3: int = mul row.0.1 size.0;
+  lidx.0.3: int = mul row.0.1 size.0.1;
   lidx.0.4: int = add lidx.0.3 i.0.3;
-  ridx.0.3: int = mul i.0.3 size.0;
+  ridx.0.3: int = mul i.0.3 size.0.1;
   ridx.0.4: int = add ridx.0.3 col.0.2;
-  lvalloc.0.3: ptr<float> = ptradd arr1.0 lidx.0.4;
+  lvalloc.0.3: ptr<float> = ptradd arr1.0.1 lidx.0.4;
   lval.0.3: float = load lvalloc.0.3;
-  rvalloc.0.3: ptr<float> = ptradd arr2.0 ridx.0.4;
+  rvalloc.0.3: ptr<float> = ptradd arr2.0.1 ridx.0.4;
   rval.0.3: float = load rvalloc.0.3;
   prod.0.3: float = fmul lval.0.3 rval.0.3;
   sum.0.4: float = fadd sum.0.3 prod.0.3;
@@ -175,9 +175,9 @@
   i.0.4: int = add i.0.3 one.0.0;
   jmp .sum.loop;
 .sum.done:
-  idx.0.2: int = mul row.0.1 size.0;
+  idx.0.2: int = mul row.0.1 size.0.1;
   idx.0.3: int = add idx.0.2 col.0.2;
-  loc.0.2: ptr<float> = ptradd dest.0 idx.0.3;
+  loc.0.2: ptr<float> = ptradd dest.0.1 idx.0.3;
   store loc.0.2 sum.0.3;
 .col.loop_end:
   col.0.3: int = add col.0.2 one.0.0;
@@ -189,11 +189,11 @@
 .row.done:
   ret;
 }
-@transpose(size.0: int, input.0: ptr<float>, output.0: ptr<float>) {
+@transpose(size.0.0: int, input.0.0: ptr<float>, output.0.0: ptr<float>) {
 .transpose.b0:
-  size.1: int = id size.0;
-  input.1: ptr<float> = id input.0;
-  output.1: ptr<float> = id output.0;
+  size.0.1: int = id size.0.0;
+  input.0.1: ptr<float> = id input.0.0;
+  output.0.1: ptr<float> = id output.0.0;
 .transpose.b1:
   one.0.0: int = const 1;
   row.0.0: int = const 0;
@@ -206,7 +206,7 @@
   dstidx.0.0: int = phi dstidx.0.1 .row.loop_end;
   cond.0.0: bool = phi cond.0.3 .row.loop_end;
   col.0.0: int = phi col.0.2 .row.loop_end;
-  cond.0.1: bool = lt row.0.1 size.0;
+  cond.0.1: bool = lt row.0.1 size.0.1;
   br cond.0.1 .row.body .row.done;
 .row.body:
   col.0.1: int = const 0;
@@ -218,15 +218,15 @@
   dstidx.0.1: int = phi dstidx.0.0 dstidx.0.3 .row.body .col.loop_end;
   cond.0.2: bool = phi cond.0.1 cond.0.3 .row.body .col.loop_end;
   col.0.2: int = phi col.0.1 col.0.3 .row.body .col.loop_end;
-  cond.0.3: bool = lt col.0.2 size.0;
+  cond.0.3: bool = lt col.0.2 size.0.1;
   br cond.0.3 .col.body .col.done;
 .col.body:
-  srcidx.0.2: int = mul row.0.1 size.0;
+  srcidx.0.2: int = mul row.0.1 size.0.1;
   srcidx.0.3: int = add srcidx.0.2 col.0.2;
-  dstidx.0.2: int = mul col.0.2 size.0;
+  dstidx.0.2: int = mul col.0.2 size.0.1;
   dstidx.0.3: int = add dstidx.0.2 row.0.1;
-  srcptr.0.2: ptr<float> = ptradd input.0 srcidx.0.3;
-  dstptr.0.2: ptr<float> = ptradd output.0 dstidx.0.3;
+  srcptr.0.2: ptr<float> = ptradd input.0.1 srcidx.0.3;
+  dstptr.0.2: ptr<float> = ptradd output.0.1 dstidx.0.3;
   value.0.2: float = load srcptr.0.2;
   store dstptr.0.2 value.0.2;
 .col.loop_end:
@@ -239,11 +239,11 @@
 .row.done:
   ret;
 }
-@sqrt(input.0: float): float {
+@sqrt(input.0.0: float): float {
 .sqrt.b0:
-  input.1: float = id input.0;
+  input.0.1: float = id input.0.0;
 .sqrt.b1:
-  n.0.0: float = id input.0;
+  n.0.0: float = id input.0.1;
   v1.0.0: float = const 1e-05;
   precision.0.0: float = id v1.0.0;
   v2.0.0: float = id n.0.0;
@@ -332,11 +332,11 @@
 .for.end.4:
   ret x.0.1;
 }
-@cholesky(size.0: int, arr1.0: ptr<float>, arr2.0: ptr<float>) {
+@cholesky(size.0.0: int, arr1.0.0: ptr<float>, arr2.0.0: ptr<float>) {
 .cholesky.b0:
-  size.1: int = id size.0;
-  arr1.1: ptr<float> = id arr1.0;
-  arr2.1: ptr<float> = id arr2.0;
+  size.0.1: int = id size.0.0;
+  arr1.0.1: ptr<float> = id arr1.0.0;
+  arr2.0.1: ptr<float> = id arr2.0.0;
 .cholesky.b1:
   one.0.0: int = const 1;
   i.0.0: int = const 0;
@@ -367,7 +367,7 @@
   a_ij_ptr.0.0: ptr<float> = phi a_ij_ptr.0.1 .i.loop_end;
   a_ij.0.0: float = phi a_ij.0.1 .i.loop_end;
   a_ii_ptr.0.0: ptr<float> = phi a_ii_ptr.0.1 .i.loop_end;
-  condi.0.1: bool = lt i.0.1 size.0;
+  condi.0.1: bool = lt i.0.1 size.0.1;
   br condi.0.1 .i.body .i.done;
 .i.body:
   j.0.1: int = const 0;
@@ -412,17 +412,17 @@
   condk.0.3: bool = lt k.0.3 j.0.2;
   br condk.0.3 .k.body .k.done;
 .k.body:
-  ik_index.0.3: int = mul i.0.1 size.0;
+  ik_index.0.3: int = mul i.0.1 size.0.1;
   ik_index.0.4: int = add ik_index.0.3 k.0.3;
-  jk_index.0.3: int = mul j.0.2 size.0;
+  jk_index.0.3: int = mul j.0.2 size.0.1;
   jk_index.0.4: int = add jk_index.0.3 k.0.3;
-  ij_index.0.5: int = mul i.0.1 size.0;
+  ij_index.0.5: int = mul i.0.1 size.0.1;
   ij_index.0.6: int = add ij_index.0.5 j.0.2;
-  ik_ptr.0.3: ptr<float> = ptradd arr2.0 ik_index.0.4;
+  ik_ptr.0.3: ptr<float> = ptradd arr2.0.1 ik_index.0.4;
   b_ik.0.3: float = load ik_ptr.0.3;
-  jk_ptr.0.3: ptr<float> = ptradd arr2.0 jk_index.0.4;
+  jk_ptr.0.3: ptr<float> = ptradd arr2.0.1 jk_index.0.4;
   b_jk.0.3: float = load jk_ptr.0.3;
-  ij_ptr.0.3: ptr<float> = ptradd arr1.0 ij_index.0.6;
+  ij_ptr.0.3: ptr<float> = ptradd arr1.0.1 ij_index.0.6;
   a_ij.0.4: float = load ij_ptr.0.3;
   value.0.5: float = fmul b_ik.0.3 b_jk.0.3;
   value.0.6: float = fsub a_ij.0.4 value.0.5;
@@ -431,13 +431,13 @@
   k.0.4: int = add k.0.3 one.0.0;
   jmp .k.loop;
 .k.done:
-  ij_index.0.3: int = mul i.0.1 size.0;
+  ij_index.0.3: int = mul i.0.1 size.0.1;
   ij_index.0.4: int = add ij_index.0.3 j.0.2;
-  jj_index.0.2: int = mul j.0.2 size.0;
+  jj_index.0.2: int = mul j.0.2 size.0.1;
   jj_index.0.3: int = add jj_index.0.2 j.0.2;
-  a_ij_ptr.0.2: ptr<float> = ptradd arr1.0 ij_index.0.4;
-  b_ij_ptr.0.2: ptr<float> = ptradd arr2.0 ij_index.0.4;
-  jj_ptr.0.2: ptr<float> = ptradd arr2.0 jj_index.0.3;
+  a_ij_ptr.0.2: ptr<float> = ptradd arr1.0.1 ij_index.0.4;
+  b_ij_ptr.0.2: ptr<float> = ptradd arr2.0.1 ij_index.0.4;
+  jj_ptr.0.2: ptr<float> = ptradd arr2.0.1 jj_index.0.3;
   a_ij.0.3: float = load a_ij_ptr.0.2;
   b_ij.0.2: float = load b_ij_ptr.0.2;
   b_jj.0.2: float = load jj_ptr.0.2;
@@ -447,10 +447,10 @@
   j.0.3: int = add j.0.2 one.0.0;
   jmp .j.loop;
 .j.done:
-  ii_index.0.1: int = mul i.0.1 size.0;
+  ii_index.0.1: int = mul i.0.1 size.0.1;
   ii_index.0.2: int = add ii_index.0.1 i.0.1;
-  a_ii_ptr.0.1: ptr<float> = ptradd arr1.0 ii_index.0.2;
-  b_ii_ptr.0.1: ptr<float> = ptradd arr2.0 ii_index.0.2;
+  a_ii_ptr.0.1: ptr<float> = ptradd arr1.0.1 ii_index.0.2;
+  b_ii_ptr.0.1: ptr<float> = ptradd arr2.0.1 ii_index.0.2;
   value.0.2: float = load a_ii_ptr.0.1;
   sqrt_value.0.1: float = call @sqrt value.0.2;
   store b_ii_ptr.0.1 sqrt_value.0.1;

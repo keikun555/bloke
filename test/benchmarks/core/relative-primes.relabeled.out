@@ -5,7 +5,7 @@
   call @relative_primes v1.0;
   v2.0: int = const 0;
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   v0.0: int = id a.0;
   v1.0: int = id b.0;
   v2.0: int = div v0.0 v1.0;
@@ -13,7 +13,7 @@
   v4.0: int = sub v0.0 v3.0;
   ret v4.0;
 }
-@gcd(a: int, b: int): int {
+@gcd(a.0: int, b.0: int): int {
   v1.0: int = id b.0;
   v2.0: int = id a.0;
   v3.0: bool = gt v1.0 v2.0;
@@ -59,7 +59,7 @@
   v21.0: int = id g.0;
   ret v21.0;
 }
-@relative_primes(a: int) {
+@relative_primes(a.0: int) {
   v1.0: int = id a.0;
   b.0: int = id v1.0;
 .for.cond.0:

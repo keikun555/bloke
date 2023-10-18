@@ -1,11 +1,11 @@
-@print_point(p: ptr<point>) {
+@print_point(p.0: ptr<point>) {
   px.0: ptr<int> = getmbr p.0 x.0;
   py.0: ptr<int> = getmbr p.0 y.0;
   xv.0: int = load px.0;
   yv.0: int = load py.0;
   print xv.0 yv.0;
 }
-@main(a: int, b: int) {
+@main(a.0: int, b.0: int) {
   one.0: int = const 1;
   two.0: int = const 2;
   z.0: ptr<point> = alloc two.0;

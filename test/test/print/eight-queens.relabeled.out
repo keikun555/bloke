@@ -1,4 +1,4 @@
-@main(input: int) {
+@main(input.0: int) {
   n.0: int = id input.0;
   zero.0: int = const 0;
   icount.0: int = id zero.0;
@@ -7,7 +7,7 @@
   print result.0;
   free site.0;
 }
-@queen(n: int, queens: int, icount: int, site: ptr<int>): int {
+@queen(n.0: int, queens.0: int, icount.0: int, site.0: ptr<int>): int {
   one.0: int = const 1;
   ite.0: int = id one.0;
   ret_cond.0: bool = eq n.0 queens.0;
@@ -32,7 +32,7 @@
 .next.ret.1:
   ret icount.0;
 }
-@valid(n: int, site: ptr<int>): bool {
+@valid(n.0: int, site.0: ptr<int>): bool {
   zero.0: int = const 0;
   one.0: int = const 1;
   true.0: bool = eq one.0 one.0;

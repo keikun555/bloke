@@ -1,4 +1,4 @@
-@main(target: int) {
+@main(target.0: int) {
   arr.0: ptr<int> = call @initArr;
   arr.0: ptr<int> = id arr.0;
   v45.0: ptr<int> = id arr.0;
@@ -55,7 +55,7 @@
   v22.0: ptr<int> = id arr.0;
   ret v22.0;
 }
-@twoSum(nums: ptr<int>, size: int, target: int): ptr<int> {
+@twoSum(nums.0: ptr<int>, size.0: int, target.0: int): ptr<int> {
   v0.0: int = const 2;
   v1.0: ptr<int> = alloc v0.0;
   res.0: ptr<int> = id v1.0;

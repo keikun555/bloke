@@ -1,6 +1,6 @@
-@sumOfSquares(n.0: int): int {
+@sumOfSquares(n.0.0: int): int {
 .sumOfSquares.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .sumOfSquares.b1:
   v0.0.0: int = const 0;
   res.0.0: int = id v0.0.0;
@@ -23,7 +23,7 @@
   res.0.1: int = phi res.0.0 res.0.2 .sumOfSquares.b1 .for.body.1;
   i.0.1: int = phi i.0.0 i.0.2 .sumOfSquares.b1 .for.body.1;
   v3.0.1: int = id i.0.1;
-  v4.0.1: int = id n.0;
+  v4.0.1: int = id n.0.1;
   v5.0.1: bool = le v3.0.1 v4.0.1;
   br v5.0.1 .for.body.1 .for.end.1;
 .for.body.1:
@@ -44,9 +44,9 @@
   v15.0.0: int = id res.0.1;
   ret v15.0.0;
 }
-@squareOfSum(n.0: int): int {
+@squareOfSum(n.0.0: int): int {
 .squareOfSum.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .squareOfSum.b1:
   v0.0.0: int = const 0;
   res.0.0: int = id v0.0.0;
@@ -65,7 +65,7 @@
   res.0.1: int = phi res.0.0 res.0.2 .squareOfSum.b1 .for.body.1;
   i.0.1: int = phi i.0.0 i.0.2 .squareOfSum.b1 .for.body.1;
   v3.0.1: int = id i.0.1;
-  v4.0.1: int = id n.0;
+  v4.0.1: int = id n.0.1;
   v5.0.1: bool = le v3.0.1 v4.0.1;
   br v5.0.1 .for.body.1 .for.end.1;
 .for.body.1:
@@ -86,14 +86,14 @@
   v15.0.0: int = id square.0.0;
   ret v15.0.0;
 }
-@main(n.0: int) {
+@main(n.0.0: int) {
 .main.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .main.b1:
-  v0.0.0: int = id n.0;
+  v0.0.0: int = id n.0.1;
   sum.0.0: int = call @sumOfSquares v0.0.0;
   sum.0.1: int = id sum.0.0;
-  v1.0.0: int = id n.0;
+  v1.0.0: int = id n.0.1;
   square.0.0: int = call @squareOfSum v1.0.0;
   square.0.1: int = id square.0.0;
   v2.0.0: int = id square.0.1;

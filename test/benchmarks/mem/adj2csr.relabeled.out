@@ -1,4 +1,4 @@
-@rand(seq: ptr<int>, max: int): int {
+@rand(seq.0: ptr<int>, max.0: int): int {
   a.0: int = const 25214903917;
   c.0: int = const 11;
   m.0: int = const 281474976710656;
@@ -14,7 +14,7 @@
   val.0: int = sub next.0 val.0;
   ret val.0;
 }
-@randarray(size: int, rng: ptr<int>): ptr<int> {
+@randarray(size.0: int, rng.0: ptr<int>): ptr<int> {
   arr.0: ptr<int> = alloc size.0;
   i.0: int = const 0;
   max.0: int = const 2;
@@ -38,7 +38,7 @@
 .done:
   ret arr.0;
 }
-@printarray(size: int, arr: ptr<int>) {
+@printarray(size.0: int, arr.0: ptr<int>) {
   i.0: int = const 0;
   one.0: int = const 1;
 .loop:
@@ -54,7 +54,7 @@
 .done:
   ret;
 }
-@zeroarray(size: int): ptr<int> {
+@zeroarray(size.0: int): ptr<int> {
   arr.0: ptr<int> = alloc size.0;
   i.0: int = const 0;
   zero.0: int = const 0;
@@ -71,7 +71,7 @@
 .done:
   ret arr.0;
 }
-@adj2csr(num_nodes: int, adjmat: ptr<int>, csr_offset: ptr<int>, csr_edges: ptr<int>): int {
+@adj2csr(num_nodes.0: int, adjmat.0: ptr<int>, csr_offset.0: ptr<int>, csr_edges.0: ptr<int>): int {
   num_edges.0: int = const 0;
   row.0: int = const 0;
   one.0: int = const 1;
@@ -105,7 +105,7 @@
 .row_done:
   ret num_edges.0;
 }
-@main(num_nodes: int, seed: int) {
+@main(num_nodes.0: int, seed.0: int) {
   one.0: int = const 1;
   rng.0: ptr<int> = alloc one.0;
   store rng.0 seed.0;

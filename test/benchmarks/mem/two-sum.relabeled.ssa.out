@@ -1,12 +1,12 @@
-@main(target.0: int) {
+@main(target.0.0: int) {
 .main.b0:
-  target.1: int = id target.0;
+  target.0.1: int = id target.0.0;
 .main.b1:
   arr.0.0: ptr<int> = call @initArr;
   arr.0.1: ptr<int> = id arr.0.0;
   v45.0.0: ptr<int> = id arr.0.1;
   v46.0.0: int = const 4;
-  result.0.0: ptr<int> = call @twoSum v45.0.0 v46.0.0 target.0;
+  result.0.0: ptr<int> = call @twoSum v45.0.0 v46.0.0 target.0.1;
   result.0.1: ptr<int> = id result.0.0;
   v47.0.0: ptr<int> = id arr.0.1;
   free v47.0.0;
@@ -59,11 +59,11 @@
   v22.0.0: ptr<int> = id arr.0.0;
   ret v22.0.0;
 }
-@twoSum(nums.0: ptr<int>, size.0: int, target.0: int): ptr<int> {
+@twoSum(nums.0.0: ptr<int>, size.0.0: int, target.0.0: int): ptr<int> {
 .twoSum.b0:
-  nums.1: ptr<int> = id nums.0;
-  size.1: int = id size.0;
-  target.1: int = id target.0;
+  nums.0.1: ptr<int> = id nums.0.0;
+  size.0.1: int = id size.0.0;
+  target.0.1: int = id target.0.0;
 .twoSum.b1:
   v0.0.0: int = const 2;
   v1.0.0: ptr<int> = alloc v0.0.0;
@@ -114,7 +114,7 @@
   j.0.0: int = phi j.0.2 .for.end.7;
   i.0.1: int = phi i.0.0 i.0.3 .twoSum.b1 .for.end.7;
   v4.0.1: int = id i.0.1;
-  v5.0.1: int = id size.0;
+  v5.0.1: int = id size.0.1;
   v6.0.1: bool = lt v4.0.1 v5.0.1;
   br v6.0.1 .for.body.2 .for.end.2;
 .for.body.2:
@@ -160,22 +160,22 @@
   j.0.2: int = phi j.0.1 j.0.4 .for.body.2 .endif.23;
   i.0.2: int = phi i.0.1 i.0.4 .for.body.2 .endif.23;
   v11.0.2: int = id j.0.2;
-  v12.0.2: int = id size.0;
+  v12.0.2: int = id size.0.1;
   v13.0.2: bool = lt v11.0.2 v12.0.2;
   br v13.0.2 .for.body.7 .for.end.7;
 .for.body.7:
-  v14.0.2: ptr<int> = id nums.0;
+  v14.0.2: ptr<int> = id nums.0.1;
   v15.0.2: int = id i.0.2;
   v16.0.2: ptr<int> = ptradd v14.0.2 v15.0.2;
   v17.0.2: int = load v16.0.2;
-  v18.0.2: ptr<int> = id nums.0;
+  v18.0.2: ptr<int> = id nums.0.1;
   v19.0.2: int = id j.0.2;
   v20.0.2: ptr<int> = ptradd v18.0.2 v19.0.2;
   v21.0.2: int = load v20.0.2;
   v22.0.2: int = add v17.0.2 v21.0.2;
   sum.0.2: int = id v22.0.2;
   v24.0.2: int = id sum.0.2;
-  v25.0.2: int = id target.0;
+  v25.0.2: int = id target.0.1;
   v26.0.2: bool = eq v24.0.2 v25.0.2;
   br v26.0.2 .then.23 .else.23;
 .then.23:

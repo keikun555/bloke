@@ -1,34 +1,34 @@
-@ack(m.0: int, n.0: int): int {
+@ack(m.0.0: int, n.0.0: int): int {
 .ack.b0:
-  m.1: int = id m.0;
-  n.1: int = id n.0;
+  m.0.1: int = id m.0.0;
+  n.0.1: int = id n.0.0;
 .ack.b1:
   zero.0.0: int = const 0;
   one.0.0: int = const 1;
-  cond_m.0.0: bool = eq m.0 zero.0.0;
+  cond_m.0.0: bool = eq m.0.1 zero.0.0;
   br cond_m.0.0 .m_zero .m_nonzero;
 .m_zero:
-  tmp.0.0: int = add n.0 one.0.0;
+  tmp.0.0: int = add n.0.1 one.0.0;
   ret tmp.0.0;
 .m_nonzero:
-  cond_n.0.0: bool = eq n.0 zero.0.0;
+  cond_n.0.0: bool = eq n.0.1 zero.0.0;
   br cond_n.0.0 .n_zero .n_nonzero;
 .n_zero:
-  m1.0.0: int = sub m.0 one.0.0;
+  m1.0.0: int = sub m.0.1 one.0.0;
   tmp.0.1: int = call @ack m1.0.0 one.0.0;
   ret tmp.0.1;
 .n_nonzero:
-  m1.0.1: int = sub m.0 one.0.0;
-  n1.0.0: int = sub n.0 one.0.0;
-  t1.0.0: int = call @ack m.0 n1.0.0;
+  m1.0.1: int = sub m.0.1 one.0.0;
+  n1.0.0: int = sub n.0.1 one.0.0;
+  t1.0.0: int = call @ack m.0.1 n1.0.0;
   t2.0.0: int = call @ack m1.0.1 t1.0.0;
   ret t2.0.0;
 }
-@main(m.0: int, n.0: int) {
+@main(m.0.0: int, n.0.0: int) {
 .main.b0:
-  m.1: int = id m.0;
-  n.1: int = id n.0;
+  m.0.1: int = id m.0.0;
+  n.0.1: int = id n.0.0;
 .main.b1:
-  tmp.0.0: int = call @ack m.0 n.0;
+  tmp.0.0: int = call @ack m.0.1 n.0.1;
   print tmp.0.0;
 }

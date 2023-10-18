@@ -1,9 +1,9 @@
-@add5(n.0: int): int {
+@add5(n.0.0: int): int {
 .add5.b0:
-  n.1: int = id n.0;
+  n.0.1: int = id n.0.0;
 .add5.b1:
   five.0.0: int = const 5;
-  sum.0.0: int = add n.0 five.0.0;
+  sum.0.0: int = add n.0.1 five.0.0;
   ret sum.0.0;
 }
 @main {

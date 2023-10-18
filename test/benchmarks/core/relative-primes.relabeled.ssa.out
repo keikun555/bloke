@@ -1,0 +1,159 @@
+@main {
+.main.b0:
+  v0.0.0: int = const 20;
+  a.0.0: int = id v0.0.0;
+  v1.0.0: int = id a.0.0;
+  call @relative_primes v1.0.0;
+  v2.0.0: int = const 0;
+}
+@mod(a.0.0: int, b.0.0: int): int {
+.mod.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.mod.b1:
+  v0.0.0: int = id a.0.1;
+  v1.0.0: int = id b.0.1;
+  v2.0.0: int = div v0.0.0 v1.0.0;
+  v3.0.0: int = mul v2.0.0 v1.0.0;
+  v4.0.0: int = sub v0.0.0 v3.0.0;
+  ret v4.0.0;
+}
+@gcd(a.0.0: int, b.0.0: int): int {
+.gcd.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.gcd.b1:
+  v1.0.0: int = id b.0.1;
+  v2.0.0: int = id a.0.1;
+  v3.0.0: bool = gt v1.0.0 v2.0.0;
+  br v3.0.0 .then.0 .else.0;
+.then.0:
+  v4.0.0: int = id a.0.1;
+  tmp.0.0: int = id v4.0.0;
+  v5.0.0: int = id b.0.1;
+  a.0.2: int = id v5.0.0;
+  v6.0.0: int = id tmp.0.0;
+  b.0.2: int = id v6.0.0;
+  jmp .endif.0;
+.else.0:
+.endif.0:
+  v6.0.1: int = phi v6.0.0 .then.0;
+  v5.0.1: int = phi v5.0.0 .then.0;
+  v4.0.1: int = phi v4.0.0 .then.0;
+  tmp.0.1: int = phi tmp.0.0 .then.0;
+  b.0.3: int = phi b.0.2 b.0.1 .then.0 .else.0;
+  a.0.3: int = phi a.0.2 a.0.1 .then.0 .else.0;
+  v8.0.0: int = id a.0.3;
+  v9.0.0: int = const 0;
+  v10.0.0: bool = eq v8.0.0 v9.0.0;
+  br v10.0.0 .then.7 .else.7;
+.then.7:
+  v11.0.0: int = id b.0.3;
+  ret v11.0.0;
+.gcd.b2:
+  jmp .endif.7;
+.else.7:
+  v13.0.0: int = id b.0.3;
+  v14.0.0: int = const 0;
+  v15.0.0: bool = eq v13.0.0 v14.0.0;
+  br v15.0.0 .then.12 .else.12;
+.then.12:
+  v16.0.0: int = id a.0.3;
+  ret v16.0.0;
+.gcd.b3:
+  jmp .endif.12;
+.else.12:
+.endif.12:
+  v6.0.2: int = phi v6.0.1 .else.12;
+  v5.0.2: int = phi v5.0.1 .else.12;
+  v4.0.2: int = phi v4.0.1 .else.12;
+  v21.0.0: int = phi;
+  v20.0.0: int = phi;
+  v19.0.0: int = phi;
+  v18.0.0: int = phi;
+  v17.0.0: int = phi;
+  v16.0.1: int = phi;
+  v11.0.1: int = phi;
+  tmp.0.2: int = phi tmp.0.1 .else.12;
+  remainder.0.0: int = phi;
+  g.0.0: int = phi;
+  b.0.4: int = phi b.0.3 .else.12;
+  a.0.4: int = phi a.0.3 .else.12;
+.endif.7:
+  v6.0.3: int = phi v6.0.2 .endif.12;
+  v5.0.3: int = phi v5.0.2 .endif.12;
+  v4.0.3: int = phi v4.0.2 .endif.12;
+  v21.0.1: int = phi v21.0.0 .endif.12;
+  v20.0.1: int = phi v20.0.0 .endif.12;
+  v19.0.1: int = phi v19.0.0 .endif.12;
+  v18.0.1: int = phi v18.0.0 .endif.12;
+  v17.0.1: int = phi v17.0.0 .endif.12;
+  v16.0.2: int = phi v16.0.1 .endif.12;
+  v11.0.2: int = phi v11.0.1 .endif.12;
+  tmp.0.3: int = phi tmp.0.2 .endif.12;
+  remainder.0.1: int = phi remainder.0.0 .endif.12;
+  g.0.1: int = phi g.0.0 .endif.12;
+  b.0.5: int = phi b.0.4 .endif.12;
+  a.0.5: int = phi a.0.4 .endif.12;
+  v17.0.2: int = id a.0.5;
+  v18.0.2: int = id b.0.5;
+  remainder.0.2: int = call @mod v17.0.2 v18.0.2;
+  remainder.0.3: int = id remainder.0.2;
+  v19.0.2: int = id b.0.5;
+  v20.0.2: int = id remainder.0.3;
+  g.0.2: int = call @gcd v19.0.2 v20.0.2;
+  g.0.3: int = id g.0.2;
+  v21.0.2: int = id g.0.3;
+  ret v21.0.2;
+}
+@relative_primes(a.0.0: int) {
+.relative_primes.b0:
+  a.0.1: int = id a.0.0;
+.relative_primes.b1:
+  v1.0.0: int = id a.0.1;
+  b.0.0: int = id v1.0.0;
+.for.cond.0:
+  v9.0.0: int = phi v9.0.1 .endif.7;
+  v8.0.0: int = phi v8.0.1 .endif.7;
+  v6.0.0: int = phi v6.0.1 .endif.7;
+  v5.0.0: int = phi v5.0.1 .endif.7;
+  v4.0.0: bool = phi v4.0.1 .endif.7;
+  v3.0.0: int = phi v3.0.1 .endif.7;
+  v2.0.0: int = phi v2.0.1 .endif.7;
+  v15.0.0: int = phi v15.0.1 .endif.7;
+  v14.0.0: int = phi v14.0.1 .endif.7;
+  v13.0.0: int = phi v13.0.1 .endif.7;
+  v12.0.0: int = phi v12.0.2 .endif.7;
+  v11.0.0: int = phi v11.0.2 .endif.7;
+  v10.0.0: bool = phi v10.0.1 .endif.7;
+  g.0.0: int = phi g.0.2 .endif.7;
+  b.0.1: int = phi b.0.0 b.0.2 .relative_primes.b1 .endif.7;
+  v2.0.1: int = id b.0.1;
+  v3.0.1: int = const 1;
+  v4.0.1: bool = ge v2.0.1 v3.0.1;
+  br v4.0.1 .for.body.0 .for.end.0;
+.for.body.0:
+  v5.0.1: int = id a.0.1;
+  v6.0.1: int = id b.0.1;
+  g.0.1: int = call @gcd v5.0.1 v6.0.1;
+  g.0.2: int = id g.0.1;
+  v8.0.1: int = id g.0.2;
+  v9.0.1: int = const 1;
+  v10.0.1: bool = eq v8.0.1 v9.0.1;
+  br v10.0.1 .then.7 .else.7;
+.then.7:
+  v11.0.1: int = id b.0.1;
+  print v11.0.1;
+  v12.0.1: int = const 0;
+  jmp .endif.7;
+.else.7:
+.endif.7:
+  v12.0.2: int = phi v12.0.1 v12.0.0 .then.7 .else.7;
+  v11.0.2: int = phi v11.0.1 v11.0.0 .then.7 .else.7;
+  v13.0.1: int = id b.0.1;
+  v14.0.1: int = const 1;
+  v15.0.1: int = sub v13.0.1 v14.0.1;
+  b.0.2: int = id v15.0.1;
+  jmp .for.cond.0;
+.for.end.0:
+}

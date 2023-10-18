@@ -1,0 +1,18 @@
+@main {
+.main.b0:
+  x.0.0: int = const 2;
+  y.0.0: int = const 2;
+  z.0.0: int = call @add2 x.0.0 y.0.0;
+  print y.0.0;
+  print z.0.0;
+}
+@add2(x.0.0: int, y.0.0: int): int {
+.add2.b0:
+  x.0.1: int = id x.0.0;
+  y.0.1: int = id y.0.0;
+.add2.b1:
+  w.0.0: int = add x.0.1 y.0.1;
+  y.0.2: int = const 5;
+  print w.0.0;
+  ret;
+}

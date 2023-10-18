@@ -1,4 +1,4 @@
-@main(cond: bool) {
+@main(cond.0: bool) {
 .top:
   a.0: int = const 5;
   br cond.0 .here .there;

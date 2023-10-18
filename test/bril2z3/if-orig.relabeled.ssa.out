@@ -1,9 +1,9 @@
-@main(cond.0: bool) {
+@main(cond.0.0: bool) {
 .main.b0:
-  cond.1: bool = id cond.0;
+  cond.0.1: bool = id cond.0.0;
 .entry:
   a.0.0: int = const 47;
-  br cond.0 .left .right;
+  br cond.0.1 .left .right;
 .left:
   a.0.1: int = add a.0.0 a.0.0;
   jmp .exit;

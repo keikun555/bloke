@@ -1,4 +1,4 @@
-@pow(x: int, n: int): int {
+@pow(x.0: int, n.0: int): int {
   v1.0: int = id n.0;
   v2.0: int = const 1;
   v3.0: bool = eq v1.0 v2.0;
@@ -38,7 +38,7 @@
   ret v22.0;
 .endif.0:
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   v0.0: int = id a.0;
   v1.0: int = id a.0;
   v2.0: int = id b.0;
@@ -48,7 +48,7 @@
   v6.0: int = sub v0.0 v5.0;
   ret v6.0;
 }
-@LEFTSHIFT(x: int, step: int): int {
+@LEFTSHIFT(x.0: int, step.0: int): int {
   v0.0: int = const 2;
   v1.0: int = id step.0;
   p.0: int = call @pow v0.0 v1.0;
@@ -58,7 +58,7 @@
   v4.0: int = mul v2.0 v3.0;
   ret v4.0;
 }
-@RIGHTSHIFT(x: int, step: int): int {
+@RIGHTSHIFT(x.0: int, step.0: int): int {
   v0.0: int = const 2;
   v1.0: int = id step.0;
   p.0: int = call @pow v0.0 v1.0;
@@ -68,7 +68,7 @@
   v4.0: int = div v2.0 v3.0;
   ret v4.0;
 }
-@main(a: int, b: int, c: int, d: int) {
+@main(a.0: int, b.0: int, c.0: int, d.0: int) {
   v2.0: int = id a.0;
   v3.0: int = id b.0;
   ans1.0: int = call @LEFTSHIFT v2.0 v3.0;

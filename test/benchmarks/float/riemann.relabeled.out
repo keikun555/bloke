@@ -9,11 +9,11 @@
   right.0: float = call @right_riemann a.0 b.0 n.0;
   print right.0;
 }
-@square_function(x: float): float {
+@square_function(x.0: float): float {
   square.0: float = fmul x.0 x.0;
   ret square.0;
 }
-@left_riemann(a: float, b: float, n: float): float {
+@left_riemann(a.0: float, b.0: float, n.0: float): float {
   zero.0: float = const 0.0;
   one.0: float = const 1.0;
   negative_one.0: float = fsub zero.0 one.0;
@@ -35,7 +35,7 @@
   sum.0: float = fmul sum.0 delta.0;
   ret sum.0;
 }
-@right_riemann(a: float, b: float, n: float): float {
+@right_riemann(a.0: float, b.0: float, n.0: float): float {
   zero.0: float = const 0.0;
   one.0: float = const 1.0;
   diff.0: float = fsub b.0 a.0;
@@ -56,7 +56,7 @@
   sum.0: float = fmul sum.0 delta.0;
   ret sum.0;
 }
-@midpoint_riemann(a: float, b: float, n: float): float {
+@midpoint_riemann(a.0: float, b.0: float, n.0: float): float {
   zero.0: float = const 0.0;
   one.0: float = const 1.0;
   negative_one.0: float = fsub zero.0 one.0;

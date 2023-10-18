@@ -1,20 +1,20 @@
-@pow(x.0: int, n.0: int): int {
+@pow(x.0.0: int, n.0.0: int): int {
 .pow.b0:
-  x.1: int = id x.0;
-  n.1: int = id n.0;
+  x.0.1: int = id x.0.0;
+  n.0.1: int = id n.0.0;
 .pow.b1:
-  v1.0.0: int = id n.0;
+  v1.0.0: int = id n.0.1;
   v2.0.0: int = const 1;
   v3.0.0: bool = eq v1.0.0 v2.0.0;
   br v3.0.0 .then.0 .else.0;
 .then.0:
-  v4.0.0: int = id x.0;
+  v4.0.0: int = id x.0.1;
   ret v4.0.0;
 .pow.b2:
   jmp .endif.0;
 .else.0:
-  v5.0.0: int = id x.0;
-  v6.0.0: int = id n.0;
+  v5.0.0: int = id x.0.1;
+  v6.0.0: int = id n.0.1;
   v7.0.0: int = const 2;
   v8.0.0: int = div v6.0.0 v7.0.0;
   half.0.0: int = call @pow v5.0.0 v8.0.0;
@@ -23,7 +23,7 @@
   v10.0.0: int = id half.0.1;
   v11.0.0: int = mul v9.0.0 v10.0.0;
   half2.0.0: int = id v11.0.0;
-  v13.0.0: int = id n.0;
+  v13.0.0: int = id n.0.1;
   v14.0.0: int = const 2;
   v15.0.0: int = call @mod v13.0.0 v14.0.0;
   v16.0.0: int = const 1;
@@ -31,7 +31,7 @@
   br v17.0.0 .then.12 .else.12;
 .then.12:
   v18.0.0: int = id half2.0.0;
-  v19.0.0: int = id x.0;
+  v19.0.0: int = id x.0.1;
   v20.0.0: int = mul v18.0.0 v19.0.0;
   ans.0.0: int = id v20.0.0;
   jmp .endif.12;
@@ -48,61 +48,61 @@
   ret v22.0.0;
 .endif.0:
 }
-@mod(a.0: int, b.0: int): int {
+@mod(a.0.0: int, b.0.0: int): int {
 .mod.b0:
-  a.1: int = id a.0;
-  b.1: int = id b.0;
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
 .mod.b1:
-  v0.0.0: int = id a.0;
-  v1.0.0: int = id a.0;
-  v2.0.0: int = id b.0;
+  v0.0.0: int = id a.0.1;
+  v1.0.0: int = id a.0.1;
+  v2.0.0: int = id b.0.1;
   v3.0.0: int = div v1.0.0 v2.0.0;
-  v4.0.0: int = id b.0;
+  v4.0.0: int = id b.0.1;
   v5.0.0: int = mul v3.0.0 v4.0.0;
   v6.0.0: int = sub v0.0.0 v5.0.0;
   ret v6.0.0;
 }
-@LEFTSHIFT(x.0: int, step.0: int): int {
+@LEFTSHIFT(x.0.0: int, step.0.0: int): int {
 .LEFTSHIFT.b0:
-  x.1: int = id x.0;
-  step.1: int = id step.0;
+  x.0.1: int = id x.0.0;
+  step.0.1: int = id step.0.0;
 .LEFTSHIFT.b1:
   v0.0.0: int = const 2;
-  v1.0.0: int = id step.0;
+  v1.0.0: int = id step.0.1;
   p.0.0: int = call @pow v0.0.0 v1.0.0;
   p.0.1: int = id p.0.0;
-  v2.0.0: int = id x.0;
+  v2.0.0: int = id x.0.1;
   v3.0.0: int = id p.0.1;
   v4.0.0: int = mul v2.0.0 v3.0.0;
   ret v4.0.0;
 }
-@RIGHTSHIFT(x.0: int, step.0: int): int {
+@RIGHTSHIFT(x.0.0: int, step.0.0: int): int {
 .RIGHTSHIFT.b0:
-  x.1: int = id x.0;
-  step.1: int = id step.0;
+  x.0.1: int = id x.0.0;
+  step.0.1: int = id step.0.0;
 .RIGHTSHIFT.b1:
   v0.0.0: int = const 2;
-  v1.0.0: int = id step.0;
+  v1.0.0: int = id step.0.1;
   p.0.0: int = call @pow v0.0.0 v1.0.0;
   p.0.1: int = id p.0.0;
-  v2.0.0: int = id x.0;
+  v2.0.0: int = id x.0.1;
   v3.0.0: int = id p.0.1;
   v4.0.0: int = div v2.0.0 v3.0.0;
   ret v4.0.0;
 }
-@main(a.0: int, b.0: int, c.0: int, d.0: int) {
+@main(a.0.0: int, b.0.0: int, c.0.0: int, d.0.0: int) {
 .main.b0:
-  a.1: int = id a.0;
-  b.1: int = id b.0;
-  c.1: int = id c.0;
-  d.1: int = id d.0;
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+  c.0.1: int = id c.0.0;
+  d.0.1: int = id d.0.0;
 .main.b1:
-  v2.0.0: int = id a.0;
-  v3.0.0: int = id b.0;
+  v2.0.0: int = id a.0.1;
+  v3.0.0: int = id b.0.1;
   ans1.0.0: int = call @LEFTSHIFT v2.0.0 v3.0.0;
   print ans1.0.0;
-  v4.0.0: int = id c.0;
-  v5.0.0: int = id d.0;
+  v4.0.0: int = id c.0.1;
+  v5.0.0: int = id d.0.1;
   ans2.0.0: int = call @RIGHTSHIFT v4.0.0 v5.0.0;
   print ans2.0.0;
 }

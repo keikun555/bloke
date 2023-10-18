@@ -1,4 +1,4 @@
-@main(in: int) {
+@main(in.0: int) {
   ten.0: int = const 10;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -22,7 +22,7 @@
   is_palindrome.0: bool = call @palindrome in.0 exp.0;
   print is_palindrome.0;
 }
-@pow(base: int, exp: int): int {
+@pow(base.0: int, exp.0: int): int {
   res.0: int = const 1;
   zero.0: int = const 0;
   one.0: int = const 1;
@@ -42,7 +42,7 @@
 .for.end.pow:
   ret res.0;
 }
-@palindrome(in: int, len: int): bool {
+@palindrome(in.0: int, len.0: int): bool {
   is_palindrome.0: bool = const false;
   zero.0: int = const 0;
   two.0: int = const 2;

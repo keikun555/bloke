@@ -1,4 +1,4 @@
-@helloBR(end: char): ptr<char> {
+@helloBR(end.0: char): ptr<char> {
   c1.0: char = const 'o';
   c2.0: char = const 'i';
   tam.0: int = const 3;

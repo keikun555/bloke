@@ -52,7 +52,7 @@
   store arr.0 a33.0;
   ret return_ptr.0;
 }
-@zeros(sqsize: int): ptr<float> {
+@zeros(sqsize.0: int): ptr<float> {
   arr.0: ptr<float> = alloc sqsize.0;
   i.0: int = const 0;
   one.0: int = const 1;
@@ -69,7 +69,7 @@
 .done:
   ret arr.0;
 }
-@printarray(size: int, arr: ptr<float>) {
+@printarray(size.0: int, arr.0: ptr<float>) {
   i.0: int = const 0;
   one.0: int = const 1;
 .loop:
@@ -85,7 +85,7 @@
 .done:
   ret;
 }
-@matmul(size: int, arr1: ptr<float>, arr2: ptr<float>, dest: ptr<float>) {
+@matmul(size.0: int, arr1.0: ptr<float>, arr2.0: ptr<float>, dest.0: ptr<float>) {
   one.0: int = const 1;
   row.0: int = const 0;
 .row.loop:
@@ -131,7 +131,7 @@
 .row.done:
   ret;
 }
-@transpose(size: int, input: ptr<float>, output: ptr<float>) {
+@transpose(size.0: int, input.0: ptr<float>, output.0: ptr<float>) {
   one.0: int = const 1;
   row.0: int = const 0;
 .row.loop:
@@ -161,7 +161,7 @@
 .row.done:
   ret;
 }
-@sqrt(input: float): float {
+@sqrt(input.0: float): float {
   n.0: float = id input.0;
   v1.0: float = const 1e-05;
   precision.0: float = id v1.0;
@@ -217,7 +217,7 @@
 .for.end.4:
   ret x.0;
 }
-@cholesky(size: int, arr1: ptr<float>, arr2: ptr<float>) {
+@cholesky(size.0: int, arr1.0: ptr<float>, arr2.0: ptr<float>) {
   one.0: int = const 1;
   i.0: int = const 0;
 .i.loop:

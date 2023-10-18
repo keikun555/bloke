@@ -4,7 +4,7 @@
   x.0: int = const 5;
   ret x.0;
 }
-@argint(x: int) {
+@argint(x.0: int) {
 }
 @noret {
   x.0: int = const 5;

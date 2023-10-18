@@ -1,4 +1,4 @@
-@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int): ptr<int> {
+@pack(size.0: int, n1.0: int, n2.0: int, n3.0: int, n4.0: int, n5.0: int): ptr<int> {
   one.0: int = const 1;
   i.0: int = const 0;
   array.0: ptr<int> = alloc size.0;
@@ -18,7 +18,7 @@
   store loc.0 n5.0;
   ret array.0;
 }
-@print_array(array: ptr<int>, size: int) {
+@print_array(array.0: ptr<int>, size.0: int) {
   i.0: int = const 0;
   one.0: int = const 1;
 .loop:
@@ -34,7 +34,7 @@
 .done:
   ret;
 }
-@binary_search(array: ptr<int>, target: int, left: int, right: int): int {
+@binary_search(array.0: ptr<int>, target.0: int, left.0: int, right.0: int): int {
   negone.0: int = const -1;
   zero.0: int = const 0;
   one.0: int = const 1;

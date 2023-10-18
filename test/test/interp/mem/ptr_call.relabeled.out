@@ -1,4 +1,4 @@
-@funcA(p: ptr<int>) {
+@funcA(p.0: ptr<int>) {
   ret;
 }
 @main {

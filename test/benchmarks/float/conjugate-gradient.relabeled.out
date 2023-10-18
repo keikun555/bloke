@@ -1,4 +1,4 @@
-@main(n: int) {
+@main(n.0: int) {
   one.0: int = const 1;
   fone.0: float = const 1;
   a.0: ptr<float> = call @get_sym n.0;
@@ -25,7 +25,7 @@
   free b.0;
   free a.0;
 }
-@vec_mul(size: int, c: float, v: ptr<float>): ptr<float> {
+@vec_mul(size.0: int, c.0: float, v.0: ptr<float>): ptr<float> {
   v_copy.0: ptr<float> = alloc size.0;
   one.0: int = const 1;
   i.0: int = const 0;
@@ -43,12 +43,12 @@
 .for.end:
   ret v_copy.0;
 }
-@vec_copy(size: int, v: ptr<float>): ptr<float> {
+@vec_copy(size.0: int, v.0: ptr<float>): ptr<float> {
   fone.0: float = const 1;
   v_copy.0: ptr<float> = call @vec_mul size.0 fone.0 v.0;
   ret v_copy.0;
 }
-@dot_p(size: int, u: ptr<float>, v: ptr<float>): float {
+@dot_p(size.0: int, u.0: ptr<float>, v.0: ptr<float>): float {
   one.0: int = const 1;
   i.0: int = const 0;
   acc.0: float = const 0;
@@ -67,14 +67,14 @@
 .for.end:
   ret acc.0;
 }
-@vec_sub(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+@vec_sub(size.0: int, u.0: ptr<float>, v.0: ptr<float>): ptr<float> {
   fnegone.0: float = const -1;
   minus_v.0: ptr<float> = call @vec_mul size.0 fnegone.0 v.0;
   diff.0: ptr<float> = call @vec_add size.0 u.0 minus_v.0;
   free minus_v.0;
   ret diff.0;
 }
-@vec_add(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+@vec_add(size.0: int, u.0: ptr<float>, v.0: ptr<float>): ptr<float> {
   sum.0: ptr<float> = alloc size.0;
   one.0: int = const 1;
   i.0: int = const 0;
@@ -94,17 +94,17 @@
 .for.end:
   ret sum.0;
 }
-@vec_add_inp(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+@vec_add_inp(size.0: int, u.0: ptr<float>, v.0: ptr<float>): ptr<float> {
   sum.0: ptr<float> = call @vec_add size.0 u.0 v.0;
   free u.0;
   ret sum.0;
 }
-@vec_sub_inp(size: int, u: ptr<float>, v: ptr<float>): ptr<float> {
+@vec_sub_inp(size.0: int, u.0: ptr<float>, v.0: ptr<float>): ptr<float> {
   diff.0: ptr<float> = call @vec_sub size.0 u.0 v.0;
   free u.0;
   ret diff.0;
 }
-@mat_vec(size: int, a: ptr<float>, v: ptr<float>): ptr<float> {
+@mat_vec(size.0: int, a.0: ptr<float>, v.0: ptr<float>): ptr<float> {
   prod.0: ptr<float> = alloc size.0;
   row.0: int = const 0;
   one.0: int = const 1;
@@ -138,7 +138,7 @@
 .for.row.end:
   ret prod.0;
 }
-@get_sym(size: int): ptr<float> {
+@get_sym(size.0: int): ptr<float> {
   nnz.0: int = mul size.0 size.0;
   a.0: ptr<float> = alloc nnz.0;
   one.0: int = const 1;
@@ -172,7 +172,7 @@
 .for.end:
   ret a.0;
 }
-@disp_vec(size: int, v: ptr<float>) {
+@disp_vec(size.0: int, v.0: ptr<float>) {
   i.0: int = const 0;
   one.0: int = const 1;
 .for.cond:
@@ -187,7 +187,7 @@
 .for.end:
   ret;
 }
-@cg(size: int, a: ptr<float>, x0: ptr<float>, b: ptr<float>): ptr<float> {
+@cg(size.0: int, a.0: ptr<float>, x0.0: ptr<float>, b.0: ptr<float>): ptr<float> {
   max_iter.0: int = const 1000;
   inv_tol.0: float = const 100;
   fone.0: float = const 1;

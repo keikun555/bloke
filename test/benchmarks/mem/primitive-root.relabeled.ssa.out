@@ -1,0 +1,237 @@
+@rem(a.0.0: int, b.0.0: int): int {
+.rem.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.rem.b1:
+  quotient.0.0: int = div a.0.1 b.0.1;
+  guess.0.0: int = mul b.0.1 quotient.0.0;
+  rem.0.0: int = sub a.0.1 guess.0.0;
+  ret rem.0.0;
+}
+@divides(m.0.0: int, n.0.0: int): bool {
+.divides.b0:
+  m.0.1: int = id m.0.0;
+  n.0.1: int = id n.0.0;
+.divides.b1:
+  zero.0.0: int = const 0;
+  quotient.0.0: int = div n.0.1 m.0.1;
+  guess.0.0: int = mul m.0.1 quotient.0.0;
+  rem.0.0: int = sub n.0.1 guess.0.0;
+  res.0.0: bool = eq rem.0.0 zero.0.0;
+  ret res.0.0;
+}
+@prepend(n.0.0: int, ns.0.0: ptr<int>, l.0.0: int): ptr<int> {
+.prepend.b0:
+  n.0.1: int = id n.0.0;
+  ns.0.1: ptr<int> = id ns.0.0;
+  l.0.1: int = id l.0.0;
+.prepend.b1:
+  one.0.0: int = const 1;
+  new.0.0: int = add l.0.1 one.0.0;
+  out.0.0: ptr<int> = alloc new.0.0;
+  i.0.0: int = const 0;
+  store out.0.0 n.0.1;
+  curr.0.0: ptr<int> = id ns.0.1;
+  curr2.0.0: ptr<int> = ptradd out.0.0 one.0.0;
+.repeat:
+  tmp.0.0: int = phi tmp.0.1 .next;
+  stop.0.0: bool = phi stop.0.1 .next;
+  i.0.1: int = phi i.0.0 i.0.2 .prepend.b1 .next;
+  curr2.0.1: ptr<int> = phi curr2.0.0 curr2.0.2 .prepend.b1 .next;
+  curr.0.1: ptr<int> = phi curr.0.0 curr.0.2 .prepend.b1 .next;
+  stop.0.1: bool = lt i.0.1 l.0.1;
+  br stop.0.1 .next .exit;
+.next:
+  tmp.0.1: int = load curr.0.1;
+  store curr2.0.1 tmp.0.1;
+  i.0.2: int = add i.0.1 one.0.0;
+  curr.0.2: ptr<int> = ptradd curr.0.1 one.0.0;
+  curr2.0.2: ptr<int> = ptradd curr2.0.1 one.0.0;
+  jmp .repeat;
+.exit:
+  free ns.0.1;
+  ret out.0.0;
+}
+@prime_factor(n.0.0: int): int {
+.prime_factor.b0:
+  n.0.1: int = id n.0.0;
+.prime_factor.b1:
+  guess.0.0: int = const 2;
+  inc.0.0: int = const 1;
+.continue:
+  works.0.0: bool = phi works.0.1 .inc;
+  square.0.0: int = phi square.0.1 .inc;
+  guess.0.1: int = phi guess.0.0 guess.0.2 .prime_factor.b1 .inc;
+  continue.0.0: bool = phi continue.0.1 .inc;
+  square.0.1: int = mul guess.0.1 guess.0.1;
+  continue.0.1: bool = lt square.0.1 n.0.1;
+  works.0.1: bool = call @divides guess.0.1 n.0.1;
+  br works.0.1 .yay .inc;
+.yay:
+  ret guess.0.1;
+.inc:
+  guess.0.2: int = add guess.0.1 inc.0.0;
+  br continue.0.1 .continue .giveup;
+.giveup:
+  ret n.0.1;
+}
+@prime_factors(n.0.0: int, num_factors.0.0: ptr<int>): ptr<int> {
+.prime_factors.b0:
+  n.0.1: int = id n.0.0;
+  num_factors.0.1: ptr<int> = id num_factors.0.0;
+.prime_factors.b1:
+  count.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  ans.0.0: ptr<int> = alloc count.0.0;
+  store ans.0.0 zero.0.0;
+.continue:
+  tmp.0.0: int = phi tmp.0.1 .divided;
+  prime.0.0: int = phi prime.0.1 .divided;
+  n.0.2: int = phi n.0.1 n.0.4 .prime_factors.b1 .divided;
+  exit.0.0: bool = phi exit.0.1 .divided;
+  divides.0.0: bool = phi divides.0.2 .divided;
+  count.0.1: int = phi count.0.0 count.0.2 .prime_factors.b1 .divided;
+  ans.0.1: ptr<int> = phi ans.0.0 ans.0.2 .prime_factors.b1 .divided;
+  exit.0.1: bool = eq n.0.2 one.0.0;
+  br exit.0.1 .exit .next;
+.next:
+  prime.0.1: int = call @prime_factor n.0.2;
+.repeat:
+  n.0.3: int = phi n.0.2 n.0.4 .next .repeat;
+  divides.0.1: bool = phi divides.0.0 divides.0.2 .next .repeat;
+  n.0.4: int = div n.0.3 prime.0.1;
+  divides.0.2: bool = call @divides prime.0.1 n.0.4;
+  br divides.0.2 .repeat .divided;
+.divided:
+  tmp.0.1: int = sub count.0.1 one.0.0;
+  ans.0.2: ptr<int> = call @prepend prime.0.1 ans.0.1 count.0.1;
+  count.0.2: int = add count.0.1 one.0.0;
+  jmp .continue;
+.exit:
+  store num_factors.0.1 count.0.1;
+  ret ans.0.1;
+}
+@modexp(a.0.0: int, k.0.0: int, m.0.0: int): int {
+.modexp.b0:
+  a.0.1: int = id a.0.0;
+  k.0.1: int = id k.0.0;
+  m.0.1: int = id m.0.0;
+.modexp.b1:
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  two.0.0: int = const 2;
+  a.0.2: int = call @rem a.0.1 m.0.1;
+  eq_zero.0.0: bool = eq zero.0.0 k.0.1;
+  br eq_zero.0.0 .exp_zero .not_zero;
+.exp_zero:
+  ret one.0.0;
+.not_zero:
+  eq_one.0.0: bool = eq one.0.0 k.0.1;
+  br eq_one.0.0 .exp_one .not_one;
+.exp_one:
+  ret a.0.2;
+.not_one:
+  rem_two.0.0: int = call @rem k.0.1 two.0.0;
+  post_mul.0.0: bool = eq rem_two.0.0 one.0.0;
+  half_exp.0.0: int = div k.0.1 two.0.0;
+  sqrt.0.0: int = call @modexp a.0.2 half_exp.0.0 m.0.1;
+  res.0.0: int = mul sqrt.0.0 sqrt.0.0;
+  res.0.1: int = call @rem res.0.0 m.0.1;
+  br post_mul.0.0 .post_multiply .no_post;
+.post_multiply:
+  res.0.2: int = mul res.0.1 a.0.2;
+  res.0.3: int = call @rem res.0.2 m.0.1;
+.no_post:
+  res.0.4: int = phi res.0.1 res.0.3 .not_one .post_multiply;
+.exit:
+  ret res.0.4;
+}
+@check_ord(p.0.0: int, phi_p.0.0: int, factors.0.0: ptr<int>, guess.0.0: int): bool {
+.check_ord.b0:
+  p.0.1: int = id p.0.0;
+  phi_p.0.1: int = id phi_p.0.0;
+  factors.0.1: ptr<int> = id factors.0.0;
+  guess.0.1: int = id guess.0.0;
+.check_ord.b1:
+  count.0.0: int = const 0;
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  ptr.0.0: ptr<int> = id factors.0.1;
+.check_power:
+  stop.0.0: bool = phi stop.0.1 .next2;
+  ptr.0.1: ptr<int> = phi ptr.0.0 ptr.0.2 .check_ord.b1 .next2;
+  power.0.0: int = phi power.0.1 .next2;
+  is_one.0.0: bool = phi is_one.0.1 .next2;
+  factor.0.0: int = phi factor.0.1 .next2;
+  exp.0.0: int = phi exp.0.1 .next2;
+  count.0.1: int = phi count.0.0 count.0.2 .check_ord.b1 .next2;
+  factor.0.1: int = load ptr.0.1;
+  stop.0.1: bool = eq factor.0.1 zero.0.0;
+  br stop.0.1 .ret_true .next1;
+.next1:
+  power.0.1: int = div phi_p.0.1 factor.0.1;
+  exp.0.1: int = call @modexp guess.0.1 power.0.1 p.0.1;
+  is_one.0.1: bool = eq exp.0.1 one.0.0;
+  br is_one.0.1 .ret_false .next2;
+.next2:
+  ptr.0.2: ptr<int> = ptradd ptr.0.1 one.0.0;
+  count.0.2: int = add count.0.1 one.0.0;
+  jmp .check_power;
+.ret_true:
+  t.0.1: bool = const true;
+  ret t.0.1;
+.ret_false:
+  t.0.0: bool = const false;
+  ret t.0.0;
+}
+@search_primitive(p.0.0: int, phi_p.0.0: int, factors.0.0: ptr<int>, start.0.0: int): int {
+.search_primitive.b0:
+  p.0.1: int = id p.0.0;
+  phi_p.0.1: int = id phi_p.0.0;
+  factors.0.1: ptr<int> = id factors.0.0;
+  start.0.1: int = id start.0.0;
+.search_primitive.b1:
+  fallback.0.0: int = const -999;
+  one.0.0: int = const 1;
+  guess.0.0: int = id start.0.1;
+.eval:
+  works.0.0: bool = phi works.0.1 .inc;
+  too_big.0.0: bool = phi too_big.0.1 .inc;
+  guess.0.1: int = phi guess.0.0 guess.0.2 .search_primitive.b1 .inc;
+  too_big.0.1: bool = ge guess.0.1 p.0.1;
+  br too_big.0.1 .done_guess .keep_trying;
+.keep_trying:
+  works.0.1: bool = call @check_ord p.0.1 phi_p.0.1 factors.0.1 guess.0.1;
+  br works.0.1 .ret .inc;
+.ret:
+  ret guess.0.1;
+.inc:
+  guess.0.2: int = add guess.0.1 one.0.0;
+  jmp .eval;
+.done_guess:
+  ret fallback.0.0;
+}
+@phi(p.0.0: int): int {
+.phi.b0:
+  p.0.1: int = id p.0.0;
+.phi.b1:
+  one.0.0: int = const 1;
+  q.0.0: int = sub p.0.1 one.0.0;
+  ret q.0.0;
+}
+@main(p.0.0: int) {
+.main.b0:
+  p.0.1: int = id p.0.0;
+.main.b1:
+  zero.0.0: int = const 0;
+  one.0.0: int = const 1;
+  phi_p.0.0: int = call @phi p.0.1;
+  count_result.0.0: ptr<int> = alloc one.0.0;
+  prime_factors.0.0: ptr<int> = call @prime_factors phi_p.0.0 count_result.0.0;
+  num_factors.0.0: int = load count_result.0.0;
+  res.0.0: int = call @search_primitive p.0.1 phi_p.0.0 prime_factors.0.0 one.0.0;
+  print res.0.0;
+  free count_result.0.0;
+  free prime_factors.0.0;
+}

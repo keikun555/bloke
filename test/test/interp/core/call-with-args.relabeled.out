@@ -5,7 +5,7 @@
   print y.0;
   print z.0;
 }
-@add2(x: int, y: int): int {
+@add2(x.0: int, y.0: int): int {
   w.0: int = add x.0 y.0;
   y.0: int = const 5;
   print w.0;

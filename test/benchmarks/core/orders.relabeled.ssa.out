@@ -1,0 +1,112 @@
+@abs(a.0.0: int): int {
+.abs.b0:
+  a.0.1: int = id a.0.0;
+.abs.b1:
+  zero.0.0: int = const 0;
+  is_neg.0.0: bool = lt a.0.1 zero.0.0;
+  br is_neg.0.0 .mul_neg_one .abs_res;
+.mul_neg_one:
+  neg_one.0.0: int = const -1;
+  a.0.2: int = mul a.0.1 neg_one.0.0;
+.abs_res:
+  neg_one.0.1: int = phi neg_one.0.0 .mul_neg_one;
+  a.0.3: int = phi a.0.1 a.0.2 .abs.b1 .mul_neg_one;
+  ret a.0.3;
+}
+@mod(a.0.0: int, b.0.0: int): int {
+.mod.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.mod.b1:
+  q.0.0: int = div a.0.1 b.0.1;
+  aq.0.0: int = mul b.0.1 q.0.0;
+  mod.0.0: int = sub a.0.1 aq.0.0;
+  ret mod.0.0;
+}
+@gcd(a.0.0: int, b.0.0: int): int {
+.gcd.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.while.cond:
+  zero.0.0: int = phi zero.0.1 .while.body;
+  mod.0.0: int = phi mod.0.1 .while.body;
+  is_term.0.0: bool = phi is_term.0.1 .while.body;
+  b.0.2: int = phi b.0.1 b.0.3 .gcd.b0 .while.body;
+  a.0.2: int = phi a.0.1 a.0.3 .gcd.b0 .while.body;
+  mod.0.1: int = call @mod a.0.2 b.0.2;
+  zero.0.1: int = const 0;
+  is_term.0.1: bool = eq mod.0.1 zero.0.1;
+  br is_term.0.1 .while.finish .while.body;
+.while.body:
+  a.0.3: int = id b.0.2;
+  b.0.3: int = id mod.0.1;
+  jmp .while.cond;
+.while.finish:
+  ret b.0.2;
+}
+@lcm(a.0.0: int, b.0.0: int): int {
+.lcm.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.lcm.b1:
+  zero.0.0: int = const 0;
+  a_is_zero.0.0: bool = eq a.0.1 zero.0.0;
+  br a_is_zero.0.0 .check_b .is_good;
+.check_b:
+  b_is_zero.0.0: bool = eq b.0.1 zero.0.0;
+  br b_is_zero.0.0 .special_case .is_good;
+.special_case:
+  ret zero.0.0;
+.is_good:
+  b_is_zero.0.1: bool = phi b_is_zero.0.0 .check_b;
+  ab.0.0: int = mul a.0.1 b.0.1;
+  ab.0.1: int = call @abs ab.0.0;
+  gcdab.0.0: int = call @gcd a.0.1 b.0.1;
+  lcm.0.0: int = div ab.0.1 gcdab.0.0;
+  ret lcm.0.0;
+}
+@orders(u.0.0: int, n.0.0: int, use_lcm.0.0: bool) {
+.orders.b0:
+  u.0.1: int = id u.0.0;
+  n.0.1: int = id n.0.0;
+  use_lcm.0.1: bool = id use_lcm.0.0;
+.for.cond:
+  u.0.2: int = phi u.0.1 u.0.3 .orders.b0 .for.body.print;
+  ordu.0.0: int = phi ordu.0.3 .for.body.print;
+  one.0.0: int = phi one.0.1 .for.body.print;
+  lcm.0.0: int = phi lcm.0.2 .for.body.print;
+  is_term.0.0: bool = phi is_term.0.1 .for.body.print;
+  gcdun.0.0: int = phi gcdun.0.2 .for.body.print;
+  is_term.0.1: bool = eq u.0.2 n.0.1;
+  br is_term.0.1 .for.finish .for.body;
+.for.body:
+  br use_lcm.0.1 .lcm .gcd;
+.lcm:
+  lcm.0.1: int = call @lcm u.0.2 n.0.1;
+  ordu.0.1: int = div lcm.0.1 u.0.2;
+  jmp .for.body.print;
+.gcd:
+  gcdun.0.1: int = call @gcd u.0.2 n.0.1;
+  ordu.0.2: int = div n.0.1 gcdun.0.1;
+.for.body.print:
+  ordu.0.3: int = phi ordu.0.1 ordu.0.2 .lcm .gcd;
+  lcm.0.2: int = phi lcm.0.1 lcm.0.0 .lcm .gcd;
+  gcdun.0.2: int = phi gcdun.0.0 gcdun.0.1 .lcm .gcd;
+  print u.0.2 ordu.0.3;
+  one.0.1: int = const 1;
+  u.0.3: int = add u.0.2 one.0.1;
+  jmp .for.cond;
+.for.finish:
+  ret;
+}
+@main(n.0.0: int, use_lcm.0.0: bool) {
+.main.b0:
+  n.0.1: int = id n.0.0;
+  use_lcm.0.1: bool = id use_lcm.0.0;
+.main.b1:
+  zero.0.0: int = const 0;
+  u.0.0: int = const 1;
+  n.0.2: int = call @abs n.0.1;
+  print zero.0.0 u.0.0;
+  call @orders u.0.0 n.0.2 use_lcm.0.1;
+}

@@ -1,29 +1,29 @@
-@rand(seq.0: ptr<int>, max.0: int): int {
+@rand(seq.0.0: ptr<int>, max.0.0: int): int {
 .rand.b0:
-  seq.1: ptr<int> = id seq.0;
-  max.1: int = id max.0;
+  seq.0.1: ptr<int> = id seq.0.0;
+  max.0.1: int = id max.0.0;
 .rand.b1:
   a.0.0: int = const 25214903917;
   c.0.0: int = const 11;
   m.0.0: int = const 281474976710656;
-  x.0.0: int = load seq.0;
+  x.0.0: int = load seq.0.1;
   ax.0.0: int = mul a.0.0 x.0.0;
   axpc.0.0: int = add ax.0.0 c.0.0;
   next.0.0: int = div axpc.0.0 m.0.0;
   next.0.1: int = mul next.0.0 m.0.0;
   next.0.2: int = sub axpc.0.0 next.0.1;
-  store seq.0 next.0.2;
-  val.0.0: int = div next.0.2 max.0;
-  val.0.1: int = mul val.0.0 max.0;
+  store seq.0.1 next.0.2;
+  val.0.0: int = div next.0.2 max.0.1;
+  val.0.1: int = mul val.0.0 max.0.1;
   val.0.2: int = sub next.0.2 val.0.1;
   ret val.0.2;
 }
-@randarray(size.0: int, rng.0: ptr<int>): ptr<int> {
+@randarray(size.0.0: int, rng.0.0: ptr<int>): ptr<int> {
 .randarray.b0:
-  size.1: int = id size.0;
-  rng.1: ptr<int> = id rng.0;
+  size.0.1: int = id size.0.0;
+  rng.0.1: ptr<int> = id rng.0.0;
 .randarray.b1:
-  arr.0.0: ptr<int> = alloc size.0;
+  arr.0.0: ptr<int> = alloc size.0.1;
   i.0.0: int = const 0;
   max.0.0: int = const 1000;
   one.0.0: int = const 1;
@@ -32,10 +32,10 @@
   loc.0.0: ptr<int> = phi loc.0.1 .loop_end;
   i.0.1: int = phi i.0.0 i.0.2 .randarray.b1 .loop_end;
   cond.0.0: bool = phi cond.0.1 .loop_end;
-  cond.0.1: bool = lt i.0.1 size.0;
+  cond.0.1: bool = lt i.0.1 size.0.1;
   br cond.0.1 .body .done;
 .body:
-  val.0.1: int = call @rand rng.0 max.0.0;
+  val.0.1: int = call @rand rng.0.1 max.0.0;
   loc.0.1: ptr<int> = ptradd arr.0.0 i.0.1;
   store loc.0.1 val.0.1;
 .loop_end:
@@ -44,18 +44,18 @@
 .done:
   ret arr.0.0;
 }
-@main(size.0: int, seed.0: int) {
+@main(size.0.0: int, seed.0.0: int) {
 .main.b0:
-  size.1: int = id size.0;
-  seed.1: int = id seed.0;
+  size.0.1: int = id size.0.0;
+  seed.0.1: int = id seed.0.0;
 .main.b1:
   two.0.0: int = const 2;
-  rng.0.0: ptr<int> = alloc seed.0;
-  store rng.0.0 seed.0;
-  arr.0.0: ptr<int> = call @randarray size.0 rng.0.0;
+  rng.0.0: ptr<int> = alloc seed.0.1;
+  store rng.0.0 seed.0.1;
+  arr.0.0: ptr<int> = call @randarray size.0.1 rng.0.0;
   i.0.0: int = const 0;
 .loop:
-  cond.0.0: bool = lt i.0.0 size.0;
+  cond.0.0: bool = lt i.0.0 size.0.1;
   br cond.0.0 .body .done;
 .body:
   loc.0.0: ptr<int> = ptradd arr.0.0 i.0.0;

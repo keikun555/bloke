@@ -11,7 +11,7 @@
   print v4.0;
   v5.0: int = const 0;
 }
-@mod(r: int, s: int): int {
+@mod(r.0: int, s.0: int): int {
   v0.0: int = id r.0;
   v1.0: int = id r.0;
   v2.0: int = id s.0;
@@ -23,7 +23,7 @@
   v7.0: int = id result.0;
   ret v7.0;
 }
-@gcd(a: int, b: int): int {
+@gcd(a.0: int, b.0: int): int {
   v0.0: int = const 0;
   zero.0: int = id v0.0;
   v1.0: int = id b.0;

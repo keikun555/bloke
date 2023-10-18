@@ -1,4 +1,4 @@
-@main(n1: int, n2: int, n3: int, n4: int, n5: int, n6: int) {
+@main(n1.0: int, n2.0: int, n3.0: int, n4.0: int, n5.0: int, n6.0: int) {
   size.0: int = const 6;
   array.0: ptr<int> = call @pack size.0 n1.0 n2.0 n3.0 n4.0 n5.0 n6.0;
   one.0: int = const 1;
@@ -8,7 +8,7 @@
   call @print_array array.0 size.0;
   free array.0;
 }
-@qsort(array: ptr<int>, l: int, r: int) {
+@qsort(array.0: ptr<int>, l.0: int, r.0: int) {
   l_ge_r.0: bool = ge l.0 r.0;
   zero.0: int = const 0;
   neg_r.0: bool = lt r.0 zero.0;
@@ -24,7 +24,7 @@
 .done:
   ret;
 }
-@partition(array: ptr<int>, l: int, r: int): int {
+@partition(array.0: ptr<int>, l.0: int, r.0: int): int {
   pivot_loc.0: ptr<int> = ptradd array.0 r.0;
   pivot.0: int = load pivot_loc.0;
   one.0: int = const 1;
@@ -54,7 +54,7 @@
   store pivot_loc.0 a_i.0;
   ret i.0;
 }
-@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int): ptr<int> {
+@pack(size.0: int, n1.0: int, n2.0: int, n3.0: int, n4.0: int, n5.0: int, n6.0: int): ptr<int> {
   one.0: int = const 1;
   i.0: int = const 0;
   array.0: ptr<int> = alloc size.0;
@@ -77,7 +77,7 @@
   store loc.0 n6.0;
   ret array.0;
 }
-@print_array(array: ptr<int>, size: int) {
+@print_array(array.0: ptr<int>, size.0: int) {
   i.0: int = const 0;
   one.0: int = const 1;
 .loop:

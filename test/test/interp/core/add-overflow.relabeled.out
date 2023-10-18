@@ -1,4 +1,4 @@
-@pow(base: int, exp: int): int {
+@pow(base.0: int, exp.0: int): int {
   out.0: int = const 1;
   one.0: int = const 1;
 .loop:

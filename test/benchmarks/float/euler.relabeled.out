@@ -1,4 +1,4 @@
-@main(n: float) {
+@main(n.0: float) {
   v0.0: float = id n.0;
   e.0: float = call @taylor_series_euler v0.0;
   e.0: float = id e.0;
@@ -6,7 +6,7 @@
   print v1.0;
   v2.0: int = const 0;
 }
-@factorial(n: float): float {
+@factorial(n.0: float): float {
   v1.0: float = id n.0;
   v2.0: float = const 1;
   v3.0: bool = fle v1.0 v2.0;
@@ -25,7 +25,7 @@
   v10.0: float = fmul v8.0 v9.0;
   ret v10.0;
 }
-@taylor_series_euler(n: float): float {
+@taylor_series_euler(n.0: float): float {
   v0.0: float = const 0;
   e.0: float = id v0.0;
   v2.0: float = const 0;

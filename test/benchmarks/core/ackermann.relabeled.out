@@ -1,4 +1,4 @@
-@ack(m: int, n: int): int {
+@ack(m.0: int, n.0: int): int {
   zero.0: int = const 0;
   one.0: int = const 1;
   cond_m.0: bool = eq m.0 zero.0;
@@ -20,7 +20,7 @@
   t2.0: int = call @ack m1.0 t1.0;
   ret t2.0;
 }
-@main(m: int, n: int) {
+@main(m.0: int, n.0: int) {
   tmp.0: int = call @ack m.0 n.0;
   print tmp.0;
 }

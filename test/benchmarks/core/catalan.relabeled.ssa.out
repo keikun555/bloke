@@ -1,0 +1,42 @@
+@main(input.0.0: int) {
+.main.b0:
+  input.0.1: int = id input.0.0;
+.main.b1:
+  catn.0.0: int = call @catalan input.0.1;
+  print catn.0.0;
+}
+@catalan(n.0.0: int): int {
+.catalan.b0:
+  n.0.1: int = id n.0.0;
+.catalan.b1:
+  one.0.0: int = const 1;
+  zero.0.0: int = const 0;
+  guard0.0.0: bool = eq n.0.1 zero.0.0;
+  br guard0.0.0 .if .else;
+.if:
+  ret one.0.0;
+.else:
+  sum.0.0: int = id zero.0.0;
+  idx.0.0: int = id zero.0.0;
+  n.0.2: int = sub n.0.1 one.0.0;
+.while:
+  v2.0.0: int = phi v2.0.1 .while.body;
+  v1.0.0: int = phi v1.0.1 .while.body;
+  sum.0.1: int = phi sum.0.0 sum.0.2 .else .while.body;
+  n2.0.0: int = phi n2.0.1 .while.body;
+  idx.0.1: int = phi idx.0.0 idx.0.2 .else .while.body;
+  guard1.0.0: bool = phi guard1.0.1 .while.body;
+  elti.0.0: int = phi elti.0.1 .while.body;
+  guard1.0.1: bool = le idx.0.1 n.0.2;
+  br guard1.0.1 .while.body .while.end;
+.while.body:
+  n2.0.1: int = sub n.0.2 idx.0.1;
+  v1.0.1: int = call @catalan idx.0.1;
+  v2.0.1: int = call @catalan n2.0.1;
+  elti.0.1: int = mul v1.0.1 v2.0.1;
+  sum.0.2: int = add sum.0.1 elti.0.1;
+  idx.0.2: int = add idx.0.1 one.0.0;
+  jmp .while;
+.while.end:
+  ret sum.0.1;
+}

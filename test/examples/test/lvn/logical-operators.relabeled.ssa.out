@@ -1,7 +1,7 @@
-@main(arg1.0: bool, arg2.0: bool) {
+@main(arg1.0.0: bool, arg2.0.0: bool) {
 .main.b0:
-  arg1.1: bool = id arg1.0;
-  arg2.1: bool = id arg2.0;
+  arg1.0.1: bool = id arg1.0.0;
+  arg2.0.1: bool = id arg2.0.0;
 .main.b1:
   t.0.0: bool = const true;
   f.0.0: bool = const false;
@@ -11,15 +11,15 @@
   constant_fold4.0.0: bool = or f.0.0 t.0.0;
   constant_fold5.0.0: bool = not t.0.0;
   constant_fold6.0.0: bool = not f.0.0;
-  should_fold1.0.0: bool = and f.0.0 arg1.0;
-  should_fold2.0.0: bool = and arg1.0 f.0.0;
-  should_fold3.0.0: bool = or t.0.0 arg1.0;
-  should_fold4.0.0: bool = or arg1.0 t.0.0;
-  no_fold1.0.0: bool = and t.0.0 arg1.0;
-  no_fold2.0.0: bool = and arg1.0 t.0.0;
-  no_fold3.0.0: bool = or f.0.0 arg1.0;
-  no_fold4.0.0: bool = or arg1.0 f.0.0;
-  no_fold5.0.0: bool = and arg1.0 arg2.0;
-  no_fold6.0.0: bool = or arg1.0 arg2.0;
-  no_fold7.0.0: bool = not arg1.0;
+  should_fold1.0.0: bool = and f.0.0 arg1.0.1;
+  should_fold2.0.0: bool = and arg1.0.1 f.0.0;
+  should_fold3.0.0: bool = or t.0.0 arg1.0.1;
+  should_fold4.0.0: bool = or arg1.0.1 t.0.0;
+  no_fold1.0.0: bool = and t.0.0 arg1.0.1;
+  no_fold2.0.0: bool = and arg1.0.1 t.0.0;
+  no_fold3.0.0: bool = or f.0.0 arg1.0.1;
+  no_fold4.0.0: bool = or arg1.0.1 f.0.0;
+  no_fold5.0.0: bool = and arg1.0.1 arg2.0.1;
+  no_fold6.0.0: bool = or arg1.0.1 arg2.0.1;
+  no_fold7.0.0: bool = not arg1.0.1;
 }

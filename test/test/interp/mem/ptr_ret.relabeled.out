@@ -1,4 +1,4 @@
-@ident(p: ptr<int>): ptr<int> {
+@ident(p.0: ptr<int>): ptr<int> {
   ret p.0;
 }
 @main {

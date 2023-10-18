@@ -1,4 +1,4 @@
-@mod2(a: int): bool {
+@mod2(a.0: int): bool {
   two.0: int = const 2;
   tmp.0: int = div a.0 two.0;
   tmp2.0: int = mul tmp.0 two.0;
@@ -7,7 +7,7 @@
   ans.0: bool = eq one.0 tmp3.0;
   ret ans.0;
 }
-@loop_subroutine(a: int, b: int, c: bool): int {
+@loop_subroutine(a.0: int, b.0: int, c.0: bool): int {
   i.0: int = const 0;
   n.0: int = const 63;
   one.0: int = const 1;
@@ -37,23 +37,23 @@
 .end:
   ret ans.0;
 }
-@OR(a: int, b: int): int {
+@OR(a.0: int, b.0: int): int {
   oper.0: bool = const true;
   v1.0: int = call @loop_subroutine a.0 b.0 oper.0;
   ret v1.0;
 }
-@AND(a: int, b: int): int {
+@AND(a.0: int, b.0: int): int {
   oper.0: bool = const false;
   v1.0: int = call @loop_subroutine a.0 b.0 oper.0;
   ret v1.0;
 }
-@XOR(a: int, b: int): int {
+@XOR(a.0: int, b.0: int): int {
   and_val.0: int = call @AND a.0 b.0;
   or_val.0: int = call @OR a.0 b.0;
   ans.0: int = sub or_val.0 and_val.0;
   ret ans.0;
 }
-@main(a: int, b: int, c: int) {
+@main(a.0: int, b.0: int, c.0: int) {
   one.0: int = const 1;
   zero.0: int = const 0;
   sel.0: int = sub c.0 one.0;

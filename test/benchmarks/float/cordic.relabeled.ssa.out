@@ -1,17 +1,17 @@
-@main(theta.0: float) {
+@main(theta.0.0: float) {
 .main.b0:
-  theta.1: float = id theta.0;
+  theta.0.1: float = id theta.0.0;
 .main.b1:
-  v0.0.0: float = id theta.0;
+  v0.0.0: float = id theta.0.1;
   x.0.0: float = call @cordic v0.0.0;
   x.0.1: float = id x.0.0;
   v1.0.0: float = id x.0.1;
   print v1.0.0;
   v2.0.0: int = const 0;
 }
-@cordic(theta.0: float): float {
+@cordic(theta.0.0: float): float {
 .cordic.b0:
-  theta.1: float = id theta.0;
+  theta.0.1: float = id theta.0.0;
 .cordic.b1:
   v0.0.0: float = const 0.7853981633974483;
   cstab0.0.0: float = id v0.0.0;
@@ -176,7 +176,7 @@
   v16.0.1: bool = lt v14.0.1 v15.0.1;
   br v16.0.1 .for.body.12 .for.end.12;
 .for.body.12:
-  v17.0.1: float = id theta.0;
+  v17.0.1: float = id theta.0.1;
   v18.0.1: float = id gamma.0.1;
   v19.0.1: float = fsub v17.0.1 v18.0.1;
   v20.0.1: float = const 0;

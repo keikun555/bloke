@@ -1,8 +1,8 @@
-@main(input: int) {
+@main(input.0: int) {
   catn.0: int = call @catalan input.0;
   print catn.0;
 }
-@catalan(n: int): int {
+@catalan(n.0: int): int {
   one.0: int = const 1;
   zero.0: int = const 0;
   guard0.0: bool = eq n.0 zero.0;

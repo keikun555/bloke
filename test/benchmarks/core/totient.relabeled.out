@@ -1,9 +1,9 @@
-@main(n: int) {
+@main(n.0: int) {
   print n.0;
   tot.0: int = call @totient n.0;
   print tot.0;
 }
-@totient(n: int): int {
+@totient(n.0: int): int {
   result.0: int = id n.0;
   p.0: int = const 2;
   one.0: int = const 1;
@@ -40,7 +40,7 @@
 .final_else_label:
   ret result.0;
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   ad.0: int = div a.0 b.0;
   mad.0: int = mul b.0 ad.0;
   ans.0: int = sub a.0 mad.0;

@@ -1,4 +1,4 @@
-@abs(a: int): int {
+@abs(a.0: int): int {
   zero.0: int = const 0;
   is_neg.0: bool = lt a.0 zero.0;
   br is_neg.0 .mul_neg_one .abs_res;
@@ -8,13 +8,13 @@
 .abs_res:
   ret a.0;
 }
-@mod(a: int, b: int): int {
+@mod(a.0: int, b.0: int): int {
   q.0: int = div a.0 b.0;
   aq.0: int = mul b.0 q.0;
   mod.0: int = sub a.0 aq.0;
   ret mod.0;
 }
-@gcd(a: int, b: int): int {
+@gcd(a.0: int, b.0: int): int {
 .while.cond:
   mod.0: int = call @mod a.0 b.0;
   zero.0: int = const 0;
@@ -27,7 +27,7 @@
 .while.finish:
   ret b.0;
 }
-@lcm(a: int, b: int): int {
+@lcm(a.0: int, b.0: int): int {
   zero.0: int = const 0;
   a_is_zero.0: bool = eq a.0 zero.0;
   br a_is_zero.0 .check_b .is_good;
@@ -43,7 +43,7 @@
   lcm.0: int = div ab.0 gcdab.0;
   ret lcm.0;
 }
-@orders(u: int, n: int, use_lcm: bool) {
+@orders(u.0: int, n.0: int, use_lcm.0: bool) {
 .for.cond:
   is_term.0: bool = eq u.0 n.0;
   br is_term.0 .for.finish .for.body;
@@ -64,7 +64,7 @@
 .for.finish:
   ret;
 }
-@main(n: int, use_lcm: bool) {
+@main(n.0: int, use_lcm.0: bool) {
   zero.0: int = const 0;
   u.0: int = const 1;
   n.0: int = call @abs n.0;

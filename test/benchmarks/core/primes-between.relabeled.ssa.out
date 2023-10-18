@@ -1,16 +1,16 @@
-@main(a.0: int, b.0: int) {
+@main(a.0.0: int, b.0.0: int) {
 .main.b0:
-  a.1: int = id a.0;
-  b.1: int = id b.0;
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
 .for.outer.init:
   t0.0.0: int = const 2;
-  t1.0.0: bool = lt a.0 t0.0.0;
+  t1.0.0: bool = lt a.0.1 t0.0.0;
   br t1.0.0 .true .false;
 .true:
   t2.0.0: int = const 2;
   jmp .for.outer.cond;
 .false:
-  t2.0.1: int = id a.0;
+  t2.0.1: int = id a.0.1;
 .for.outer.cond:
   t9.0.0: bool = phi t9.0.2 .if.outer.end;
   t8.0.0: int = phi t8.0.2 .if.outer.end;
@@ -28,7 +28,7 @@
   t12.0.0: bool = phi t12.0.3 .if.outer.end;
   t11.0.0: int = phi t11.0.3 .if.outer.end;
   t10.0.0: int = phi t10.0.3 .if.outer.end;
-  t3.0.1: bool = le t2.0.2 b.0;
+  t3.0.1: bool = le t2.0.2 b.0.1;
   br t3.0.1 .for.outer.body .for.outer.end;
 .for.outer.body:
   t4.0.1: int = const 1;
@@ -79,13 +79,13 @@
   jmp .for.outer.cond;
 .for.outer.end:
 }
-@mod(a.0: int, b.0: int): int {
+@mod(a.0.0: int, b.0.0: int): int {
 .mod.b0:
-  a.1: int = id a.0;
-  b.1: int = id b.0;
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
 .mod.b1:
-  t1.0.0: int = div a.0 b.0;
-  t2.0.0: int = mul b.0 t1.0.0;
-  t3.0.0: int = sub a.0 t2.0.0;
+  t1.0.0: int = div a.0.1 b.0.1;
+  t2.0.0: int = mul b.0.1 t1.0.0;
+  t3.0.0: int = sub a.0.1 t2.0.0;
   ret t3.0.0;
 }

@@ -1,7 +1,7 @@
-@main(a.0: int, b.0: int) {
+@main(a.0.0: int, b.0.0: int) {
 .main.b0:
-  a.1: int = id a.0;
-  b.1: int = id b.0;
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
 .main.b1:
-  c.0.0: int = add a.0 b.0 a.0;
+  c.0.0: int = add a.0.1 b.0.1 a.0.1;
 }

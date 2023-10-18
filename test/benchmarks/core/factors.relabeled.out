@@ -1,4 +1,4 @@
-@main(num: int) {
+@main(num.0: int) {
   zer.0: int = const 0;
   one.0: int = const 1;
   fac.0: int = const 2;

@@ -1,4 +1,4 @@
-@main(n: int) {
+@main(n.0: int) {
   v2.0: int = const 1;
   i.0: int = id v2.0;
 .for.cond.1:
@@ -29,7 +29,7 @@
   jmp .for.cond.1;
 .for.end.1:
 }
-@checkPrime(x: int): bool {
+@checkPrime(x.0: int): bool {
   v1.0: int = id x.0;
   v2.0: int = const 1;
   v3.0: bool = le v1.0 v2.0;

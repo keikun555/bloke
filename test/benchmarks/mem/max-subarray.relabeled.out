@@ -1,4 +1,4 @@
-@pack(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int, n7: int, n8: int, n9: int, n10: int): ptr<int> {
+@pack(size.0: int, n1.0: int, n2.0: int, n3.0: int, n4.0: int, n5.0: int, n6.0: int, n7.0: int, n8.0: int, n9.0: int, n10.0: int): ptr<int> {
   one.0: int = const 1;
   i.0: int = const 0;
   array.0: ptr<int> = alloc size.0;
@@ -33,7 +33,7 @@
   store loc.0 n10.0;
   ret array.0;
 }
-@max(n: int, m: int): int {
+@max(n.0: int, m.0: int): int {
   condi.0: bool = lt n.0 m.0;
   br condi.0 .less .biggereq;
 .less:
@@ -41,7 +41,7 @@
 .biggereq:
   ret n.0;
 }
-@main(size: int, n1: int, n2: int, n3: int, n4: int, n5: int, n6: int, n7: int, n8: int, n9: int, n10: int) {
+@main(size.0: int, n1.0: int, n2.0: int, n3.0: int, n4.0: int, n5.0: int, n6.0: int, n7.0: int, n8.0: int, n9.0: int, n10.0: int) {
   array.0: ptr<int> = call @pack size.0 n1.0 n2.0 n3.0 n4.0 n5.0 n6.0 n7.0 n8.0 n9.0 n10.0;
   sum.0: int = const 0;
   max_sum.0: int = const 0;

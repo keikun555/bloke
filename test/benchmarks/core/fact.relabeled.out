@@ -1,9 +1,9 @@
-@main(a: int) {
+@main(a.0: int) {
   x.0: int = call @fact a.0;
   print x.0;
   v13.0: int = const 0;
 }
-@fact(a: int): int {
+@fact(a.0: int): int {
   v1.0: int = id a.0;
   v2.0: int = const 0;
   v3.0: bool = eq v1.0 v2.0;
