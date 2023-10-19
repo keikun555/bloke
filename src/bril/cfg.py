@@ -1,25 +1,15 @@
 """
 Generates a Control Flow Graph from a BasicBlockFunction
 """
+import copy
 import json
 import sys
-import copy
+from typing import Generator, cast
 
-
-from typing import cast, Generator
-
-from .typing_bril import (
-    Program,
-    InstructionBase,
-    Effect,
-)
-from .bril_constants import TERMINATOR_OPERATORS
-
-from .basic_blocks import (
-    basic_block_program_from_program,
-    BasicBlock,
-)
-from .bril_extract import label_get
+from bril.basic_blocks import BasicBlock, basic_block_program_from_program
+from bril.bril_constants import TERMINATOR_OPERATORS
+from bril.bril_extract import label_get
+from bril.typing_bril import Effect, InstructionBase, Program
 
 
 class ControlFlowGraph(dict[int, set[int]]):

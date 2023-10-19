@@ -10,11 +10,15 @@ from typing import Callable, TypeAlias
 
 import click
 
-from .basic_blocks import BasicBlockProgram, basic_block_program_from_program
-from .bril_labeler import index_to_label_dict_get
-from .cfg import (ControlFlowGraph, all_paths,
-                  control_flow_graph_from_instructions, reverse_cfg)
-from .typing_bril import Program
+from bril.basic_blocks import BasicBlockProgram, basic_block_program_from_program
+from bril.bril_labeler import index_to_label_dict_get
+from bril.cfg import (
+    ControlFlowGraph,
+    all_paths,
+    control_flow_graph_from_instructions,
+    reverse_cfg,
+)
+from bril.typing_bril import Program
 
 DominanceAnalysis: TypeAlias = dict[int, set[int]]
 

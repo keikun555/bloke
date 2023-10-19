@@ -2,9 +2,18 @@
 
 from typing import Optional, cast
 
-from .basic_blocks import BasicBlock, BasicBlockFunction
-from .bril_analyze import has_label, is_value
-from .typing_bril import BrilType, Label, Value, Variable
+from bril.basic_blocks import BasicBlock, BasicBlockFunction, BasicBlockProgram
+from bril.bril_analyze import has_label, is_value
+from bril.typing_bril import BrilType, Label, Value, Variable
+
+
+def main_function_get(program: BasicBlockProgram) -> BasicBlockFunction | None:
+    """Return main function if it exists"""
+    for func in program["functions"]:
+        if func["name"] == "main":
+            return func
+
+    return None
 
 
 def label_get(basic_block: BasicBlock) -> Optional[str]:

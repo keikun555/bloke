@@ -10,18 +10,24 @@ from typing import Generator, cast
 
 import click
 
-from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
-                           basic_block_program_from_program,
-                           program_from_basic_block_program)
-from .bril_extract import phi_nodes_get, values_get
-from .bril_labeler import apply_labels, index_to_label_dict_get
-from .cfg import ControlFlowGraph, control_flow_graph_from_instructions
-from .dominance_analysis import (DominanceAnalysis,
-                                 dominance_frontier_indices_get,
-                                 immediate_dominator_index_get,
-                                 index_dominator_tree_get)
-from .typing_bril import (BrilType, Effect, Instruction, Program, Value,
-                          Variable)
+from bril.basic_blocks import (
+    BasicBlock,
+    BasicBlockFunction,
+    BasicBlockProgram,
+    basic_block_program_from_program,
+    program_from_basic_block_program,
+)
+from bril.bril_extract import phi_nodes_get, values_get
+from bril.bril_labeler import apply_labels, index_to_label_dict_get
+from bril.cfg import ControlFlowGraph, control_flow_graph_from_instructions
+from bril.dominance_analysis import (
+    DominanceAnalysis,
+    dominance_frontier_indices_get,
+    immediate_dominator_index_get,
+    index_dominator_tree_get,
+)
+
+from bril.typing_bril import BrilType, Effect, Instruction, Program, Value, Variable
 
 
 def new_variable_generator(variable: Variable) -> Generator[Variable, None, None]:

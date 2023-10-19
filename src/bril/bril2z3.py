@@ -5,27 +5,38 @@ import json
 import operator
 import sys
 from types import MappingProxyType
-from typing import (Callable, Generator, NamedTuple, TypeAlias, TypedDict,
-                    TypeVar, cast)
+from typing import Callable, Generator, NamedTuple, TypeAlias, TypedDict, TypeVar, cast
 
 import click
 import z3
 
-from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
-                           basic_block_program_from_program)
-from .bril_extract import phi_nodes_get, var_to_type_dict_get
-from .bril_labeler import index_to_label_dict_get, label_to_index_dict_get
-from .cfg import control_flow_graph_from_instructions, is_cyclic
-from .typing_bril import (BrilType, Constant, Effect, Instruction, Operation,
-                          Program, Value, Variable)
+from bril.basic_blocks import (
+    BasicBlock,
+    BasicBlockFunction,
+    BasicBlockProgram,
+    basic_block_program_from_program,
+)
+from bril.bril_extract import phi_nodes_get, var_to_type_dict_get
+from bril.bril_labeler import index_to_label_dict_get, label_to_index_dict_get
+from bril.cfg import control_flow_graph_from_instructions, is_cyclic
+from bril.typing_bril import (
+    BrilType,
+    Constant,
+    Effect,
+    Instruction,
+    Operation,
+    Program,
+    Value,
+    Variable,
+)
 
 Z3_RETURN_PREFIX = "BRIL.RETURN"
 Z3_PRINT_PREFIX = "BRIL.PRINT.LINES"
 
 
-def z3_return_arg_name_get(program_label: int) -> str:
+def z3_return_arg_name_get(label: int | str) -> str:
     """Get name of return Z3 argument"""
-    return f"{Z3_RETURN_PREFIX}.{program_label}"
+    return f"{Z3_RETURN_PREFIX}.{label}"
 
 
 ArgType = TypeVar("ArgType")
@@ -34,16 +45,40 @@ UnaryOperator: TypeAlias = Callable[[ArgType], RetType]
 BinaryOperator: TypeAlias = Callable[[ArgType, ArgType], RetType]
 
 
-def z3_bril_print_arg_type_get() -> z3.SortRef:
-    """Construct printer argument type sorts"""
-    print_arg_type = z3.Datatype("PrintArgType")
-    print_arg_type.declare("IntV", ("int", z3.IntSort()))
-    print_arg_type.declare("FloatV", ("float", z3.Float64()))
-    print_arg_type.declare("BoolV", ("bool", z3.BoolSort()))
-    return print_arg_type.create()
+class BrilAnyType(z3.DatatypeSortRef):
+    """Models any type arguments such as return and print arguments"""
+
+    int_ref: "BrilAnyType"
+    float_ref: "BrilAnyType"
+    bool_ref: "BrilAnyType"
+    nil: "BrilAnyType"
+
+    def IntV(self, int_ref):
+        ...
+
+    def FloatV(self, float_ref):
+        ...
+
+    def BoolV(self, bool_ref):
+        ...
 
 
-PRINT_ARG_TYPE = z3_bril_print_arg_type_get()
+def z3_bril_any_type_get() -> BrilAnyType:
+    """Construct any argument type sorts"""
+    any_type = z3.Datatype("AnyType")
+    any_type.declare("IntV", ("int", z3.BitVecSort(64)))
+    any_type.declare("FloatV", ("float", z3.Float64()))
+    any_type.declare("BoolV", ("bool", z3.BoolSort()))
+    any_type.declare("nil")
+    return cast(BrilAnyType, any_type.create())
+
+
+BRIL_TYPE_SORT = z3_bril_any_type_get()
+
+
+def z3_bril_any_var_get(variable: Variable) -> z3.DatatypeSortRef:
+    """Z3 any var"""
+    return z3.Const(variable, BRIL_TYPE_SORT)
 
 
 class PhiMaps(NamedTuple):
@@ -73,6 +108,7 @@ class FunctionState(NamedTuple):
 
     program_label: int
     print_index: int
+    returned: bool  # ret was called
     phi_maps: PhiMaps
 
 
@@ -391,12 +427,6 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 z3_bril_float_get,
                 z3_bril_bool_get,
             )
-            arg1, arg2 = value["args"]
-            z3_expr = (
-                z3_bril_bool_get(value["dest"])
-                == z3_bril_float_get(arg1)
-                <= z3_bril_float_get(arg2)
-            )
         case "fge":
             z3_expr = binary_op_to_z3(
                 value,
@@ -457,30 +487,37 @@ def bril_print_to_z3(
     return z3.BoolVal(True)  # TODO
 
 
+def bril_ret_to_z3_eq(return_value: BrilAnyType, label: int | str) -> z3.ExprRef:
+    """Convert Z3 return expression in z3"""
+    return_var_name = z3_return_arg_name_get(label)
+    return_var = z3_bril_any_var_get(Variable(return_var_name))
+    return return_var == return_value
+
+
 def bril_ret_to_z3(
-    effect: Effect, var_to_type: dict[Variable, BrilType], program_label: int
+    effect: Effect, var_to_type: dict[Variable, BrilType], label: int | str
 ) -> z3.ExprRef | None:
     """Converts Bril ret instruction to Z3"""
+    has_args = "args" in effect and len(effect["args"]) >= 1
+
+    if not has_args:
+        return bril_ret_to_z3_eq(BRIL_TYPE_SORT.nil, label)
+
     args = effect["args"]
-    if len(args) <= 0:
-        return None
-
     return_argument = args[0]
-
     z3_expr: z3.ExprRef | None
-    return_var_name = z3_return_arg_name_get(program_label)
     match var_to_type[return_argument]:
         case "int":
-            z3_expr = z3_bril_int_get(Variable(return_var_name)) == z3_bril_int_get(
-                return_argument
+            z3_expr = bril_ret_to_z3_eq(
+                BRIL_TYPE_SORT.IntV(z3_bril_int_get(return_argument)), label
             )
         case "float":
-            z3_expr = z3_bril_float_get(Variable(return_var_name)) == z3_bril_float_get(
-                return_argument
+            z3_expr = bril_ret_to_z3_eq(
+                BRIL_TYPE_SORT.FloatV(z3_bril_float_get(return_argument)), label
             )
         case "bool":
-            z3_expr = z3_bril_bool_get(Variable(return_var_name)) == z3_bril_bool_get(
-                return_argument
+            z3_expr = bril_ret_to_z3_eq(
+                BRIL_TYPE_SORT.BoolV(z3_bril_bool_get(return_argument)), label
             )
         # case "char":
         case _:
@@ -594,6 +631,11 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
 
     def helper(block_index: int, function_state: FunctionState) -> z3.ExprRef:
         if not 0 <= block_index < len(func["instrs"]):
+            # If not returned, add nil return
+            if not function_state.returned:
+                return bril_ret_to_z3_eq(
+                    BRIL_TYPE_SORT.nil, function_state.program_label
+                )
             return z3.BoolVal(True)
 
         block = func["instrs"][block_index]
@@ -601,7 +643,7 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
             program_label=function_state.program_label,
             print_index=function_state.print_index,
             terminated=False,
-            returned=False,
+            returned=function_state.returned,
             errored=False,
             cond=None,
             phi_maps=function_state.phi_maps.copy(),
@@ -617,12 +659,16 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
         next_state = FunctionState(
             program_label=block_state["program_label"],
             print_index=block_state["print_index"],
+            returned=block_state["returned"],
             phi_maps=block_state["phi_maps"],
         )
 
         if len(successors) <= 0:
-            # Returned
-            return block_expr
+            # Returned without ret instruction, add nil return
+            return z3.And(
+                block_expr,
+                bril_ret_to_z3_eq(BRIL_TYPE_SORT.nil, block_state["program_label"]),
+            )
 
         if block_state["cond"] is None:
             # One successor
@@ -644,6 +690,7 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
     initial_state = FunctionState(
         program_label=program_state.program_label,
         print_index=program_state.print_index,
+        returned=False,
         phi_maps=phi_maps,
     )
     return helper(0, initial_state)

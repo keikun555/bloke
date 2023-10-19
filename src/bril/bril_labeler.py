@@ -7,13 +7,17 @@ from typing import Generator, Optional, TypeAlias
 
 import click
 
-from .basic_blocks import (BasicBlock, BasicBlockFunction, BasicBlockProgram,
-                           basic_block_program_from_program,
-                           program_from_basic_block_program)
-from .bril_analyze import has_label
-from .bril_extract import label_get
-from .cfg import ControlFlowGraph, control_flow_graph_from_instructions
-from .typing_bril import Label, Program
+from bril.basic_blocks import (
+    BasicBlock,
+    BasicBlockFunction,
+    BasicBlockProgram,
+    basic_block_program_from_program,
+    program_from_basic_block_program,
+)
+from bril.bril_analyze import has_label
+from bril.bril_extract import label_get
+from bril.cfg import ControlFlowGraph, control_flow_graph_from_instructions
+from bril.typing_bril import Label, Program
 
 ENTRY_BLOCK_LABEL = "ENTRY"
 EXIT_BLOCK_LABEL = "EXIT"
