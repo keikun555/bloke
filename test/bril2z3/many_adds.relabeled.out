@@ -1,6 +1,5 @@
-@main {
+@main(x.0: int) {
   one.0: int = const 1;
-  x.0: int = const 0;
   x.0: int = add x.0 one.0;
   x.0: int = add x.0 one.0;
   x.0: int = add x.0 one.0;

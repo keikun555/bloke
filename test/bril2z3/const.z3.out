@@ -1,1 +1,1 @@
-And(And(x.0.0 == 1), True)
+And(And(x.0.0 == 1), BRIL.RETURN.0 == nil)

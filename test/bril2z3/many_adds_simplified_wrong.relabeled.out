@@ -1,0 +1,5 @@
+@main(x.0: int) {
+  hundred.0: int = const 101;
+  x.0: int = add x.0 hundred.0;
+  ret x.0;
+}

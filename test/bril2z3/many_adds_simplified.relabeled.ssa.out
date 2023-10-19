@@ -1,0 +1,8 @@
+@main(x.0.0: int) {
+.main.b0:
+  x.0.1: int = id x.0.0;
+.main.b1:
+  hundred.0.0: int = const 100;
+  x.0.2: int = add x.0.1 hundred.0.0;
+  ret x.0.2;
+}

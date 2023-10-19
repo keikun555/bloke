@@ -1,1 +1,1 @@
-And(And(a.0.0 == 2, b.0.0 == 3), True)
+And(And(a.0.0 == 2, b.0.0 == 3), BRIL.RETURN.0 == nil)

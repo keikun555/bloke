@@ -4,7 +4,14 @@ from typing import Optional, cast
 
 from bril.basic_blocks import BasicBlock, BasicBlockFunction, BasicBlockProgram
 from bril.bril_analyze import has_label, is_value
-from bril.typing_bril import BrilType, Label, Value, Variable
+from bril.typing_bril import Argument, BrilType, Label, Value, Variable
+
+
+def function_arguments_get(function: BasicBlockFunction) -> list[Argument]:
+    """Return list of arguments of a function"""
+    if "args" not in function:
+        return []
+    return function["args"]
 
 
 def main_function_get(program: BasicBlockProgram) -> BasicBlockFunction | None:

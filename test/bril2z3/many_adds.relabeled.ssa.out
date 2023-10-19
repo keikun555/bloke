@@ -1,8 +1,8 @@
-@main {
+@main(x.0.0: int) {
 .main.b0:
+  x.0.1: int = id x.0.0;
+.main.b1:
   one.0.0: int = const 1;
-  x.0.0: int = const 0;
-  x.0.1: int = add x.0.0 one.0.0;
   x.0.2: int = add x.0.1 one.0.0;
   x.0.3: int = add x.0.2 one.0.0;
   x.0.4: int = add x.0.3 one.0.0;
@@ -102,5 +102,6 @@
   x.0.98: int = add x.0.97 one.0.0;
   x.0.99: int = add x.0.98 one.0.0;
   x.0.100: int = add x.0.99 one.0.0;
-  ret x.0.100;
+  x.0.101: int = add x.0.100 one.0.0;
+  ret x.0.101;
 }

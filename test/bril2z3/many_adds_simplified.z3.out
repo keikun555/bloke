@@ -1,0 +1,4 @@
+And(And(x.0.1 == x.0.0),
+    And(hundred.0.0 == 100,
+        x.0.2 == x.0.1 + hundred.0.0,
+        BRIL.RETURN.0 == IntV(x.0.2)))

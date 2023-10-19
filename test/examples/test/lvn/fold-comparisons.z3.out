@@ -14,4 +14,4 @@ And(And(arg1.0.1 == arg1.0.0, arg2.0.1 == arg2.0.0),
             no_fold3.0.0 == (arg1.0.1 >= arg2.0.1),
             no_fold4.0.0 == (arg1.0.1 < arg1.0.1),
             no_fold5.0.0 == (arg2.0.1 > arg2.0.1)),
-        True))
+        BRIL.RETURN.0 == nil))

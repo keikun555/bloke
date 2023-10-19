@@ -5,30 +5,20 @@ import json
 import operator
 import sys
 from types import MappingProxyType
-from typing import Callable, Generator, NamedTuple, TypeAlias, TypedDict, TypeVar, cast
+from typing import (Callable, Generator, NamedTuple, TypeAlias, TypedDict,
+                    TypeVar, cast)
 
 import click
 import z3
 
-from bril.basic_blocks import (
-    BasicBlock,
-    BasicBlockFunction,
-    BasicBlockProgram,
-    basic_block_program_from_program,
-)
+from bril.basic_blocks import (BasicBlock, BasicBlockFunction,
+                               BasicBlockProgram,
+                               basic_block_program_from_program)
 from bril.bril_extract import phi_nodes_get, var_to_type_dict_get
 from bril.bril_labeler import index_to_label_dict_get, label_to_index_dict_get
 from bril.cfg import control_flow_graph_from_instructions, is_cyclic
-from bril.typing_bril import (
-    BrilType,
-    Constant,
-    Effect,
-    Instruction,
-    Operation,
-    Program,
-    Value,
-    Variable,
-)
+from bril.typing_bril import (Argument, BrilType, Constant, Effect,
+                              Instruction, Operation, Program, Value, Variable)
 
 Z3_RETURN_PREFIX = "BRIL.RETURN"
 Z3_PRINT_PREFIX = "BRIL.PRINT.LINES"
@@ -202,6 +192,24 @@ def z3_bril_float_get(variable: Variable) -> z3.FPRef:
     return z3.FP(variable, z3.Float64())
 
 
+def z3_bril_variable_get(variable: Variable, type_: BrilType) -> z3.ExprRef:
+    """Get Z3 refs for variables"""
+    match type_:
+        case "int":
+            return z3_bril_int_get(variable)
+        case "float":
+            return z3_bril_float_get(variable)
+        case "bool":
+            return z3_bril_bool_get(variable)
+
+    raise Exception(f"z3_bril_variable_get, type {type_} not implemented")
+
+
+def z3_bril_argument_get(argument: Argument) -> z3.ExprRef:
+    """Get Z3 refs for arguments"""
+    return z3_bril_variable_get(argument["name"], argument["type"])
+
+
 def bril2z3_compatible(func: BasicBlockFunction) -> bool:
     """Return True iff we can run bril2z3 on the function"""
     for block in func["instrs"]:
@@ -211,14 +219,12 @@ def bril2z3_compatible(func: BasicBlockFunction) -> bool:
 
             effect = cast(Effect, instruction)
             if effect["op"] not in COMPATIBLE_OPS:
-                # print(instruction, file=sys.stderr)
                 return False
 
     cfg = control_flow_graph_from_instructions(func["instrs"])
 
     if is_cyclic(cfg):
         # Loop-free
-        # print("Detected loop", file=sys.stderr)
         return False
 
     return True
@@ -226,57 +232,27 @@ def bril2z3_compatible(func: BasicBlockFunction) -> bool:
 
 def bril_const_to_z3(constant: Constant) -> z3.ExprRef:
     """Convert Bril const instruction to Z3"""
-    z3_expr: z3.ExprRef
-    match constant["type"]:
-        case "int":
-            z3_expr = z3_bril_int_get(constant["dest"]) == constant["value"]
-        case "float":
-            z3_expr = z3_bril_float_get(constant["dest"]) == constant["value"]
-        case "bool":
-            z3_expr = z3_bril_bool_get(constant["dest"]) == constant["value"]
-        # case "char":
-        case _:
-            raise NotImplementedError(f"bril_const_to_z3, not implemented: {constant}")
-    return z3_expr
+    return z3_bril_variable_get(constant["dest"], constant["type"]) == constant["value"]
 
 
 def bril_id_to_z3(value: Value) -> z3.ExprRef:
     """Convert Bril id instruction to Z3"""
-    z3_expr: z3.ExprRef
-    arg1 = value["args"][0]
-    match value["type"]:
-        case "int":
-            z3_expr = z3_bril_int_get(value["dest"]) == z3_bril_int_get(arg1)
-        case "float":
-            z3_expr = z3_bril_float_get(value["dest"]) == z3_bril_float_get(arg1)
-        case "bool":
-            z3_expr = z3_bril_bool_get(value["dest"]) == z3_bril_bool_get(arg1)
-        # case "char":
-        case _:
-            raise NotImplementedError(f"bril_id_to_z3, not implemented: {value}")
-    return z3_expr
+    arg1 = z3_bril_variable_get(value["args"][0], value["type"])
+    dest_var = z3_bril_variable_get(value["dest"], value["type"])
+    return dest_var == arg1
 
 
 def bril_phi_to_z3(value: Value, phi_maps: PhiMaps) -> z3.ExprRef | None:
     """Convert Bril phi instruction to Z3"""
-    z3_expr: z3.ExprRef
     phi_dest = value["dest"]
     if phi_dest not in phi_maps.phi_dest_to_var:
         return None
 
     var = phi_maps.phi_dest_to_var[phi_dest]
 
-    match value["type"]:
-        case "int":
-            z3_expr = z3_bril_int_get(phi_dest) == z3_bril_int_get(var)
-        case "float":
-            z3_expr = z3_bril_float_get(phi_dest) == z3_bril_float_get(var)
-        case "bool":
-            z3_expr = z3_bril_bool_get(phi_dest) == z3_bril_bool_get(var)
-        # case "char":
-        case _:
-            raise NotImplementedError(f"bril_id_to_z3, not implemented: {value}")
-    return z3_expr
+    phi_dest_var = z3_bril_variable_get(phi_dest, value["type"])
+    argument = z3_bril_variable_get(var, value["type"])
+    return phi_dest_var == argument
 
 
 def unary_op_to_z3(
@@ -455,11 +431,9 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
     # phi_maps bookkeeping for Phi instructions
     dest = value["dest"]
     if dest in state["phi_maps"].var_to_phi_dest:
-        # print(state["phi_maps"], file=sys.stderr)
         state["phi_maps"].phi_dest_to_var[
             state["phi_maps"].var_to_phi_dest[dest]
         ] = dest
-        # print(state["phi_maps"], file=sys.stderr)
 
     return z3_expr
 
@@ -487,10 +461,15 @@ def bril_print_to_z3(
     return z3.BoolVal(True)  # TODO
 
 
+def bril_ret_var_to_z3(label: int | str) -> z3.DatatypeSortRef:
+    """Make return variable Z3 reference"""
+    return_var_name = z3_return_arg_name_get(label)
+    return z3_bril_any_var_get(Variable(return_var_name))
+
+
 def bril_ret_to_z3_eq(return_value: BrilAnyType, label: int | str) -> z3.ExprRef:
     """Convert Z3 return expression in z3"""
-    return_var_name = z3_return_arg_name_get(label)
-    return_var = z3_bril_any_var_get(Variable(return_var_name))
+    return_var = bril_ret_var_to_z3(label)
     return return_var == return_value
 
 
@@ -569,17 +548,13 @@ def instruction_to_z3(
     instruction: Instruction, var_to_type: dict[Variable, BrilType], state: BlockState
 ) -> z3.ExprRef | None:
     """Generates Z3 formula from a bril instruction"""
-    # print(instruction, file=sys.stderr)
     if "op" not in instruction:
-        # print("no operation", file=sys.stderr)
         return None
 
     if "dest" not in instruction:
-        # print("effect", file=sys.stderr)
         effect = cast(Effect, instruction)
         return effect_to_z3(effect, var_to_type, state)
 
-    # print("value", file=sys.stderr)
     value = cast(Value, instruction)
     return value_to_z3(value, state)
 
