@@ -10,9 +10,9 @@ from typing import cast
 
 import click
 import z3
+
 from bril import bril2z3
-from bril.basic_blocks import (BasicBlockProgram,
-                               basic_block_program_from_program)
+from bril.basic_blocks import BasicBlockProgram, basic_block_program_from_program
 from bril.bril2ssa import bril_to_ssa
 from bril.bril_extract import function_arguments_get, main_function_get
 from bril.bril_variable_labeler import rename_variables_in_program

@@ -4,3 +4,6 @@ mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 
 [tool.black]
 target_version = ["py310"]
+
+[tool.isort]
+profile = "black"
