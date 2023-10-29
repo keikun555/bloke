@@ -2,6 +2,7 @@ click==8.1.7
 lark==1.1.8
 mypy==1.6.1
 mypy-extensions==1.0.0
+numpy==1.26.1
 tomli==2.0.1
 turnt==1.11.0
 typing_extensions==4.8.0

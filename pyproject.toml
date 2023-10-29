@@ -1,6 +1,7 @@
 [tool.mypy]
 python_executable = "$MYPY_CONFIG_FILE_DIR/bloke_venv/bin/python3"
 mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
+plugins = ["numpy.typing.mypy_plugin"]
 
 [tool.black]
 target_version = ["py310"]
