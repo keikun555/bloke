@@ -11,13 +11,15 @@ from bril.typing_bril import Program
 
 BRILI_COMMAND = "brili"
 BRILI_PROFILE_FLAG = "-p"
-BRILI_PROFILE_REGEX = re.compile(r"total_dyn_inst: (\d+)")
+BRILI_PROFILE_REGEX = re.compile(r"^total_dyn_inst: (\d+)$")
+BRILI_ERROR_REGEX = re.compile(r"^error: (.*)$")
 
 class BriliOutput(NamedTuple):
     """What brili would output"""
     returncode: int
     stdout: str
     stderr: str
+    error: str | None
     total_dyn_inst: int | None
 
 
@@ -34,17 +36,24 @@ def brili(program: Program, arguments: list[str], profile: bool = False) -> Bril
 
     stderr = result.stderr.decode("utf-8")
 
-    total_dyn_inst: int | None
-    match_ = BRILI_PROFILE_REGEX.match(stderr)
-    if match_ is None:
-        total_dyn_inst = None
-    else:
-        total_dyn_inst = int(match_.groups()[0])
+    error: str | None = None
+    total_dyn_inst: int | None = None
+
+    for line in stderr.splitlines():
+        match_ = BRILI_ERROR_REGEX.match(line)
+        if match_ is not None:
+            error = match_.groups()[0]
+            continue
+
+        match_ = BRILI_PROFILE_REGEX.match(line)
+        if match_ is not None:
+            total_dyn_inst = int(match_.groups()[0])
 
     return BriliOutput(
         returncode=result.returncode,
         stdout=result.stdout.decode("utf-8"),
         stderr=stderr,
+        error=error,
         total_dyn_inst=total_dyn_inst,
     )
 
