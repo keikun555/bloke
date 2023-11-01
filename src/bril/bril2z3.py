@@ -317,8 +317,9 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
             _, arg2 = value["args"]
             if arg2 == 0:
                 state["errored"] = True
+            # In Z3 Int / Int is the operator.floordiv
             z3_expr = binary_op_to_z3(
-                value, operator.floordiv, z3_bril_int_get, z3_bril_int_get
+                value, operator.truediv, z3_bril_int_get, z3_bril_int_get
             )
         case "eq":
             z3_expr = binary_op_to_z3(
