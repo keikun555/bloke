@@ -16,7 +16,7 @@ from bril.basic_blocks import BasicBlockProgram, basic_block_program_from_progra
 from bril.bril2ssa import bril_to_ssa
 from bril.bril_extract import function_arguments_get, main_function_get
 from bril.bril_variable_labeler import rename_variables_in_program
-from bril.typing_bril import Program
+from bril.typing_bril import PrimitiveType, Program
 
 
 def briltxt_get() -> ModuleType:
@@ -49,7 +49,7 @@ def briltxt_get() -> ModuleType:
     return briltxt
 
 
-def z3_value_to_python_value(value: z3.ExprRef) -> int | float | bool:
+def z3_value_to_python_value(value: z3.ExprRef) -> PrimitiveType | None:
     """Convert Z3 value to python value"""
     if isinstance(value, z3.BitVecNumRef):
         return cast(z3.BitVecNumRef, value).as_long()
@@ -58,6 +58,8 @@ def z3_value_to_python_value(value: z3.ExprRef) -> int | float | bool:
     if isinstance(value, z3.BoolRef):
         return cast(z3.BoolRef, value).__bool__()
     if isinstance(value, z3.DatatypeRef):
+        if value == bril2z3.BRIL_TYPE_SORT.nil:
+            return None
         return z3_value_to_python_value(value.children()[0])
     raise Exception(f"z3_value_to_python_value, type {type(value)} not implemented")
 
@@ -85,18 +87,22 @@ class EquivalenceAnalysisResult:
 
 def program_to_equivalence_analysis_compatible_program(
     program: Program, label: int | str
-) -> BasicBlockProgram:
+) -> BasicBlockProgram | None:
     """
     Make a program equivalence analysis compatible program
     The variables of a compatible program are relabeled
     The program is in SSA form
     The program is a basic block program
     """
-    program = rename_variables_in_program(program, label)
-    ssa_program = bril_to_ssa(program)
-    bb_program = basic_block_program_from_program(ssa_program)
+    try:
+        program = rename_variables_in_program(program, label)
+        ssa_program = bril_to_ssa(program)
+        bb_program = basic_block_program_from_program(ssa_program)
 
-    return bb_program
+        return bb_program
+    except IndexError:
+        # Unable to convert to equivalence analysis compatible program
+        return None
 
 
 def z3_prove_equivalence_or_find_counterexample(
@@ -108,6 +114,9 @@ def z3_prove_equivalence_or_find_counterexample(
 
     bb_program1 = program_to_equivalence_analysis_compatible_program(program1, 0)
     bb_program2 = program_to_equivalence_analysis_compatible_program(program2, 1)
+
+    if bb_program1 is None or bb_program2 is None:
+        return result
 
     solver = z3.Solver()
 
@@ -141,8 +150,13 @@ def z3_prove_equivalence_or_find_counterexample(
     solver.add(return1 != return2)
 
     # Lift programs to Z3
-    expression1 = bril2z3.program_to_z3(bb_program1, program_label=0)
-    expression2 = bril2z3.program_to_z3(bb_program2, program_label=1)
+    try:
+        expression1 = bril2z3.program_to_z3(bb_program1, program_label=0)
+        expression2 = bril2z3.program_to_z3(bb_program2, program_label=1)
+    except KeyError:
+        # Unable to convert to Z3
+        return result
+
     solver.add(expression1)
     solver.add(expression2)
 
