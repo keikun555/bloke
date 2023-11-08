@@ -37,7 +37,7 @@ class MonteCarloMarkovChainSample(ABC, Generic[Point]):
 
         acceptability: Probability = min(
             1.0,
-            math.exp(self.__beta * (candidate_cost - initial_cost) + bwd - fwd),
+            math.exp(-self.__beta * (candidate_cost * fwd) / (initial_cost * bwd)),
         )
 
         if random.random() < acceptability:

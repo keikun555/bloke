@@ -26,7 +26,7 @@ GenericType = Literal["generic"]
 OPERATORS: tuple[
     tuple[Operation, tuple[BrilType | GenericType, ...], BrilType | GenericType | None]
 ] = (
-    ("const", ("generic"), "generic"),
+    ("const", ("generic",), "generic"),
     # core
     ("add", ("int", "int"), "int"),
     ("mul", ("int", "int"), "int"),
@@ -43,15 +43,15 @@ OPERATORS: tuple[
     ("jmp", (), None),
     ("br", ("bool"), None),
     ("call", (), None),  # TODO Need to generalize this
-    ("ret", ("generic"), None),
-    ("id", ("generic"), "generic"),
+    ("ret", ("generic",), None),
+    ("id", ("generic",), "generic"),
     ("print", ("generic"), None),  # TODO Need to do variadic
     ("nop", (), None),
     # memory
-    ("free", ({"ptr": "generic"}), None),
-    ("alloc", ("int"), {"ptr": "generic"}),
+    ("free", ({"ptr": "generic"},), None),
+    ("alloc", ("int",), {"ptr": "generic"}),
     ("store", ({"ptr": "generic"}, "generic"), None),
-    ("load", ({"ptr": "generic"}), "generic"),
+    ("load", ({"ptr": "generic"},), "generic"),
     ("ptradd", ({"ptr": "generic"}, "int"), {"ptr": "generic"}),
     # float
     ("fadd", ("float", "float"), "float"),
@@ -64,7 +64,7 @@ OPERATORS: tuple[
     ("fgt", ("float", "float"), "bool"),
     ("fge", ("float", "float"), "bool"),
     # SSA
-    ("phi", ("generic"), "generic"),  # TODO Need to do variadic
+    ("phi", ("generic",), "generic"),  # TODO Need to do variadic
     # speculative execution
     ("speculate", (), None),
     ("commit", (), None),
@@ -75,6 +75,6 @@ OPERATORS: tuple[
     ("cle", ("char", "char"), "bool"),
     ("cgt", ("char", "char"), "bool"),
     ("cge", ("char", "char"), "bool"),
-    ("char2int", ("char"), "int"),
-    ("int2char", ("int"), "char"),
+    ("char2int", ("char",), "int"),
+    ("int2char", ("int",), "char"),
 )

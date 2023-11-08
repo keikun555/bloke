@@ -2,9 +2,10 @@
 
 import copy
 import json
+import logging
 import sys
 from collections import defaultdict
-from typing import Callable, TypeAlias, cast
+from typing import Callable, Iterable, TypeAlias, cast
 
 import click
 import numpy as np
@@ -31,6 +32,10 @@ from bril.typing_bril import (
 
 Transformation: TypeAlias = Callable[[Program], Program]
 TransformationGenerator: TypeAlias = Callable[[Program], Transformation | None]
+
+
+class Cost(float):
+    ...
 
 
 def transformation_eval(transformation: Transformation, program: Program) -> Program:
@@ -68,19 +73,33 @@ def operations_dicts_get() -> tuple[
 TestCase: TypeAlias = tuple[tuple[PrimitiveType, ...], int]
 
 
+def fresh_variable(variables: Iterable[Variable]):
+    variable_set = set(variables)
+    prefix = "x"
+    i = 0
+    while True:
+        candidate = f"{prefix}{i}"
+        if candidate not in variable_set:
+            return candidate
+
+        i += 1
+
+
 def one_testcase_validation(program: Program, testcase: TestCase) -> float:
     """Calculate validation score for one test case"""
     arguments, expected_output = testcase
     result = brili(program, arguments, profile=True)
     if result.error is not None:
         # In the future we may want to give different kinds of scores for different errors
-        return 1.0
+        return 100.0
 
     return np.log(1 + float(abs(result.returncode - expected_output)))
 
 
 def calculate_validation(program: Program, test_cases: list[TestCase]) -> float:
     """Calculate validation score for test cases"""
+    if len(test_cases) <= 0:
+        return 0.0
     return sum(one_testcase_validation(program, test_case) for test_case in test_cases)
 
 
@@ -227,22 +246,24 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             instruction,
         ) = random_instruction
 
-        variable_to_type, type_to_variables = self._variable_type_dicts_get(
-            program, function_name
-        )
+        _, type_to_variables = self._variable_type_dicts_get(program, function_name)
 
         effect = cast(Effect, instruction)
 
-        try:
-            operand_index = np.random.choice(len(effect["args"]))
-            operand_type = variable_to_type[effect["args"][operand_index]]
-            random_variable = np.random.choice(type_to_variables[operand_type])
-        except KeyError as e:
-            print("failed")
-            print(effect)
-            sys.stdin = open("/dev/tty")
-            breakpoint()
-            raise e
+        operand_index = np.random.choice(len(effect["args"]))
+        operand_type: BrilType
+        bril_type_or_generic = self._operation_dict[effect["op"]][0][operand_index]
+        if bril_type_or_generic == "generic":
+            if "dest" in effect:
+                value = cast(Value, effect)
+                operand_type = value["type"]
+            else:
+                # TODO do something else here if we want to support "call" and "print"
+                operand_type = "int"
+
+        else:
+            operand_type = cast(BrilType, bril_type_or_generic)
+        random_variable = np.random.choice(type_to_variables[operand_type])
 
         def transformation(program: Program) -> Program:
             new_program: Program = copy.deepcopy(program)
@@ -320,7 +341,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                     type_to_variables[value["type"]].append(value["dest"])
             break
 
-        random_instruction: Instruction
+        random_instruction: Effect | Value
 
         if np.random.rand() < self._unused_probability:
             random_instruction = {"op": "nop"}
@@ -334,7 +355,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                 for type_ in argument_types:
                     if (
                         type_ != "generic"
-                        and len(type_to_variables[cast(BrilType, type_)]) > 0
+                        and len(type_to_variables[cast(BrilType, type_)]) <= 0
                     ):
                         return False
                     if type == "generic" and len(variable_to_type) <= 0:
@@ -350,15 +371,17 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                     )
                 )
             )
-            random_operation = {"op": random_operation}
+            random_instruction = {"op": random_operation}
 
             argument_types, return_type = self._operation_dict[random_operation]
             arguments: list[Variable] = []
-            generic_type: BrilType = variable_to_type[
-                np.random.choice(list(variable_to_type.keys()))
-            ]
             for type_ in argument_types:
                 if type_ == "generic":
+                    if len(variable_to_type) <= 0:
+                        return None
+                    generic_type: BrilType = variable_to_type[
+                        np.random.choice(list(variable_to_type.keys()))
+                    ]
                     variables = type_to_variables[generic_type]
                 else:
                     variables = type_to_variables[cast(BrilType, type_)]
@@ -366,10 +389,23 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                 arguments.append(random_operand)
 
             if len(arguments) > 0:
-                random_operation["args"] = arguments
+                random_instruction["args"] = arguments
 
             if return_type is not None:
-                random_operation["type"] = return_type
+                if return_type == "generic":
+                    if len(variable_to_type) <= 0:
+                        return None
+                    generic_type = variable_to_type[
+                        np.random.choice(list(variable_to_type.keys()))
+                    ]
+                    variables = type_to_variables[generic_type]
+                else:
+                    variables = type_to_variables[cast(BrilType, return_type)]
+
+                variables.append(fresh_variable(variable_to_type.keys()))
+
+                cast(Value, random_instruction)["type"] = cast(BrilType, return_type)
+                cast(Value, random_instruction)["dest"] = np.random.choice(variables)
 
         def transformation(program: Program) -> Program:
             new_program: Program = copy.deepcopy(program)
@@ -399,13 +435,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             1,
             p=self._normalized_weights,
         )[0]
-        try:
-            random_transformation = generators[index](program)
-        except KeyError as e:
-            print("failed")
-            briltxt = briltxt_get()
-            briltxt.print_prog(program)
-            raise e
+        random_transformation = generators[index](program)
         prob = self._normalized_weights[index]
 
         if random_transformation is None:
@@ -454,7 +484,8 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         performance_score = calculate_performance(program)
 
         return (
-            equivalence_score + self.performance_correctness_ratio * performance_score
+            100 * equivalence_score
+            + self.performance_correctness_ratio * performance_score
         )
 
 
@@ -465,7 +496,7 @@ def bloke(program: Program, beta: float) -> Program:
         operand_weight=1,
         swap_weight=1,
         instruction_weight=1,
-        unused_probability=1,
+        unused_probability=0.16,
         mcmc_beta=beta,
     )
 
@@ -485,12 +516,13 @@ def bloke(program: Program, beta: float) -> Program:
             if cost < best_cost:
                 best_program, best_cost = candidate, cost
             if i % log_interval == 0:
-                print(f"ITERATION: {i}")
-                print(f"RATIO:     {sampler.performance_correctness_ratio}")
-                print(f"BEST_COST: {best_cost}")
+                logging.info(f"ITERATION:  {i}")
+                logging.info(f"RATIO:      {sampler.performance_correctness_ratio}")
+                logging.info(f"BEST_COST:  {best_cost}")
+                logging.info(f"TEST_CASES: {len(sampler.test_cases)}")
                 briltxt.print_prog(best_program)
             i += 1
-        sampler.performance_correctness_ratio *= 1.01
+        sampler.performance_correctness_ratio *= 1.10
 
     return best_program
 
@@ -501,7 +533,27 @@ def bloke(program: Program, beta: float) -> Program:
     type=float,
     help="Beta value for MCMC",
 )
-def main(beta: float) -> None:
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    default=False,
+    type=bool,
+    help="Verbose output",
+)
+@click.option(
+    "-d",
+    "--debug",
+    is_flag=True,
+    default=False,
+    type=bool,
+    help="Debug output",
+)
+def main(beta: float, verbose: bool, debug: bool) -> None:
+    if verbose:
+        logging.basicConfig(encoding="utf-8", level=logging.INFO, format="%(message)s")
+    if debug:
+        logging.basicConfig(encoding="utf-8", level=logging.DEBUG, format="%(message)s")
     program: Program = json.load(sys.stdin)
     optimized_program = bloke(program, beta)
     print(json.dumps(optimized_program))
