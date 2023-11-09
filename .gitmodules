@@ -1,0 +1,3 @@
+[submodule "vendor/bril"]
+	path = vendor/bril
+	url = git@github.com:keikun555/bril.git
