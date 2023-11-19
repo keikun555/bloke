@@ -1,4 +1,4 @@
-# ARGS: 25
+# ARGS: 10
 @main(starting_m: int) {
   m : int = id starting_m;
   zero: int = const 0;

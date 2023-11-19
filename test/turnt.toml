@@ -3,6 +3,16 @@ command = "bril2json < {filename} | brili {args}"
 output."eval.out" = "-"
 output."eval.err" = "2"
 
+[envs.brilipy-eval]
+command = "bril2json < {filename} | python3 ../src/brili/brilipy.py {args}"
+output."eval.out" = "-"
+output."brilipy.eval.err" = "2"
+
+[envs.brilirs-eval]
+command = "bril2json < {filename} | brilirs {args}"
+output."eval.out" = "-"
+output."brilirs.eval.err" = "2"
+
 [envs.variable-relabeler]
 command = "bril2json < {filename} | python3 ../src/bril/bril_variable_labeler.py | bril2txt"
 output."relabeled.out" = "-"

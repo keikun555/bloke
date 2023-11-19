@@ -1,0 +1,10 @@
+@main() {
+  x: int = const 9223372036854775807;
+  one: int = const 1;
+  two: int = const 3;
+  y: int = add x one;
+  print y;
+  y: int = mul x two;
+  print y;
+  # ret y;
+}
