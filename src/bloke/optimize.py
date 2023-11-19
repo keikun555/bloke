@@ -140,6 +140,24 @@ def calculate_performance(program: Program) -> float:
     )
 
 
+def random_instruction_in_program(
+    program: Program, qualifier: Callable[[Instruction], bool] | None = None
+) -> tuple[str, int, Instruction] | None:
+    """Return random instruction in a program
+    Returns an (function name, instruction index, instruction) tuple"""
+    instructions: list[tuple[str, int, Instruction]] = []
+    for function in program["functions"]:
+        for i, instruction in enumerate(function["instrs"]):
+            if qualifier is not None and not qualifier(instruction):
+                continue
+            instructions.append((function["name"], i, instruction))
+
+    if len(instructions) <= 0:
+        return None
+
+    return instructions[np.random.choice(len(instructions))]
+
+
 class BlokeSample(MonteCarloMarkovChainSample[Program]):
     """Does MCMC on Bril programs"""
 
@@ -155,7 +173,6 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         mcmc_beta: float,
     ):
         super().__init__(mcmc_beta)
-        self.__beta = mcmc_beta
 
         self._initial_program = initial_program
 
@@ -215,21 +232,6 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                         variable_to_type[var] = type_
                         type_to_variables[type_].append(var)
 
-    def _random_instruction_in_program(
-        self, program: Program, qualifier: Callable[[Instruction], bool] | None = None
-    ) -> tuple[str, int, Instruction] | None:
-        instructions: list[tuple[str, int, Instruction]] = []
-        for function in program["functions"]:
-            for i, instruction in enumerate(function["instrs"]):
-                if qualifier is not None and not qualifier(instruction):
-                    continue
-                instructions.append((function["name"], i, instruction))
-
-        if len(instructions) <= 0:
-            return None
-
-        return instructions[np.random.choice(len(instructions))]
-
     def _variable_type_dicts_get(
         self, program: Program, function_name: str
     ) -> tuple[dict[Variable, BrilType], dict[BrilType, list[Variable]]]:
@@ -257,7 +259,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         return variable_to_type, type_to_variables
 
     def _random_opcode_transformation(self, program: Program) -> Transformation | None:
-        random_instruction = self._random_instruction_in_program(
+        random_instruction = random_instruction_in_program(
             program, lambda i: "op" in i and "value" not in i
         )
         if random_instruction is None:
@@ -292,7 +294,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         return transformation
 
     def _random_operand_transformation(self, program: Program) -> Transformation | None:
-        random_instruction = self._random_instruction_in_program(
+        random_instruction = random_instruction_in_program(
             program, lambda i: "args" in i and len(cast(Effect, i)["args"]) > 0
         )
         if random_instruction is None:
@@ -338,8 +340,8 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         return transformation
 
     def _random_swap_transformation(self, program: Program) -> Transformation | None:
-        random_instruction1 = self._random_instruction_in_program(program)
-        random_instruction2 = self._random_instruction_in_program(program)
+        random_instruction1 = random_instruction_in_program(program)
+        random_instruction2 = random_instruction_in_program(program)
         if random_instruction1 is None or random_instruction2 is None:
             return None
         (
@@ -375,7 +377,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
     def _random_instruction_transformation(
         self, program: Program
     ) -> Transformation | None:
-        random_instruction_to_replace = self._random_instruction_in_program(
+        random_instruction_to_replace = random_instruction_in_program(
             program, lambda i: "label" not in i
         )
         if random_instruction_to_replace is None:
