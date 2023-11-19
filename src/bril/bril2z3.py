@@ -680,7 +680,14 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
         returned=False,
         phi_maps=phi_maps,
     )
-    return helper(0, initial_state)
+
+    # So that Z3 will type-check function arguments
+    arg_exprs: list[z3.ExprRef] = []
+    for arg in func["args"]:
+        bril_arg = z3_bril_argument_get(arg)
+        arg_exprs.append(bril_arg == bril_arg)  # pylint: disable=comparison-with-itself
+
+    return z3.And(*arg_exprs, helper(0, initial_state))
 
 
 def program_to_z3(

@@ -37,11 +37,11 @@ OPERATORS: tuple[
     ("gt", ("int", "int"), "bool"),
     ("le", ("int", "int"), "bool"),
     ("ge", ("int", "int"), "bool"),
-    ("not", ("bool"), "bool"),
+    ("not", ("bool",), "bool"),
     ("and", ("bool", "bool"), "bool"),
     ("or", ("bool", "bool"), "bool"),
     ("jmp", (), None),
-    ("br", ("bool"), None),
+    ("br", ("bool",), None),
     ("call", (), None),  # TODO Need to generalize this
     ("ret", ("generic",), None),
     ("id", ("generic",), "generic"),

@@ -3,22 +3,28 @@
 import copy
 import json
 import logging
+import math
+import random
 import sys
+import time
 from collections import defaultdict
-from typing import Callable, Iterable, TypeAlias, cast
+from functools import partial
+from multiprocessing import Pool
+from typing import Any, Callable, Iterable, TypeAlias, cast
 
 import click
 import numpy as np
 import numpy.typing as npt
 
 from bloke.bril_equivalence import (
-    briltxt_get,
+    EquivalenceAnalysisResult,
     z3_prove_equivalence_or_find_counterexample,
 )
 from bloke.mcmc import MonteCarloMarkovChainSample, Probability
 from bril.bril2z3 import COMPATIBLE_OPS
 from bril.bril_constants import OPERATORS, GenericType
-from bril.brili import brili
+from bril.brili import Brili, Brilirs, SubprocessBrili
+from bril.briltxt import prints_prog
 from bril.typing_bril import (
     BrilType,
     Effect,
@@ -32,6 +38,12 @@ from bril.typing_bril import (
 
 Transformation: TypeAlias = Callable[[Program], Program]
 TransformationGenerator: TypeAlias = Callable[[Program], Transformation | None]
+
+TransformationUndo: TypeAlias = Callable[[Program], Program]
+
+logger = logging.getLogger(__name__)
+
+MINIMUM_NUM_ARGS = 3
 
 
 class Cost(float):
@@ -85,22 +97,29 @@ def fresh_variable(variables: Iterable[Variable]):
         i += 1
 
 
-def one_testcase_validation(program: Program, testcase: TestCase) -> float:
+def one_testcase_validation(
+    brili: Brili, program: Program, testcase: TestCase
+) -> float:
     """Calculate validation score for one test case"""
     arguments, expected_output = testcase
-    result = brili(program, arguments, profile=True)
+    result = brili.interpret(program, arguments, profile=False)
     if result.error is not None:
         # In the future we may want to give different kinds of scores for different errors
-        return 100.0
+        logger.debug(result.error)
+        return 10.0
 
-    return np.log(1 + float(abs(result.returncode - expected_output)))
+    return 10.0 * float(abs(result.returncode - expected_output))
 
 
-def calculate_validation(program: Program, test_cases: list[TestCase]) -> float:
+def calculate_validation(
+    brili: Brili, program: Program, test_cases: set[TestCase]
+) -> float:
     """Calculate validation score for test cases"""
     if len(test_cases) <= 0:
         return 0.0
-    return sum(one_testcase_validation(program, test_case) for test_case in test_cases)
+
+    validator = partial(one_testcase_validation, brili, program)
+    return sum(map(validator, test_cases))
 
 
 def calculate_performance(program: Program) -> float:
@@ -126,17 +145,24 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
 
     def __init__(
         self,
+        brili: Brili,
         initial_program: Program,
         opcode_weight: int,
         operand_weight: int,
         swap_weight: int,
         instruction_weight: int,
-        unused_probability: Probability,
+        unused_probability: Probability | None,
         mcmc_beta: float,
     ):
         super().__init__(mcmc_beta)
+        self.__beta = mcmc_beta
 
         self._initial_program = initial_program
+
+        self._verification_cache: dict[str, EquivalenceAnalysisResult] = {}
+
+        # Interpreter
+        self.brili = brili
 
         # For opcode transformation generation
         (
@@ -152,11 +178,42 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             self._transform_weights
         ) / np.sum(self._transform_weights)
 
-        self._unused_probability: Probability = unused_probability
+        self._unused_probability: Probability | None = unused_probability
 
         # For the cost function
-        self.test_cases: list[TestCase] = []
+        self.test_cases: set[TestCase] = set()
         self.performance_correctness_ratio: float = 0.0
+
+        self._function_to_variables: dict[
+            str, tuple[dict[Variable, BrilType], dict[BrilType, list[Variable]]]
+        ] = {}
+        for function in initial_program["functions"]:
+            function_name = function["name"]
+            self._function_to_variables[function_name] = (
+                {},
+                {"int": [], "float": [], "bool": []},
+            )
+            variable_to_type, type_to_variables = self._function_to_variables[
+                function_name
+            ]
+            for arg in function["args"]:
+                variable_to_type[arg["name"]] = arg["type"]
+                type_to_variables[arg["type"]].append(arg["name"])
+            for instruction in function["instrs"]:
+                if "dest" in instruction:
+                    value = cast(Value, instruction)
+                    variable_to_type[value["dest"]] = value["type"]
+                    type_to_variables[value["type"]].append(value["dest"])
+
+            for type_str in ("int", "float", "bool"):
+                type_ = cast(BrilType, type_str)
+
+                num_args = len(type_to_variables[type_])
+                if num_args < MINIMUM_NUM_ARGS:
+                    for _ in range(MINIMUM_NUM_ARGS - num_args):
+                        var = fresh_variable(variable_to_type.keys())
+                        variable_to_type[var] = type_
+                        type_to_variables[type_].append(var)
 
     def _random_instruction_in_program(
         self, program: Program, qualifier: Callable[[Instruction], bool] | None = None
@@ -246,7 +303,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             instruction,
         ) = random_instruction
 
-        _, type_to_variables = self._variable_type_dicts_get(program, function_name)
+        _, type_to_variables = self._function_to_variables[function_name]
 
         effect = cast(Effect, instruction)
 
@@ -319,36 +376,29 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         self, program: Program
     ) -> Transformation | None:
         random_instruction_to_replace = self._random_instruction_in_program(
-            program, lambda i: "op" in i
+            program, lambda i: "label" not in i
         )
         if random_instruction_to_replace is None:
             return None
         (
             function_name,
             instruction_index,
-            instruction,
+            _,
         ) = random_instruction_to_replace
 
-        variable_to_type: dict[Variable, BrilType] = {}
-        type_to_variables: dict[BrilType, list[Variable]] = defaultdict(list)
-        for function in program["functions"]:
-            if function["name"] != function_name:
-                continue
-            for instruction in function["instrs"]:
-                if "dest" in instruction:
-                    value = cast(Value, instruction)
-                    variable_to_type[value["dest"]] = value["type"]
-                    type_to_variables[value["type"]].append(value["dest"])
-            break
+        variable_to_type, type_to_variables = self._function_to_variables[function_name]
 
         random_instruction: Effect | Value
 
-        if np.random.rand() < self._unused_probability:
+        if (
+            self._unused_probability is not None
+            and np.random.rand() < self._unused_probability
+        ):
             random_instruction = {"op": "nop"}
         else:
 
             def filter_(operation: Operation) -> bool:
-                if operation in ("nop", "phi", "const"):
+                if operation in ("phi", "const"):
                     return False
 
                 argument_types, _ = self._operation_dict[operation]
@@ -398,11 +448,12 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
                     generic_type = variable_to_type[
                         np.random.choice(list(variable_to_type.keys()))
                     ]
+                    return_type = generic_type
                     variables = type_to_variables[generic_type]
                 else:
                     variables = type_to_variables[cast(BrilType, return_type)]
 
-                variables.append(fresh_variable(variable_to_type.keys()))
+                # variables.append(fresh_variable(variable_to_type.keys()))
 
                 cast(Value, random_instruction)["type"] = cast(BrilType, return_type)
                 cast(Value, random_instruction)["dest"] = np.random.choice(variables)
@@ -450,16 +501,22 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
 
     def _verification(self, program: Program) -> float:
         """Calculate verification score for test cases"""
-        result = z3_prove_equivalence_or_find_counterexample(
-            self._initial_program, program
-        )
+
+        program_string = json.dumps(program)
+        if (result := self._verification_cache.get(program_string)) is None:
+            result = z3_prove_equivalence_or_find_counterexample(
+                self._initial_program, program
+            )
+            self._verification_cache[program_string] = result
 
         if result.counterexample is not None:
             # Z3 found a counterexample, add it to test cases
-            self.test_cases.append(
+            self.test_cases.add(
                 (
                     tuple(result.counterexample.arguments1),
-                    cast(int, result.counterexample.return1),
+                    cast(
+                        int, result.counterexample.return1
+                    ),  # TODO cover other than int
                 )
             )
 
@@ -473,30 +530,32 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
 
     def cost(self, program: Program) -> Probability:
         """Calculate the MCMC cost function"""
-        equivalence_score = calculate_validation(program, self.test_cases)
+        equivalence_cost = calculate_validation(self.brili, program, self.test_cases)
 
-        if equivalence_score == 0:
-            equivalence_score = self._verification(program)
+        if equivalence_cost == 0:
+            equivalence_cost = self._verification(program)
+        logger.debug(equivalence_cost)
 
         if self.performance_correctness_ratio == 0:
-            return equivalence_score
+            return equivalence_cost
 
-        performance_score = calculate_performance(program)
+        performance_cost = calculate_performance(program)
 
         return (
-            100 * equivalence_score
-            + self.performance_correctness_ratio * performance_score
+            100 * equivalence_cost
+            + self.performance_correctness_ratio * performance_cost
         )
 
 
-def bloke(program: Program, beta: float) -> Program:
+def bloke(brili, program: Program, beta: float) -> Program:
     sampler = BlokeSample(
+        brili,
         program,
         opcode_weight=1,
         operand_weight=1,
         swap_weight=1,
         instruction_weight=1,
-        unused_probability=0.16,
+        unused_probability=None,
         mcmc_beta=beta,
     )
 
@@ -505,29 +564,50 @@ def bloke(program: Program, beta: float) -> Program:
 
     best_program: Program = program
 
-    log_interval = 100
+    log_interval = 1000
     i = 0
-    briltxt = briltxt_get()
+    # testcases = [((a, b, c), a*(b+c)) for a in range(5) for b in range(5) for c in range(5)]
+    # sampler.test_cases = testcases
 
+    t0 = time.time()
     while sampler.performance_correctness_ratio < maximum_ratio:
         best_cost: float = sampler.cost(best_program)
-        for _ in range(100):
+        for _ in range(10000):
             candidate, cost = sampler.sample(best_program, best_cost)
-            if cost < best_cost:
+            if cost <= best_cost:
                 best_program, best_cost = candidate, cost
             if i % log_interval == 0:
-                logging.info(f"ITERATION:  {i}")
-                logging.info(f"RATIO:      {sampler.performance_correctness_ratio}")
-                logging.info(f"BEST_COST:  {best_cost}")
-                logging.info(f"TEST_CASES: {len(sampler.test_cases)}")
-                briltxt.print_prog(best_program)
+                t1 = time.time()
+                logger.info(
+                    f"ITERATION:   {i}\n"
+                    f"RATIO:       {sampler.performance_correctness_ratio}\n"
+                    f"BEST_COST:   {best_cost}\n"
+                    f"TEST_CASES:  {len(sampler.test_cases)}\n"
+                    f"PERFORMANCE: {log_interval / (t1 - t0)}"
+                )
+                logger.info(prints_prog(best_program))
+                t0 = t1
             i += 1
-        sampler.performance_correctness_ratio *= 1.10
+        sampler.performance_correctness_ratio += 0.10
+
+        if i > log_interval * 100:
+            break
 
     return best_program
 
 
+BRILI_MAP: dict[str, Brili] = {
+    "subprocess": SubprocessBrili(),
+    "brilirs": Brilirs(),
+}
+
+
 @click.command()
+@click.option(
+    "--brili",
+    default="subprocess",
+    type=click.Choice(BRILI_MAP.keys(), case_sensitive=False),
+)
 @click.option(
     "--beta",
     type=float,
@@ -549,13 +629,27 @@ def bloke(program: Program, beta: float) -> Program:
     type=bool,
     help="Debug output",
 )
-def main(beta: float, verbose: bool, debug: bool) -> None:
+def main(brili: str, beta: float, verbose: bool, debug: bool) -> None:
+    brili_impl = BRILI_MAP[brili]
+
+    logging_config: dict[str, Any] = {
+        "stream": sys.stderr,
+        "encoding": "utf-8",
+        "format": "%(message)s",
+    }
+
     if verbose:
-        logging.basicConfig(encoding="utf-8", level=logging.INFO, format="%(message)s")
+        logging_config["level"] = logging.INFO
     if debug:
-        logging.basicConfig(encoding="utf-8", level=logging.DEBUG, format="%(message)s")
-    program: Program = json.load(sys.stdin)
-    optimized_program = bloke(program, beta)
+        logging_config["level"] = logging.DEBUG
+
+    logging.basicConfig(**logging_config)
+
+    # program: Program = json.load(sys.stdin)
+    program: Program = json.loads(
+        """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
+    )
+    optimized_program = bloke(brili_impl, program, beta)
     print(json.dumps(optimized_program))
 
 

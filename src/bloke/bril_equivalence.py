@@ -8,7 +8,9 @@ from dataclasses import asdict, dataclass
 from types import ModuleType
 from typing import cast
 
+import briltxt
 import click
+import numpy as np
 import z3
 
 from bril import bril2z3
@@ -19,40 +21,14 @@ from bril.bril_variable_labeler import rename_variables_in_program
 from bril.typing_bril import PrimitiveType, Program
 
 
-def briltxt_get() -> ModuleType:
-    """Return the briltxt module from the bril repo"""
-
-    def getGitRoot():
-        """Get the root path in the git repo"""
-        return (
-            subprocess.Popen(
-                ["git", "rev-parse", "--show-toplevel"], stdout=subprocess.PIPE
-            )
-            .communicate()[0]
-            .rstrip()
-            .decode("utf-8")
-        )
-
-    full_path = f"{getGitRoot()}/vendor/bril/bril-txt/briltxt.py"
-
-    spec = importlib.util.spec_from_file_location("briltxt", full_path)
-    if spec is None:
-        raise Exception(f"briltxt not found at {full_path}")
-
-    briltxt = importlib.util.module_from_spec(spec)
-    sys.modules["briltxt"] = briltxt
-
-    if spec.loader is None:
-        raise Exception(f"briltxt loader not found at {full_path}")
-    spec.loader.exec_module(briltxt)
-
-    return briltxt
+def to_signed(n: int) -> int:
+    return int(np.int64(np.uint64(n)))
 
 
 def z3_value_to_python_value(value: z3.ExprRef) -> PrimitiveType | None:
     """Convert Z3 value to python value"""
     if isinstance(value, z3.BitVecNumRef):
-        return cast(z3.BitVecNumRef, value).as_long()
+        return to_signed(cast(z3.BitVecNumRef, value).as_long())
     if isinstance(value, z3.FPRef):
         return float(cast(z3.FPRef, value).as_string())
     if isinstance(value, z3.BoolRef):
@@ -192,8 +168,6 @@ def z3_prove_equivalence_or_find_counterexample(
 @click.argument("program1_filepath", type=click.Path(exists=True))
 @click.argument("program2_filepath", type=click.Path(exists=True))
 def main(program1_filepath: str, program2_filepath: str) -> None:
-    briltxt = briltxt_get()
-
     with open(program1_filepath, "r", encoding="utf-8") as file:
         program1: Program = json.loads(briltxt.parse_bril(file.read()))
     with open(program2_filepath, "r", encoding="utf-8") as file:
