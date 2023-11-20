@@ -106,9 +106,9 @@ def one_testcase_validation(
     if result.error is not None:
         # In the future we may want to give different kinds of scores for different errors
         logger.debug(result.error)
-        return 10.0
+        return 2.0
 
-    return 10.0 * float(abs(result.returncode - expected_output))
+    return 1.0 * float(abs(result.returncode - expected_output))
 
 
 def calculate_validation(
@@ -557,12 +557,12 @@ def bloke(brili, program: Program, beta: float) -> Program:
         operand_weight=1,
         swap_weight=1,
         instruction_weight=1,
-        unused_probability=None,
+        unused_probability=0.1,
         mcmc_beta=beta,
     )
 
     sampler.performance_correctness_ratio = 0.01
-    maximum_ratio = 0.95
+    maximum_ratio = 1.
 
     best_program: Program = program
 
@@ -570,7 +570,7 @@ def bloke(brili, program: Program, beta: float) -> Program:
     i = 0
 
     t0 = time.time()
-    while sampler.performance_correctness_ratio < maximum_ratio:
+    while sampler.performance_correctness_ratio <= maximum_ratio:
         best_cost: float = sampler.cost(best_program)
         for _ in range(10000):
             program, cost = sampler.sample(program, best_cost)
@@ -589,9 +589,14 @@ def bloke(brili, program: Program, beta: float) -> Program:
                 t0 = t1
             i += 1
         sampler.performance_correctness_ratio += 0.10
+        sampler.performance_correctness_ratio = min(
+            1.0, sampler.performance_correctness_ratio
+        )
 
         if i > log_interval * 100:
-            break
+            cont = input("Continue? [Y/n] ")
+            if len(cont) <= 0 or cont[0] != "Y":
+                break
 
     return best_program
 
@@ -649,6 +654,7 @@ def main(brili: str, beta: float, verbose: bool, debug: bool) -> None:
     program: Program = json.loads(
         """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
     )
+    sys.stdin = open("/dev/tty")
     optimized_program = bloke(brili_impl, program, beta)
     print(json.dumps(optimized_program))
 
