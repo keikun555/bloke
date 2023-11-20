@@ -568,16 +568,14 @@ def bloke(brili, program: Program, beta: float) -> Program:
 
     log_interval = 1000
     i = 0
-    # testcases = [((a, b, c), a*(b+c)) for a in range(5) for b in range(5) for c in range(5)]
-    # sampler.test_cases = testcases
 
     t0 = time.time()
     while sampler.performance_correctness_ratio < maximum_ratio:
         best_cost: float = sampler.cost(best_program)
         for _ in range(10000):
-            candidate, cost = sampler.sample(best_program, best_cost)
+            program, cost = sampler.sample(program, best_cost)
             if cost <= best_cost:
-                best_program, best_cost = candidate, cost
+                best_program, best_cost = program, cost
             if i % log_interval == 0:
                 t1 = time.time()
                 logger.info(
