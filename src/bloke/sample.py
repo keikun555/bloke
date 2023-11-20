@@ -3,13 +3,10 @@
 import copy
 import json
 import logging
-import math
-import random
 import sys
 import time
 from collections import defaultdict
 from functools import partial
-from multiprocessing import Pool
 from typing import Any, Callable, Iterable, TypeAlias, cast
 
 import click
@@ -549,7 +546,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
         )
 
 
-def bloke(brili, program: Program, beta: float) -> Program:
+def sample(brili, program: Program, beta: float) -> Program:
     sampler = BlokeSample(
         brili,
         program,
@@ -655,7 +652,7 @@ def main(brili: str, beta: float, verbose: bool, debug: bool) -> None:
         """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
     )
     sys.stdin = open("/dev/tty")
-    optimized_program = bloke(brili_impl, program, beta)
+    optimized_program = sample(brili_impl, program, beta)
     print(json.dumps(optimized_program))
 
 
