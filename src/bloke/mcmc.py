@@ -27,7 +27,7 @@ class MonteCarloMarkovChainSample(ABC, Generic[Point]):
 
     def sample(
         self, initial_point: Point, initial_cost: Optional[Probability] = None
-    ) -> tuple[Point, Probability]:
+    ) -> Point:
         """Generates the next points using MCMC"""
         if initial_cost is None:
             initial_cost = self.cost(initial_point)
@@ -41,6 +41,6 @@ class MonteCarloMarkovChainSample(ABC, Generic[Point]):
         )
 
         if random.random() < acceptability:
-            return candidate_point, candidate_cost
+            return candidate_point
 
-        return initial_point, initial_cost
+        return initial_point

@@ -1,11 +1,11 @@
 """Bril optimizer using STOKE"""
-
 import copy
 import json
 import logging
 import sys
 import time
 from collections import defaultdict
+from dataclasses import dataclass
 from functools import partial
 from typing import Any, Callable, Iterable, TypeAlias, cast
 
@@ -155,7 +155,14 @@ def random_instruction_in_program(
     return instructions[np.random.choice(len(instructions))]
 
 
-class BlokeSample(MonteCarloMarkovChainSample[Program]):
+@dataclass
+class State:
+    program: Program
+    correct: bool
+    cost: float
+
+
+class BlokeSample(MonteCarloMarkovChainSample[State]):
     """Does MCMC on Bril programs"""
 
     def __init__(
@@ -471,9 +478,7 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
 
         return transformation
 
-    def _next_candidate(
-        self, program: Program
-    ) -> tuple[Program, Probability, Probability]:
+    def _next_candidate(self, state: State) -> tuple[State, Probability, Probability]:
         generators: tuple[TransformationGenerator, ...] = (
             self._random_opcode_transformation,
             self._random_operand_transformation,
@@ -485,18 +490,18 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             1,
             p=self._normalized_weights,
         )[0]
-        random_transformation = generators[index](program)
+        random_transformation = generators[index](state.program)
         prob = self._normalized_weights[index]
 
         if random_transformation is None:
             # Unable to do transformation, return itself
-            return program, prob, prob
+            return state, prob, prob
 
         # The fwd and bwd probabilities are equal
         # because the inverses of these transformations
         # are of the same class of transformations
-        candidate = transformation_eval(random_transformation, program)
-        return candidate, prob, prob
+        candidate = transformation_eval(random_transformation, state.program)
+        return State(candidate, False, 0.0), prob, prob
 
     def _verification(self, program: Program) -> float:
         """Calculate verification score for test cases"""
@@ -527,23 +532,28 @@ class BlokeSample(MonteCarloMarkovChainSample[Program]):
             return 0.0
         return 1.0
 
-    def cost(self, program: Program) -> Probability:
+    def cost(self, state: State) -> Probability:
         """Calculate the MCMC cost function"""
-        equivalence_cost = calculate_validation(self.brili, program, self.test_cases)
+        equivalence_cost = calculate_validation(
+            self.brili, state.program, self.test_cases
+        )
 
         if equivalence_cost == 0:
-            equivalence_cost = self._verification(program)
+            equivalence_cost = self._verification(state.program)
+        state.correct = equivalence_cost == 0
         logger.debug(equivalence_cost)
 
         if self.performance_correctness_ratio == 0:
             return equivalence_cost
 
-        performance_cost = calculate_performance(program)
+        performance_cost = calculate_performance(state.program)
 
-        return (
+        state.cost = (
             100 * equivalence_cost
             + self.performance_correctness_ratio * performance_cost
         )
+
+        return state.cost
 
 
 def sample(brili, program: Program, beta: float) -> Program:
@@ -559,30 +569,34 @@ def sample(brili, program: Program, beta: float) -> Program:
     )
 
     sampler.performance_correctness_ratio = 0.01
-    maximum_ratio = 1.
+    maximum_ratio = 1.0
 
-    best_program: Program = program
+    state = State(program, True, 0.0)
+    state.cost = sampler.cost(state)
+    best_state: State = state
+    best_correct_state: State = state
 
     log_interval = 1000
     i = 0
 
     t0 = time.time()
     while sampler.performance_correctness_ratio <= maximum_ratio:
-        best_cost: float = sampler.cost(best_program)
         for _ in range(10000):
-            program, cost = sampler.sample(program, best_cost)
-            if cost <= best_cost:
-                best_program, best_cost = program, cost
+            state = sampler.sample(state, best_state.cost)
+            if state.correct and state.cost <= best_correct_state.cost:
+                best_correct_state = state
+            if state.cost <= best_state.cost:
+                best_state = state
             if i % log_interval == 0:
                 t1 = time.time()
                 logger.info(
                     f"ITERATION:   {i}\n"
                     f"RATIO:       {sampler.performance_correctness_ratio}\n"
-                    f"BEST_COST:   {best_cost}\n"
+                    f"BEST_COST:   {best_state.cost}\n"
                     f"TEST_CASES:  {len(sampler.test_cases)}\n"
                     f"PERFORMANCE: {log_interval / (t1 - t0)}"
                 )
-                logger.info(prints_prog(best_program))
+                logger.info(prints_prog(best_correct_state.program))
                 t0 = t1
             i += 1
         sampler.performance_correctness_ratio += 0.10
@@ -595,7 +609,7 @@ def sample(brili, program: Program, beta: float) -> Program:
             if len(cont) <= 0 or cont[0] != "Y":
                 break
 
-    return best_program
+    return best_correct_state.program
 
 
 BRILI_MAP: dict[str, Brili] = {
