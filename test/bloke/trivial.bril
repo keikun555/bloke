@@ -1,0 +1,10 @@
+@main(x: int):int
+{
+  one: int = const 1;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret one;
+}
