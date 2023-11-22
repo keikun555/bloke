@@ -94,6 +94,51 @@ def fresh_variable(variables: Iterable[Variable]):
         i += 1
 
 
+def one_testcase_validation_and_performance(
+    brili: Brili, program: Program, testcase: TestCase
+) -> tuple[float, float | None]:
+    """Calculate validation and (if exists) performance score for one test case"""
+    arguments, expected_output = testcase
+    result = brili.interpret(program, arguments, profile=True)
+    if result.total_dyn_inst is None:
+        performance = approximate_performance(program)
+    else:
+        performance = result.total_dyn_inst
+
+    if result.error is not None:
+        # In the future we may want to give different kinds of scores for different errors
+        logger.debug(result.error)
+        validation = 2.0
+    else:
+        validation = 1.0 * float(abs(result.returncode - expected_output))
+
+    return validation, performance
+
+
+def calculate_validation_and_performance(
+    brili: Brili, program: Program, test_cases: set[TestCase]
+) -> tuple[float, float]:
+    """Calculate validation and performance score for test cases"""
+    approximate_performance_ = approximate_performance(program)
+
+    if len(test_cases) <= 0:
+        return 0.0, approximate_performance_
+
+    validator = partial(one_testcase_validation_and_performance, brili, program)
+
+    validation_score = 0.0
+    performance_score = 0.0
+    for validation, performance_ in map(validator, test_cases):
+        validation_score += validation
+        if performance_ is None:
+            performance = approximate_performance_
+        else:
+            performance = performance_
+        performance_score = max(performance_score, performance)
+
+    return validation_score, performance_score
+
+
 def one_testcase_validation(
     brili: Brili, program: Program, testcase: TestCase
 ) -> float:
@@ -119,7 +164,7 @@ def calculate_validation(
     return sum(map(validator, test_cases))
 
 
-def calculate_performance(program: Program) -> float:
+def approximate_performance(program: Program) -> float:
     """Calculate expected performance"""
     # Number of instructions
     return float(
@@ -534,7 +579,7 @@ class BlokeSample(MonteCarloMarkovChainSample[State]):
 
     def cost(self, state: State) -> Probability:
         """Calculate the MCMC cost function"""
-        equivalence_cost = calculate_validation(
+        equivalence_cost, performance_cost = calculate_validation_and_performance(
             self.brili, state.program, self.test_cases
         )
 
@@ -544,13 +589,13 @@ class BlokeSample(MonteCarloMarkovChainSample[State]):
         logger.debug(equivalence_cost)
 
         if self.performance_correctness_ratio == 0:
-            return equivalence_cost
-
-        performance_cost = calculate_performance(state.program)
+            state.cost = 100 * equivalence_cost + 0.01
+            return state.cost
 
         state.cost = (
             100 * equivalence_cost
             + self.performance_correctness_ratio * performance_cost
+            + 0.01  # To make sure we are nonzero
         )
 
         return state.cost
