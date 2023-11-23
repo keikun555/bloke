@@ -42,7 +42,7 @@ from bril.typing_bril import (
 logger = logging.getLogger(__name__)
 
 MIN_PHASES = 2
-MAX_PHASES = 5
+MAX_PHASES = 10
 
 
 class Bloke(object):
@@ -65,24 +65,23 @@ class Bloke(object):
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
-        best_state = state
+        # best_state = state
 
         local_program_set.add(json.dumps(state.program))
         correct_state_queue.put(state, block=True)
 
         i = 0
         while i < max_iterations:
+            last_state = state
+            state = sampler.sample(last_state, state.cost)
             if (
                 state.correct
                 and (program_string := json.dumps(state.program))
                 not in local_program_set
             ):
                 local_program_set.add(program_string)
-                if state.cost < best_state.cost:
-                    best_state = state
+                if state.cost < last_state.cost:
                     correct_state_queue.put(state, block=True)
-
-            state = sampler.sample(state, state.cost)
             i += 1
 
         correct_state_queue.put(best_state, block=True)
@@ -167,10 +166,10 @@ class Bloke(object):
         """Optimize program, beta is for MCMC, num_phases for performance factor smoothing"""
         assert MIN_PHASES <= num_phases <= MAX_PHASES
 
-        min_beta, max_beta = beta_range
-        beta_step = (max_beta - min_beta) / (num_phases - 1)
-        betas = [min_beta + beta_step * i for i in range(num_phases)]
-        betas[-1] = max_beta
+        beta_min, beta_max = beta_range
+        beta_step = (beta_max - beta_min) / (num_phases - 1)
+        betas = [beta_min + beta_step * i for i in range(num_phases)]
+        betas[-1] = beta_max
 
         if (cpu_count := os.cpu_count()) is None:
             cpu_count = 1
@@ -236,13 +235,13 @@ def validate_num_phases(ctx, param, value):
 
 @click.command()
 @click.option(
-    "--min-beta",
+    "--beta-min",
     type=float,
     default=1.0,
     help="Minimum beta value for MCMC",
 )
 @click.option(
-    "--max-beta",
+    "--beta-max",
     type=float,
     default=10.0,
     help="Maximum beta value for MCMC",
@@ -271,7 +270,7 @@ def validate_num_phases(ctx, param, value):
     help="Debug output",
 )
 def main(
-    min_beta: float, max_beta: float, num_phases: int, verbose: bool, debug: bool
+    beta_min: float, beta_max: float, num_phases: int, verbose: bool, debug: bool
 ) -> None:
     logging_config: dict[str, Any] = {
         "stream": sys.stderr,
@@ -293,7 +292,7 @@ def main(
         "/dev/tty", encoding="utf-8"
     )  # pylint: disable=consider-using-with
 
-    optimized_program = Bloke.optimize(program, (min_beta, max_beta), num_phases)
+    optimized_program = Bloke.optimize(program, (beta_min, beta_max), num_phases)
     print(json.dumps(optimized_program))
 
 
