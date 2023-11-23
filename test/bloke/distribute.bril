@@ -1,0 +1,6 @@
+@main(a: int, b: int, c: int):int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
