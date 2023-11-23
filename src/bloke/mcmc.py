@@ -35,10 +35,14 @@ class MonteCarloMarkovChainSample(ABC, Generic[Point]):
         candidate_point, fwd, bwd = self._next_candidate(initial_point)
         candidate_cost = self.cost(candidate_point)
 
-        acceptability: Probability = min(
-            1.0,
-            math.exp(-self.__beta * (candidate_cost * fwd) / (initial_cost * bwd)),
-        )
+        acceptability: Probability
+        if initial_cost * bwd == 0:
+            acceptability = Probability(0)
+        else:
+            acceptability = min(
+                1.0,
+                math.exp(-self.__beta * (candidate_cost * fwd) / (initial_cost * bwd)),
+            )
 
         if random.random() < acceptability:
             return candidate_point

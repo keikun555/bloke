@@ -259,7 +259,7 @@ class BlokeSample(MonteCarloMarkovChainSample[State]):
             variable_to_type, type_to_variables = self._function_to_variables[
                 function_name
             ]
-            for arg in function["args"]:
+            for arg in function.get("args", []):
                 variable_to_type[arg["name"]] = arg["type"]
                 type_to_variables[arg["type"]].append(arg["name"])
             for instruction in function["instrs"]:
@@ -586,13 +586,12 @@ class BlokeSample(MonteCarloMarkovChainSample[State]):
         logger.debug(equivalence_cost)
 
         if self.performance_correctness_ratio == 0:
-            state.cost = 100 * equivalence_cost + 0.01
+            state.cost = 100 * equivalence_cost
             return state.cost
 
         state.cost = (
             100 * equivalence_cost
             + self.performance_correctness_ratio * performance_cost
-            + 0.01  # To make sure we are nonzero
         )
 
         return state.cost
