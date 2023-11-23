@@ -1,11 +1,6 @@
 """Equivalence of Bril programs"""
-import importlib
-import importlib.util
 import json
-import subprocess
-import sys
 from dataclasses import asdict, dataclass
-from types import ModuleType
 from typing import cast
 
 import briltxt
@@ -21,8 +16,9 @@ from bril.bril_variable_labeler import rename_variables_in_program
 from bril.typing_bril import PrimitiveType, Program
 
 
-def to_signed(n: int) -> int:
-    return int(np.int64(np.uint64(n)))
+def to_signed(unsigned_integer: int) -> int:
+    """Convert an unsigned integer to its signed form"""
+    return int(np.int64(np.uint64(unsigned_integer)))
 
 
 def z3_value_to_python_value(value: z3.ExprRef) -> PrimitiveType | None:
