@@ -104,7 +104,7 @@ def one_testcase_validation_and_performance(
     if result.error is not None:
         # In the future we may want to give different kinds of scores for different errors
         logger.debug(result.error)
-        validation = 2.0
+        validation = 10.0
     else:
         validation = 1.0 * float(abs(result.returncode - expected_output))
 
@@ -127,6 +127,7 @@ def calculate_validation_and_performance(
     for validation, performance_ in map(validator, test_cases):
         validation_score += validation
         if performance_ is None:
+            # If performance is undefined, set to the approximate performance
             performance = approximate_performance_
         else:
             performance = performance_
