@@ -1,0 +1,11 @@
+@main(z: int): int {
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  ret z;
+}

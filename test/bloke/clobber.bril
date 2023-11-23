@@ -1,0 +1,16 @@
+@main(a: int, b: int): int {
+  # (a + b) * (a + b)
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+
+  # Clobber both sums.
+  sum1: int = const 0;
+  sum2: int = const 0;
+
+  # Use the sums again.
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+
+  ret prod2;
+}
