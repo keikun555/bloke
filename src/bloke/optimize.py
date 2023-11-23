@@ -45,41 +45,42 @@ MIN_PHASES = 2
 MAX_PHASES = 10
 
 
+def handle_exception(args):
+    """Thread exception handling"""
+    if issubclass(args.exc_type, KeyboardInterrupt):
+        sys.__excepthook__(*args.exc_type)
+        return
+
+    logger.error("Uncaught exception", exc_info=(args.exc_type, args.exc_value, args.exc_traceback))
+
+
+threading.excepthook = handle_exception
+
+
 class Bloke(object):
     """Namespace for all the Bloke functions"""
 
     @staticmethod
-    def process_thread(
+    def phase_optimize_thread(
+        sampler: BlokeSample,
         correct_state_queue: queue.Queue[State | None],
         program: Program,
-        beta: float,
-        performance_correctness_ratio: float,
         max_iterations: int = 10000,
     ) -> None:
         """Samples from bloke and pass in correct and better programs into queue"""
-        logger.debug("Starting process thread")
-        local_program_set: set[str] = set()
-
-        sampler = BlokeSample(Brilirs(), program, 1, 1, 1, 1, 0.1, beta)
-        sampler.performance_correctness_ratio = performance_correctness_ratio
+        logger.debug("Starting optimize thread")
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
         best_state = state
 
-        local_program_set.add(json.dumps(state.program))
         correct_state_queue.put(state, block=True)
 
         i = 0
         while i < max_iterations:
             last_state = state
             state = sampler.sample(last_state, state.cost)
-            if (
-                state.correct
-                and (program_string := json.dumps(state.program))
-                not in local_program_set
-            ):
-                local_program_set.add(program_string)
+            if state.correct:
                 if state.cost < last_state.cost:
                     correct_state_queue.put(state, block=True)
                 if state.cost < best_state.cost:
@@ -88,34 +89,53 @@ class Bloke(object):
 
         correct_state_queue.put(best_state, block=True)
         correct_state_queue.put(None, block=True)
-        logger.debug("Finished process thread")
+        logger.debug("Finished optimize thread")
 
     @staticmethod
-    def process(
+    def phase_optimize(
         out_queue: queue.Queue[State | None],
         program: Program,
         beta: float,
         ratio: float,
+        threads_per_program: int = 1, # TODO: 2 and more doesn't work because of Z3 race
     ) -> int:
         """Runs Bloke on program, sends unique programs into out_queue"""
-        logger.debug("Starting process")
+        logger.debug("Starting phase optimize")
+        program_set: set[str] = set()
 
-        correct_state_queue: queue.Queue[State | None] = queue.Queue(maxsize=1)
-
-        process_thread = threading.Thread(
-            target=Bloke.process_thread,
-            args=(correct_state_queue, program, beta, ratio),
+        correct_state_queue: queue.Queue[State | None] = queue.Queue(
+            maxsize=threads_per_program
         )
-        process_thread.start()
+
+        sampler = BlokeSample(Brilirs(), program, 1, 1, 1, 1, 0.1, beta)
+        sampler.performance_correctness_ratio = ratio
+
+        threads: list[threading.Thread] = []
+        for _ in range(threads_per_program):
+            thread = threading.Thread(
+                target=Bloke.phase_optimize_thread,
+                args=(sampler, correct_state_queue, program),
+            )
+            thread.start()
+            threads.append(thread)
 
         count = 0
-        while (state := correct_state_queue.get(block=True)) is not None:
-            out_queue.put(state, block=True)
-            count += 1
+        done_count = 0
+        while done_count < threads_per_program:
+            state = correct_state_queue.get(block=True)
+            if state is None:
+                done_count += 1
+                continue
 
-        process_thread.join()
+            if (program_string := json.dumps(state.program)) not in program_set:
+                program_set.add(program_string)
+                out_queue.put(state, block=True)
+                count += 1
 
-        logger.debug("Finished process")
+        for thread in threads:
+            thread.join()
+
+        logger.debug("Finished phase optimize")
         return count
 
     @staticmethod
@@ -141,7 +161,7 @@ class Bloke(object):
                     prints_prog(state.program),
                 )
                 process = pool.apply_async(
-                    Bloke.process, (out_queue, state.program, beta, ratio)
+                    Bloke.phase_optimize, (out_queue, state.program, beta, ratio)
                 )
                 processes.append(process)
 
