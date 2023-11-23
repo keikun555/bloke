@@ -100,10 +100,6 @@ def one_testcase_validation_and_performance(
     """Calculate validation and (if exists) performance score for one test case"""
     arguments, expected_output = testcase
     result = brili.interpret(program, arguments, profile=True)
-    if result.total_dyn_inst is None:
-        performance = approximate_performance(program)
-    else:
-        performance = result.total_dyn_inst
 
     if result.error is not None:
         # In the future we may want to give different kinds of scores for different errors
@@ -112,7 +108,7 @@ def one_testcase_validation_and_performance(
     else:
         validation = 1.0 * float(abs(result.returncode - expected_output))
 
-    return validation, performance
+    return validation, result.total_dyn_inst
 
 
 def calculate_validation_and_performance(
