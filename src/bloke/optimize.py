@@ -65,7 +65,7 @@ class Bloke(object):
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
-        # best_state = state
+        best_state = state
 
         local_program_set.add(json.dumps(state.program))
         correct_state_queue.put(state, block=True)
@@ -82,6 +82,8 @@ class Bloke(object):
                 local_program_set.add(program_string)
                 if state.cost < last_state.cost:
                     correct_state_queue.put(state, block=True)
+                if state.cost < best_state.cost:
+                    best_state = state
             i += 1
 
         correct_state_queue.put(best_state, block=True)
@@ -133,7 +135,7 @@ class Bloke(object):
             if (program_string := json.dumps(state.program)) not in program_set:
                 program_set.add(program_string)
                 logger.info(
-                    "PHASE %.2f (beta=%.2f) received:\n%s",
+                    "Phase %.2f (beta=%.2f) received:\n%s",
                     ratio,
                     beta,
                     prints_prog(state.program),
