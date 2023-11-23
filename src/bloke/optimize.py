@@ -289,10 +289,9 @@ def main(
     logger.debug("GAMMA: %f", gamma)
 
     program: Program = json.load(sys.stdin)
-    # program: Program = json.loads(
-    #     """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
-    # )
-    sys.stdin = open("/dev/tty")
+    sys.stdin = open(
+        "/dev/tty", encoding="utf-8"
+    )  # pylint: disable=consider-using-with
 
     optimized_program = Bloke.optimize(program, (min_beta, max_beta), num_phases)
     print(json.dumps(optimized_program))
