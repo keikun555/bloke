@@ -51,7 +51,10 @@ def handle_exception(args):
         sys.__excepthook__(*args.exc_type)
         return
 
-    logger.error("Uncaught exception", exc_info=(args.exc_type, args.exc_value, args.exc_traceback))
+    logger.error(
+        "Uncaught exception",
+        exc_info=(args.exc_type, args.exc_value, args.exc_traceback),
+    )
 
 
 threading.excepthook = handle_exception
@@ -65,16 +68,16 @@ class Bloke(object):
         sampler: BlokeSample,
         correct_state_queue: queue.Queue[State | None],
         program: Program,
-        max_iterations: int = 10000,
+        max_iterations: int = 100000,
     ) -> None:
         """Samples from bloke and pass in correct and better programs into queue"""
         logger.debug("Starting optimize thread")
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
-        best_state = state
-
         correct_state_queue.put(state, block=True)
+
+        best_state = state
 
         i = 0
         while i < max_iterations:
@@ -97,7 +100,7 @@ class Bloke(object):
         program: Program,
         beta: float,
         ratio: float,
-        threads_per_program: int = 1, # TODO: 2 and more doesn't work because of Z3 race
+        threads_per_program: int = 1,  # TODO: 2 or more doesn't work because of Z3 race
     ) -> int:
         """Runs Bloke on program, sends unique programs into out_queue"""
         logger.debug("Starting phase optimize")
