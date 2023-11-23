@@ -2,6 +2,7 @@
 
 import copy
 import json
+import logging
 import operator
 import sys
 from types import MappingProxyType
@@ -30,6 +31,8 @@ from bril.typing_bril import (
     Value,
     Variable,
 )
+
+logger = logging.getLogger(__name__)
 
 Z3_RETURN_PREFIX = "BRIL.RETURN"
 Z3_PRINT_PREFIX = "BRIL.PRINT.LINES"
@@ -230,12 +233,14 @@ def bril2z3_compatible(func: BasicBlockFunction) -> bool:
 
             effect = cast(Effect, instruction)
             if effect["op"] not in COMPATIBLE_OPS:
+                logger.error("Incompatible operation %s", effect["op"])
                 return False
 
     cfg = control_flow_graph_from_instructions(func["instrs"])
 
     if is_cyclic(cfg):
         # Loop-free
+        logger.error("Loop found")
         return False
 
     return True
