@@ -67,22 +67,24 @@ class BrilAnyType(z3.DatatypeSortRef):
         ...
 
 
-def z3_bril_any_type_get() -> BrilAnyType:
+def z3_bril_any_type(
+    ctx: z3.Context | None = None,
+) -> BrilAnyType:
     """Construct any argument type sorts"""
-    any_type = z3.Datatype("AnyType")
-    any_type.declare("IntV", ("int", z3.BitVecSort(64)))
-    any_type.declare("FloatV", ("float", z3.Float64()))
-    any_type.declare("BoolV", ("bool", z3.BoolSort()))
+    any_type = z3.Datatype("AnyType", ctx=ctx)
+    any_type.declare("IntV", ("int", z3.BitVecSort(64, ctx=ctx)))
+    any_type.declare("FloatV", ("float", z3.Float64(ctx=ctx)))
+    any_type.declare("BoolV", ("bool", z3.BoolSort(ctx=ctx)))
     any_type.declare("nil")
     return cast(BrilAnyType, any_type.create())
 
 
-BRIL_TYPE_SORT = z3_bril_any_type_get()
-
-
-def z3_bril_any_var_get(variable: Variable) -> z3.DatatypeSortRef:
+def z3_bril_any_var_get(
+    variable: Variable,
+    ctx: z3.Context | None = None,
+) -> z3.DatatypeSortRef:
     """Z3 any var"""
-    return z3.Const(variable, BRIL_TYPE_SORT)
+    return z3.Const(variable, z3_bril_any_type(ctx=ctx))
 
 
 class PhiMaps(NamedTuple):
@@ -191,37 +193,53 @@ def z3_print_variable_name_generator() -> Generator[str, None, None]:
         i += 1
 
 
-def z3_bril_int_get(variable: Variable) -> z3.BitVecRef:
+def z3_bril_int_get(
+    variable: Variable,
+    ctx: z3.Context | None = None,
+) -> z3.BitVecRef:
     """Get Z3 bitvector for bril ints"""
-    return z3.BitVec(variable, 64)
+    return z3.BitVec(variable, 64, ctx=ctx)
 
 
-def z3_bril_bool_get(variable: Variable) -> z3.BoolRef:
+def z3_bril_bool_get(
+    variable: Variable,
+    ctx: z3.Context | None = None,
+) -> z3.BoolRef:
     """Get Z3 Bool for bril bools"""
-    return z3.Bool(variable)
+    return z3.Bool(variable, ctx=ctx)
 
 
-def z3_bril_float_get(variable: Variable) -> z3.FPRef:
+def z3_bril_float_get(
+    variable: Variable,
+    ctx: z3.Context | None = None,
+) -> z3.FPRef:
     """Get Z3 FP for bril floats"""
-    return z3.FP(variable, z3.Float64())
+    return z3.FP(variable, z3.Float64(ctx=ctx), ctx=ctx)
 
 
-def z3_bril_variable_get(variable: Variable, type_: BrilType) -> z3.ExprRef:
+def z3_bril_variable_get(
+    variable: Variable,
+    type_: BrilType,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Get Z3 refs for variables"""
     match type_:
         case "int":
-            return z3_bril_int_get(variable)
+            return z3_bril_int_get(variable, ctx=ctx)
         case "float":
-            return z3_bril_float_get(variable)
+            return z3_bril_float_get(variable, ctx=ctx)
         case "bool":
-            return z3_bril_bool_get(variable)
+            return z3_bril_bool_get(variable, ctx=ctx)
 
     raise Exception(f"z3_bril_variable_get, type {type_} not implemented")
 
 
-def z3_bril_argument_get(argument: Argument) -> z3.ExprRef:
+def z3_bril_argument_get(
+    argument: Argument,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Get Z3 refs for arguments"""
-    return z3_bril_variable_get(argument["name"], argument["type"])
+    return z3_bril_variable_get(argument["name"], argument["type"], ctx=ctx)
 
 
 def bril2z3_compatible(func: BasicBlockFunction) -> bool:
@@ -246,19 +264,32 @@ def bril2z3_compatible(func: BasicBlockFunction) -> bool:
     return True
 
 
-def bril_const_to_z3(constant: Constant) -> z3.ExprRef:
+def bril_const_to_z3(
+    constant: Constant,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Convert Bril const instruction to Z3"""
-    return z3_bril_variable_get(constant["dest"], constant["type"]) == constant["value"]
+    return (
+        z3_bril_variable_get(constant["dest"], constant["type"], ctx=ctx)
+        == constant["value"]
+    )
 
 
-def bril_id_to_z3(value: Value) -> z3.ExprRef:
+def bril_id_to_z3(
+    value: Value,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Convert Bril id instruction to Z3"""
-    arg1 = z3_bril_variable_get(value["args"][0], value["type"])
-    dest_var = z3_bril_variable_get(value["dest"], value["type"])
+    arg1 = z3_bril_variable_get(value["args"][0], value["type"], ctx=ctx)
+    dest_var = z3_bril_variable_get(value["dest"], value["type"], ctx=ctx)
     return dest_var == arg1
 
 
-def bril_phi_to_z3(value: Value, phi_maps: PhiMaps) -> z3.ExprRef | None:
+def bril_phi_to_z3(
+    value: Value,
+    phi_maps: PhiMaps,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef | None:
     """Convert Bril phi instruction to Z3"""
     phi_dest = value["dest"]
     if phi_dest not in phi_maps.phi_dest_to_var:
@@ -266,56 +297,62 @@ def bril_phi_to_z3(value: Value, phi_maps: PhiMaps) -> z3.ExprRef | None:
 
     var = phi_maps.phi_dest_to_var[phi_dest]
 
-    phi_dest_var = z3_bril_variable_get(phi_dest, value["type"])
-    argument = z3_bril_variable_get(var, value["type"])
+    phi_dest_var = z3_bril_variable_get(phi_dest, value["type"], ctx=ctx)
+    argument = z3_bril_variable_get(var, value["type"], ctx=ctx)
     return phi_dest_var == argument
 
 
 def unary_op_to_z3(
     value: Value,
     oper: UnaryOperator[z3.ExprRef, z3.ExprRef],
-    arg_constructor: Callable[[Variable], z3.ExprRef],
-    value_constructor: Callable[[Variable], z3.ExprRef],
+    arg_constructor: Callable[[Variable, z3.Context | None], z3.ExprRef],
+    value_constructor: Callable[[Variable, z3.Context | None], z3.ExprRef],
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef:
     """Convert Bril unary operator to Z3"""
     arg1 = value["args"][0]
-    z3_expr = value_constructor(value["dest"]) == oper(arg_constructor(arg1))
+    z3_expr = value_constructor(value["dest"], ctx) == oper(arg_constructor(arg1, ctx))
     return z3_expr
 
 
 def binary_op_to_z3(
     value: Value,
     oper: BinaryOperator[z3.ExprRef, z3.ExprRef],
-    arg_constructor: Callable[[Variable], z3.ExprRef],
-    value_constructor: Callable[[Variable], z3.ExprRef],
+    arg_constructor: Callable[[Variable, z3.Context | None], z3.ExprRef],
+    value_constructor: Callable[[Variable, z3.Context | None], z3.ExprRef],
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef:
     """Convert Bril binary operator to Z3"""
     arg1, arg2 = value["args"]
-    z3_expr = value_constructor(value["dest"]) == oper(
-        arg_constructor(arg1), arg_constructor(arg2)
+    z3_expr = value_constructor(value["dest"], ctx) == oper(
+        arg_constructor(arg1, ctx), arg_constructor(arg2, ctx)
     )
     return z3_expr
 
 
-def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
+def value_to_z3(
+    value: Value,
+    state: BlockState,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef | None:
     """Generates Z3 formula from a bril value"""
     z3_expr: z3.ExprRef | None
     match value["op"]:
         case "const":
             constant = cast(Constant, value)
-            z3_expr = bril_const_to_z3(constant)
+            z3_expr = bril_const_to_z3(constant, ctx=ctx)
         # core
         case "add":
             z3_expr = binary_op_to_z3(
-                value, operator.add, z3_bril_int_get, z3_bril_int_get
+                value, operator.add, z3_bril_int_get, z3_bril_int_get, ctx=ctx
             )
         case "mul":
             z3_expr = binary_op_to_z3(
-                value, operator.mul, z3_bril_int_get, z3_bril_int_get
+                value, operator.mul, z3_bril_int_get, z3_bril_int_get, ctx=ctx
             )
         case "sub":
             z3_expr = binary_op_to_z3(
-                value, operator.sub, z3_bril_int_get, z3_bril_int_get
+                value, operator.sub, z3_bril_int_get, z3_bril_int_get, ctx=ctx
             )
         case "div":
             # In Bril it's an error to divide by zero
@@ -324,11 +361,11 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 state["errored"] = True
             # In Z3 Int / Int is the operator.floordiv
             z3_expr = binary_op_to_z3(
-                value, operator.truediv, z3_bril_int_get, z3_bril_int_get
+                value, operator.truediv, z3_bril_int_get, z3_bril_int_get, ctx=ctx
             )
         case "eq":
             z3_expr = binary_op_to_z3(
-                value, operator.eq, z3_bril_int_get, z3_bril_bool_get
+                value, operator.eq, z3_bril_int_get, z3_bril_bool_get, ctx=ctx
             )
         case "lt":
             z3_expr = binary_op_to_z3(
@@ -336,6 +373,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.lt),
                 z3_bril_int_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "gt":
             z3_expr = binary_op_to_z3(
@@ -343,6 +381,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.gt),
                 z3_bril_int_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "le":
             z3_expr = binary_op_to_z3(
@@ -350,6 +389,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.le),
                 z3_bril_int_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "ge":
             z3_expr = binary_op_to_z3(
@@ -357,16 +397,23 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.ge),
                 z3_bril_int_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "not":
-            z3_expr = unary_op_to_z3(value, z3.Not, z3_bril_bool_get, z3_bril_bool_get)
+            z3_expr = unary_op_to_z3(
+                value, z3.Not, z3_bril_bool_get, z3_bril_bool_get, ctx=ctx
+            )
         case "and":
-            z3_expr = binary_op_to_z3(value, z3.And, z3_bril_bool_get, z3_bril_bool_get)
+            z3_expr = binary_op_to_z3(
+                value, z3.And, z3_bril_bool_get, z3_bril_bool_get, ctx=ctx
+            )
         case "or":
-            z3_expr = binary_op_to_z3(value, z3.Or, z3_bril_bool_get, z3_bril_bool_get)
+            z3_expr = binary_op_to_z3(
+                value, z3.Or, z3_bril_bool_get, z3_bril_bool_get, ctx=ctx
+            )
         # case "call":
         case "id":
-            z3_expr = bril_id_to_z3(value)
+            z3_expr = bril_id_to_z3(value, ctx=ctx)
         # memory
         # case "alloc":
         # case "load":
@@ -374,15 +421,15 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
         # float
         case "fadd":
             z3_expr = binary_op_to_z3(
-                value, operator.add, z3_bril_float_get, z3_bril_float_get
+                value, operator.add, z3_bril_float_get, z3_bril_float_get, ctx=ctx
             )
         case "fmul":
             z3_expr = binary_op_to_z3(
-                value, operator.mul, z3_bril_float_get, z3_bril_float_get
+                value, operator.mul, z3_bril_float_get, z3_bril_float_get, ctx=ctx
             )
         case "fsub":
             z3_expr = binary_op_to_z3(
-                value, operator.sub, z3_bril_float_get, z3_bril_float_get
+                value, operator.sub, z3_bril_float_get, z3_bril_float_get, ctx=ctx
             )
         case "fdiv":
             # In Bril it's an error to divide by zero
@@ -390,7 +437,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
             if arg2 == 0:
                 state["errored"] = True
             z3_expr = binary_op_to_z3(
-                value, operator.truediv, z3_bril_int_get, z3_bril_int_get
+                value, operator.truediv, z3_bril_int_get, z3_bril_int_get, ctx=ctx
             )
         case "feq":
             z3_expr = binary_op_to_z3(
@@ -398,6 +445,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.eq),
                 z3_bril_float_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "flt":
             z3_expr = binary_op_to_z3(
@@ -405,6 +453,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.lt),
                 z3_bril_float_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "fgt":
             z3_expr = binary_op_to_z3(
@@ -412,6 +461,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.gt),
                 z3_bril_float_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "fle":
             z3_expr = binary_op_to_z3(
@@ -419,6 +469,7 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.le),
                 z3_bril_float_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         case "fge":
             z3_expr = binary_op_to_z3(
@@ -426,13 +477,14 @@ def value_to_z3(value: Value, state: BlockState) -> z3.ExprRef | None:
                 cast(BinaryOperator, operator.ge),
                 z3_bril_float_get,
                 z3_bril_bool_get,
+                ctx=ctx,
             )
         # SSA
         case "phi":
             phi_dest = value["dest"]
             if phi_dest not in state["phi_maps"].phi_dest_to_var:
                 state["errored"] = True
-            z3_expr = bril_phi_to_z3(value, state["phi_maps"])
+            z3_expr = bril_phi_to_z3(value, state["phi_maps"], ctx=ctx)
         # speculative execution
         # character
         # case "ceq":
@@ -459,6 +511,7 @@ def bril_print_to_z3(
     effect: Effect,
     var_to_type: dict[Variable, BrilType],
     print_index: int,
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef:
     """Converts Bril print instruction to Z3"""
     args = effect["args"]
@@ -478,26 +531,36 @@ def bril_print_to_z3(
     return z3.BoolVal(True)  # TODO
 
 
-def bril_ret_var_to_z3(label: int | str) -> z3.DatatypeSortRef:
+def bril_ret_var_to_z3(
+    label: int | str,
+    ctx: z3.Context | None = None,
+) -> z3.DatatypeSortRef:
     """Make return variable Z3 reference"""
     return_var_name = z3_return_arg_name_get(label)
-    return z3_bril_any_var_get(Variable(return_var_name))
+    return z3_bril_any_var_get(Variable(return_var_name), ctx=ctx)
 
 
-def bril_ret_to_z3_eq(return_value: BrilAnyType, label: int | str) -> z3.ExprRef:
+def bril_ret_to_z3_eq(
+    return_value: BrilAnyType,
+    label: int | str,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Convert Z3 return expression in z3"""
-    return_var = bril_ret_var_to_z3(label)
+    return_var = bril_ret_var_to_z3(label, ctx=ctx)
     return return_var == return_value
 
 
 def bril_ret_to_z3(
-    effect: Effect, var_to_type: dict[Variable, BrilType], label: int | str
+    effect: Effect,
+    var_to_type: dict[Variable, BrilType],
+    label: int | str,
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef | None:
     """Converts Bril ret instruction to Z3"""
     has_args = "args" in effect and len(effect["args"]) >= 1
 
     if not has_args:
-        return bril_ret_to_z3_eq(BRIL_TYPE_SORT.nil, label)
+        return bril_ret_to_z3_eq(z3_bril_any_type(ctx=ctx).nil, label, ctx=ctx)
 
     args = effect["args"]
     return_argument = args[0]
@@ -505,15 +568,27 @@ def bril_ret_to_z3(
     match var_to_type[return_argument]:
         case "int":
             z3_expr = bril_ret_to_z3_eq(
-                BRIL_TYPE_SORT.IntV(z3_bril_int_get(return_argument)), label
+                z3_bril_any_type(ctx=ctx).IntV(
+                    z3_bril_int_get(return_argument, ctx=ctx)
+                ),
+                label,
+                ctx=ctx,
             )
         case "float":
             z3_expr = bril_ret_to_z3_eq(
-                BRIL_TYPE_SORT.FloatV(z3_bril_float_get(return_argument)), label
+                z3_bril_any_type(ctx=ctx).FloatV(
+                    z3_bril_float_get(return_argument, ctx=ctx)
+                ),
+                label,
+                ctx=ctx,
             )
         case "bool":
             z3_expr = bril_ret_to_z3_eq(
-                BRIL_TYPE_SORT.BoolV(z3_bril_bool_get(return_argument)), label
+                z3_bril_any_type(ctx=ctx).BoolV(
+                    z3_bril_bool_get(return_argument, ctx=ctx)
+                ),
+                label,
+                ctx=ctx,
             )
         # case "char":
         case _:
@@ -522,7 +597,10 @@ def bril_ret_to_z3(
 
 
 def effect_to_z3(
-    effect: Effect, var_to_type: dict[Variable, BrilType], state: BlockState
+    effect: Effect,
+    var_to_type: dict[Variable, BrilType],
+    state: BlockState,
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef | None:
     """Generates Z3 formula from a bril effect"""
     z3_expr: z3.ExprRef | None = None
@@ -531,17 +609,21 @@ def effect_to_z3(
         case "jmp":
             state["terminated"] = True
         case "br":
-            if_ = z3_bril_bool_get(effect["args"][0])
+            if_ = z3_bril_bool_get(effect["args"][0], ctx=ctx)
             then, else_, *_ = effect["labels"]
             state["cond"] = (if_, then, else_)
             state["terminated"] = True
         # case "call":
         case "ret":
-            z3_expr = bril_ret_to_z3(effect, var_to_type, state["program_label"])
+            z3_expr = bril_ret_to_z3(
+                effect, var_to_type, state["program_label"], ctx=ctx
+            )
             state["terminated"] = True
             state["returned"] = True
         case "print":
-            z3_expr = bril_print_to_z3(effect, var_to_type, state["print_index"])
+            z3_expr = bril_print_to_z3(
+                effect, var_to_type, state["print_index"], ctx=ctx
+            )
             state["print_index"] += 1
         case "nop":
             z3_expr = None
@@ -562,7 +644,10 @@ def effect_to_z3(
 
 
 def instruction_to_z3(
-    instruction: Instruction, var_to_type: dict[Variable, BrilType], state: BlockState
+    instruction: Instruction,
+    var_to_type: dict[Variable, BrilType],
+    state: BlockState,
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef | None:
     """Generates Z3 formula from a bril instruction"""
     if "op" not in instruction:
@@ -570,33 +655,42 @@ def instruction_to_z3(
 
     if "dest" not in instruction:
         effect = cast(Effect, instruction)
-        return effect_to_z3(effect, var_to_type, state)
+        return effect_to_z3(effect, var_to_type, state, ctx=ctx)
 
     value = cast(Value, instruction)
-    return value_to_z3(value, state)
+    return value_to_z3(value, state, ctx=ctx)
 
 
 def block_to_z3(
-    block: BasicBlock, block_state: BlockState, var_to_type: dict[Variable, BrilType]
+    block: BasicBlock,
+    block_state: BlockState,
+    var_to_type: dict[Variable, BrilType],
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef:
     """Generate Z3 formula from a bril block"""
     z3_expressions: list[z3.ExprRef] = []
     for instruction in block:
         if (
-            z3_expr := instruction_to_z3(instruction, var_to_type, block_state)
+            z3_expr := instruction_to_z3(instruction, var_to_type, block_state, ctx=ctx)
         ) is not None:
             z3_expressions.append(z3_expr)
 
         if block_state["terminated"]:
-            return z3.And(*z3_expressions)
+            break
 
         if block_state["errored"]:
-            return z3.BoolVal(False)
+            return z3.BoolVal(False, ctx=ctx)
+
+    if len(z3_expressions) <= 0:
+        # So that we can give it context
+        return z3.BoolVal(True, ctx=ctx)
 
     return z3.And(*z3_expressions)
 
 
-def phi_maps_get(func: BasicBlockFunction) -> PhiMaps:
+def phi_maps_get(
+    func: BasicBlockFunction,
+) -> PhiMaps:
     """Construct PhiMaps given a function"""
     var_to_phi_dest: dict[Variable, Variable] = {}
     for block in func["instrs"]:
@@ -611,7 +705,11 @@ def phi_maps_get(func: BasicBlockFunction) -> PhiMaps:
     )
 
 
-def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.ExprRef:
+def function_to_z3(
+    func: BasicBlockFunction,
+    program_state: ProgramState,
+    ctx: z3.Context | None = None,
+) -> z3.ExprRef:
     """Generates Z3 formula from a bril function"""
     # Need CFG for branch analysis (print, ret, and phi)
     cfg = control_flow_graph_from_instructions(func["instrs"])
@@ -626,7 +724,7 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
             # If not returned, add nil return
             if not function_state.returned:
                 return bril_ret_to_z3_eq(
-                    BRIL_TYPE_SORT.nil, function_state.program_label
+                    z3_bril_any_type(ctx=ctx).nil, function_state.program_label, ctx=ctx
                 )
             return z3.BoolVal(True)
 
@@ -641,7 +739,7 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
             phi_maps=function_state.phi_maps.copy(),
         )
 
-        block_expr = block_to_z3(block, block_state, var_to_type)
+        block_expr = block_to_z3(block, block_state, var_to_type, ctx=ctx)
 
         if block_state["returned"] or block_state["errored"]:
             return block_expr
@@ -659,7 +757,9 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
             # Returned without ret instruction, add nil return
             return z3.And(
                 block_expr,
-                bril_ret_to_z3_eq(BRIL_TYPE_SORT.nil, block_state["program_label"]),
+                bril_ret_to_z3_eq(
+                    z3_bril_any_type(ctx=ctx).nil, block_state["program_label"], ctx=ctx
+                ),
             )
 
         if block_state["cond"] is None:
@@ -676,7 +776,12 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
 
         return z3.And(
             block_expr,
-            z3.If(if_, helper(then_index, next_state), helper(else_index, next_state)),
+            z3.If(
+                if_,
+                helper(then_index, next_state),
+                helper(else_index, next_state),
+                ctx=ctx,
+            ),
         )
 
     initial_state = FunctionState(
@@ -689,14 +794,16 @@ def function_to_z3(func: BasicBlockFunction, program_state: ProgramState) -> z3.
     # So that Z3 will type-check function arguments
     arg_exprs: list[z3.ExprRef] = []
     for arg in func["args"]:
-        bril_arg = z3_bril_argument_get(arg)
+        bril_arg = z3_bril_argument_get(arg, ctx=ctx)
         arg_exprs.append(bril_arg == bril_arg)  # pylint: disable=comparison-with-itself
-
+    
     return z3.And(*arg_exprs, helper(0, initial_state))
 
 
 def program_to_z3(
-    program: BasicBlockProgram, program_label: int = 0
+    program: BasicBlockProgram,
+    program_label: int = 0,
+    ctx: z3.Context | None = None,
 ) -> z3.ExprRef | None:
     """Convert program to Z3"""
     initial_state = ProgramState(program_label=program_label, print_index=0)
@@ -704,7 +811,7 @@ def program_to_z3(
         if func["name"] != "main":
             continue
         if bril2z3_compatible(func):
-            return function_to_z3(func, initial_state)
+            return function_to_z3(func, initial_state, ctx=ctx)
         return None
     return None
 
@@ -727,9 +834,14 @@ def program_to_z3(
 )
 def main(simplify: bool, program_label: int) -> None:
     program: Program = json.load(sys.stdin)
+    sys.stdin = open(
+        "/dev/tty", encoding="utf-8"
+    )  # pylint: disable=consider-using-with
+
     bb_program: BasicBlockProgram = basic_block_program_from_program(program)
 
-    expression = program_to_z3(bb_program, program_label=program_label)
+    context = z3.Context()
+    expression = program_to_z3(bb_program, program_label=program_label, ctx=context)
     if simplify and expression is not None:
         expression = z3.simplify(expression)
 

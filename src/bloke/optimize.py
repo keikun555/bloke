@@ -43,14 +43,14 @@ class Bloke(object):
     """Namespace for all the Bloke functions"""
 
     @staticmethod
-    def phase_optimize_thread(
+    def sample_thread(
         sampler: BlokeSample,
         correct_state_queue: queue.Queue[State | None],
         program: Program,
         max_iterations: int = 100000,
     ) -> None:
         """Samples from bloke and pass in correct and better programs into queue"""
-        logger.debug("Starting optimize thread")
+        logger.debug("Starting sample thread")
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
@@ -71,18 +71,19 @@ class Bloke(object):
 
         correct_state_queue.put(best_state, block=True)
         correct_state_queue.put(None, block=True)
-        logger.debug("Finished optimize thread")
+        logger.debug("Finished sample thread")
 
     @staticmethod
-    def phase_optimize(
+    def sample(
         out_queue: queue.Queue[State | None],
         program: Program,
         beta: float,
         ratio: float,
-        threads_per_program: int = 1,  # TODO: 2 or more doesn't work because of Z3 race
+        threads_per_program: int = 2,
     ) -> int:
         """Runs Bloke on program, sends unique programs into out_queue"""
-        logger.debug("Starting phase optimize")
+        logger.debug("Starting sample")
+        start_time = time.time()
         program_set: set[str] = set()
 
         correct_state_queue: queue.Queue[State | None] = queue.Queue(
@@ -95,7 +96,7 @@ class Bloke(object):
         threads: list[threading.Thread] = []
         for _ in range(threads_per_program):
             thread = threading.Thread(
-                target=Bloke.phase_optimize_thread,
+                target=Bloke.sample_thread,
                 args=(sampler, correct_state_queue, program),
             )
             thread.start()
@@ -117,7 +118,8 @@ class Bloke(object):
         for thread in threads:
             thread.join()
 
-        logger.debug("Finished phase optimize")
+        logger.info("Finished sample process in %.2f seconds", time.time() - start_time)
+        logger.debug("Finished sample")
         return count
 
     @staticmethod
@@ -128,7 +130,7 @@ class Bloke(object):
         in_queue: queue.Queue[State | None],
         out_queue: queue.Queue[State | None],
     ):
-        """Accepts from in_queue and starts process threads"""
+        """Accepts from in_queue and starts sample processes"""
         logger.debug("Starting phase thread")
         processes: list["mp.pool.ApplyResult[int]"] = []
         program_set: set[str] = set()
@@ -143,7 +145,7 @@ class Bloke(object):
                     prints_prog(state.program),
                 )
                 process = pool.apply_async(
-                    Bloke.phase_optimize, (out_queue, state.program, beta, ratio)
+                    Bloke.sample, (out_queue, state.program, beta, ratio)
                 )
                 processes.append(process)
 
@@ -156,7 +158,7 @@ class Bloke(object):
         out_queue.put(None, block=True)
 
         logger.info(
-            "PHASE %.2f (beta=%.2f) sent %d programs",
+            "Phase %.2f (beta=%.2f) sent %d programs",
             ratio,
             beta,
             total_count,
@@ -177,7 +179,7 @@ class Bloke(object):
 
         if (cpu_count := os.cpu_count()) is None:
             cpu_count = 1
-        # Make num_phases phases from 0 to 1
+        # Make num_phases ratios from 0 to 1
         ratios = [i / (num_phases - 1) for i in range(num_phases)]
 
         # Make input and output queues
@@ -242,20 +244,21 @@ def validate_num_phases(ctx, param, value):
     "--beta-min",
     type=float,
     default=1.0,
-    help="Minimum beta value for MCMC",
+    help="Minimum beta value for MCMC.",
 )
 @click.option(
     "--beta-max",
     type=float,
     default=10.0,
-    help="Maximum beta value for MCMC",
+    help="Maximum beta value for MCMC.",
 )
 @click.option(
     "--num-phases",
     type=int,
     default=2,
     callback=validate_num_phases,
-    help="Number of phases, determines gamma",
+    help="Number of phases, determines gamma. "
+    f"Must be between {MIN_PHASES} and {MAX_PHASES}, inclusive.",
 )
 @click.option(
     "-v",

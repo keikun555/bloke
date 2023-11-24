@@ -1,5 +1,6 @@
 """Equivalence of Bril programs"""
 import json
+import logging
 from dataclasses import asdict, dataclass
 from typing import cast
 
@@ -15,13 +16,17 @@ from bril.bril_extract import function_arguments_get, main_function_get
 from bril.bril_variable_labeler import rename_variables_in_program
 from bril.typing_bril import PrimitiveType, Program
 
+logger = logging.getLogger(__name__)
+
 
 def to_signed(unsigned_integer: int) -> int:
     """Convert an unsigned integer to its signed form"""
     return int(np.int64(np.uint64(unsigned_integer)))
 
 
-def z3_value_to_python_value(value: z3.ExprRef) -> PrimitiveType | None:
+def z3_value_to_python_value(
+    value: z3.ExprRef, ctx: z3.Context | None = None
+) -> PrimitiveType | None:
     """Convert Z3 value to python value"""
     if isinstance(value, z3.BitVecNumRef):
         return to_signed(cast(z3.BitVecNumRef, value).as_long())
@@ -30,9 +35,9 @@ def z3_value_to_python_value(value: z3.ExprRef) -> PrimitiveType | None:
     if isinstance(value, z3.BoolRef):
         return cast(z3.BoolRef, value).__bool__()
     if isinstance(value, z3.DatatypeRef):
-        if value == bril2z3.BRIL_TYPE_SORT.nil:
+        if value == bril2z3.z3_bril_any_type(ctx=ctx).nil:
             return None
-        return z3_value_to_python_value(value.children()[0])
+        return z3_value_to_python_value(value.children()[0], ctx=ctx)
     raise Exception(f"z3_value_to_python_value, type {type(value)} not implemented")
 
 
@@ -90,7 +95,8 @@ def z3_prove_equivalence_or_find_counterexample(
     if bb_program1 is None or bb_program2 is None:
         return result
 
-    solver = z3.Solver()
+    context = z3.Context()
+    solver = z3.Solver(ctx=context)
 
     # Make sure arguments are equivalent
     main_function1 = main_function_get(bb_program1)
@@ -112,19 +118,20 @@ def z3_prove_equivalence_or_find_counterexample(
 
     for arg1, arg2 in zip(function_arguments1, function_arguments2):
         solver.add(
-            bril2z3.z3_bril_argument_get(arg1) == bril2z3.z3_bril_argument_get(arg2)
+            bril2z3.z3_bril_argument_get(arg1, ctx=context)
+            == bril2z3.z3_bril_argument_get(arg2, ctx=context)
         )
 
     # We check satisfiability of the returns being different
     # Does there exist inputs such that the returns are different?
-    return1 = bril2z3.bril_ret_var_to_z3(0)
-    return2 = bril2z3.bril_ret_var_to_z3(1)
+    return1 = bril2z3.bril_ret_var_to_z3(0, ctx=context)
+    return2 = bril2z3.bril_ret_var_to_z3(1, ctx=context)
     solver.add(return1 != return2)
 
     # Lift programs to Z3
     try:
-        expression1 = bril2z3.program_to_z3(bb_program1, program_label=0)
-        expression2 = bril2z3.program_to_z3(bb_program2, program_label=1)
+        expression1 = bril2z3.program_to_z3(bb_program1, program_label=0, ctx=context)
+        expression2 = bril2z3.program_to_z3(bb_program2, program_label=1, ctx=context)
     except KeyError:
         # Unable to convert to Z3
         return result
@@ -145,17 +152,25 @@ def z3_prove_equivalence_or_find_counterexample(
         result.counterexample = Counterexample([], [], None, None)
         for arg in function_arguments1:
             python_argument = z3_value_to_python_value(
-                model[bril2z3.z3_bril_argument_get(arg)]
+                model[bril2z3.z3_bril_argument_get(arg, ctx=context)],
+                ctx=context,
             )
             result.counterexample.arguments1.append(python_argument)
         for arg in function_arguments2:
             python_argument = z3_value_to_python_value(
-                model[bril2z3.z3_bril_argument_get(arg)]
+                model[bril2z3.z3_bril_argument_get(arg, ctx=context)],
+                ctx=context,
             )
             result.counterexample.arguments2.append(python_argument)
 
-        result.counterexample.return1 = z3_value_to_python_value(model[return1])
-        result.counterexample.return2 = z3_value_to_python_value(model[return2])
+        result.counterexample.return1 = z3_value_to_python_value(
+            model[return1],
+            ctx=context,
+        )
+        result.counterexample.return2 = z3_value_to_python_value(
+            model[return2],
+            ctx=context,
+        )
 
     return result
 
