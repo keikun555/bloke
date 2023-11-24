@@ -45,16 +45,16 @@ class Bloke(object):
     @staticmethod
     def sample_thread(
         sampler: BlokeSample,
-        correct_state_queue: queue.Queue[State | None],
+        state_queue: queue.Queue[State | None],
         program: Program,
-        max_iterations: int = 100000,
+        max_iterations: int,
     ) -> None:
         """Samples from bloke and pass in correct and better programs into queue"""
         logger.debug("Starting sample thread")
 
         state = State(program, True, 1.0)
         state.cost = sampler.cost(state)
-        correct_state_queue.put(state, block=True)
+        state_queue.put(state, block=True)
 
         best_state = state
 
@@ -64,13 +64,14 @@ class Bloke(object):
             state = sampler.sample(last_state, state.cost)
             if state.correct:
                 if state.cost < last_state.cost:
-                    correct_state_queue.put(state, block=True)
+                    state_queue.put(state, block=True)
                 if state.cost < best_state.cost:
                     best_state = state
             i += 1
 
-        correct_state_queue.put(best_state, block=True)
-        correct_state_queue.put(None, block=True)
+        state_queue.put(best_state, block=True)
+        state_queue.put(None, block=True)
+
         logger.debug("Finished sample thread")
 
     @staticmethod
@@ -79,47 +80,46 @@ class Bloke(object):
         program: Program,
         beta: float,
         ratio: float,
-        threads_per_program: int = 2,
+        max_iterations: int,
     ) -> int:
         """Runs Bloke on program, sends unique programs into out_queue"""
         logger.debug("Starting sample")
-        start_time = time.time()
+
         program_set: set[str] = set()
 
-        correct_state_queue: queue.Queue[State | None] = queue.Queue(
-            maxsize=threads_per_program
-        )
+        state_queue: queue.Queue[State | None] = queue.Queue(maxsize=1)
 
         sampler = BlokeSample(Brilirs(), program, 1, 1, 1, 1, 0.1, beta)
         sampler.performance_correctness_ratio = ratio
 
-        threads: list[threading.Thread] = []
-        for _ in range(threads_per_program):
-            thread = threading.Thread(
-                target=Bloke.sample_thread,
-                args=(sampler, correct_state_queue, program),
-            )
-            thread.start()
-            threads.append(thread)
+        start_time = time.time()
+        thread = threading.Thread(
+            target=Bloke.sample_thread,
+            args=(sampler, state_queue, program, max_iterations),
+        )
+        thread.start()
 
         count = 0
-        done_count = 0
-        while done_count < threads_per_program:
-            state = correct_state_queue.get(block=True)
-            if state is None:
-                done_count += 1
-                continue
-
+        while (state := state_queue.get(block=True)) is not None:
             if (program_string := json.dumps(state.program)) not in program_set:
                 program_set.add(program_string)
                 out_queue.put(state, block=True)
                 count += 1
 
-        for thread in threads:
-            thread.join()
+        thread.join()
 
-        logger.info("Finished sample process in %.2f seconds", time.time() - start_time)
-        logger.debug("Finished sample")
+        logger.info(
+            "Phase %.2f (beta=%.2f), finished sample process in %.2f seconds\n"
+            "\t%.2f samples per second\n"
+            "\t%d test cases\n"
+            "\t%d programs found\n",
+            ratio,
+            beta,
+            time.time() - start_time,
+            max_iterations / (time.time() - start_time),
+            len(sampler.test_cases),
+            count,
+        )
         return count
 
     @staticmethod
@@ -129,6 +129,8 @@ class Bloke(object):
         ratio: float,
         in_queue: queue.Queue[State | None],
         out_queue: queue.Queue[State | None],
+        sample_processes_per_program: int,
+        samples_per_program: int,
     ):
         """Accepts from in_queue and starts sample processes"""
         logger.debug("Starting phase thread")
@@ -144,10 +146,14 @@ class Bloke(object):
                     beta,
                     prints_prog(state.program),
                 )
-                process = pool.apply_async(
-                    Bloke.sample, (out_queue, state.program, beta, ratio)
-                )
-                processes.append(process)
+
+                # Start sample processes
+                for _ in range(sample_processes_per_program):
+                    process = pool.apply_async(
+                        Bloke.sample,
+                        (out_queue, state.program, beta, ratio, samples_per_program),
+                    )
+                    processes.append(process)
 
         # We're done
         total_count = 0
@@ -158,16 +164,18 @@ class Bloke(object):
         out_queue.put(None, block=True)
 
         logger.info(
-            "Phase %.2f (beta=%.2f) sent %d programs",
+            "Phase %.2f (beta=%.2f), sent %d programs",
             ratio,
             beta,
             total_count,
         )
-        logger.debug("Finished phase thread")
 
     @staticmethod
     def optimize(
-        program: Program, beta_range: tuple[float, float], num_phases: int
+        program: Program,
+        beta_range: tuple[float, float],
+        num_phases: int,
+        samples: int,
     ) -> Program:
         """Optimize program, beta is for MCMC, num_phases for performance factor smoothing"""
         assert MIN_PHASES <= num_phases <= MAX_PHASES
@@ -190,17 +198,20 @@ class Bloke(object):
         in_queues: list[queue.Queue[State | None]] = queues[:-1]
         out_queues: list[queue.Queue[State | None]] = queues[1:]
 
+        # Number of sample processes to run per program received on phase thread
+        processes_per_program = [16] + [1 for _ in range(num_phases - 1)]
+
         # Phase worker threads
         threads: list[threading.Thread] = []
 
         with mp.Pool() as pool:
             # Start phase threads
-            for beta, ratio, in_queue, out_queue in zip(
-                betas, ratios, in_queues, out_queues
+            for beta, ratio, in_queue, out_queue, processes in zip(
+                betas, ratios, in_queues, out_queues, processes_per_program
             ):
                 thread = threading.Thread(
                     target=Bloke.phase_thread,
-                    args=(pool, beta, ratio, in_queue, out_queue),
+                    args=(pool, beta, ratio, in_queue, out_queue, processes, samples),
                 )
                 thread.start()
                 threads.append(thread)
@@ -261,6 +272,12 @@ def validate_num_phases(ctx, param, value):
     f"Must be between {MIN_PHASES} and {MAX_PHASES}, inclusive.",
 )
 @click.option(
+    "--samples",
+    type=int,
+    default=10000,
+    help="Number of samples per program.",
+)
+@click.option(
     "-v",
     "--verbose",
     is_flag=True,
@@ -277,7 +294,12 @@ def validate_num_phases(ctx, param, value):
     help="Debug output",
 )
 def main(
-    beta_min: float, beta_max: float, num_phases: int, verbose: bool, debug: bool
+    beta_min: float,
+    beta_max: float,
+    num_phases: int,
+    samples: int,
+    verbose: bool,
+    debug: bool,
 ) -> None:
     logging_config: dict[str, Any] = {
         "stream": sys.stderr,
@@ -300,7 +322,7 @@ def main(
     )  # pylint: disable=consider-using-with
 
     start_time = time.time()
-    optimized_program = Bloke.optimize(program, (beta_min, beta_max), num_phases)
+    optimized_program = Bloke.optimize(program, (beta_min, beta_max), num_phases, samples)
     logger.info("Completed in %.2f seconds", time.time() - start_time)
     print(json.dumps(optimized_program))
 
