@@ -1,0 +1,8 @@
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
