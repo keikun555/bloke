@@ -1,43 +1,22 @@
 """Optimize using the Bloke sampler"""
-import copy
 import json
 import logging
-import math
 import multiprocessing as mp
 import os
 import queue
-import random
 import sys
 import threading
 import time
-from collections import defaultdict
-from functools import partial
-from typing import Any, Callable, Generator, Iterable, TypeAlias, cast
+from typing import Any
 
 import click
 import numpy as np
 import numpy.typing as npt
 
-from bloke.bril_equivalence import (
-    EquivalenceAnalysisResult,
-    z3_prove_equivalence_or_find_counterexample,
-)
-from bloke.mcmc import MonteCarloMarkovChainSample, Probability
 from bloke.sample import BlokeSample, State
-from bril.bril2z3 import COMPATIBLE_OPS
-from bril.bril_constants import OPERATORS, GenericType
-from bril.brili import Brili, Brilirs, SubprocessBrili
+from bril.brili import Brilirs
 from bril.briltxt import prints_prog
-from bril.typing_bril import (
-    BrilType,
-    Effect,
-    Instruction,
-    Operation,
-    PrimitiveType,
-    Program,
-    Value,
-    Variable,
-)
+from bril.typing_bril import Program
 
 logger = logging.getLogger(__name__)
 
@@ -300,7 +279,7 @@ def main(
     logging_config: dict[str, Any] = {
         "stream": sys.stderr,
         "encoding": "utf-8",
-        "format": "%(message)s",
+        "format": "%(asctime)s %(levelname)s: %(message)s",
     }
 
     if verbose:
@@ -317,7 +296,9 @@ def main(
         "/dev/tty", encoding="utf-8"
     )  # pylint: disable=consider-using-with
 
+    start_time = time.time()
     optimized_program = Bloke.optimize(program, (beta_min, beta_max), num_phases)
+    logger.info("Completed in %.2f seconds", time.time() - start_time)
     print(json.dumps(optimized_program))
 
 
