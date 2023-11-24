@@ -18,10 +18,12 @@ from bloke.bril_equivalence import (
     z3_prove_equivalence_or_find_counterexample,
 )
 from bloke.mcmc import MonteCarloMarkovChainSample, Probability
+from bril.basic_blocks import basic_block_program_from_program
 from bril.bril2z3 import COMPATIBLE_OPS
 from bril.bril_constants import OPERATORS, GenericType
 from bril.brili import Brili, Brilirs, SubprocessBrili
 from bril.briltxt import prints_prog
+from bril.cfg import control_flow_graph_from_instructions, is_cyclic
 from bril.typing_bril import (
     BrilType,
     Effect,
@@ -115,6 +117,13 @@ def calculate_validation_and_performance(
     brili: Brili, program: Program, test_cases: set[TestCase]
 ) -> tuple[float, float]:
     """Calculate validation and performance score for test cases"""
+    # Make sure we don't get into an infinite loop
+    basic_block_program = basic_block_program_from_program(program)
+    for bb_function in basic_block_program["functions"]:
+        cfg = control_flow_graph_from_instructions(bb_function["instrs"])
+        if is_cyclic(cfg):
+            return 10.0, 10.0
+
     approximate_performance_ = approximate_performance(program)
 
     if len(test_cases) <= 0:
@@ -702,10 +711,10 @@ def main(brili: str, beta: float, verbose: bool, debug: bool) -> None:
 
     logging.basicConfig(**logging_config)
 
-    # program: Program = json.load(sys.stdin)
-    program: Program = json.loads(
-        """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
-    )
+    program: Program = json.load(sys.stdin)
+    # program: Program = json.loads(
+    #     """{"functions":[{"args":[{"name":"a","type":"int"},{"name":"b","type":"int"},{"name":"c","type":"int"}],"instrs":[{"args":["a","b"],"dest":"x1","op":"mul","type":"int"},{"args":["a","c"],"dest":"x2","op":"mul","type":"int"},{"args":["x1","x2"],"dest":"x3","op":"add","type":"int"},{"args":["x3"],"op":"ret"}],"name":"main","type":"int"}]}"""
+    # )
     sys.stdin = open("/dev/tty")
     optimized_program = sample(brili_impl, program, beta)
     print(json.dumps(optimized_program))
