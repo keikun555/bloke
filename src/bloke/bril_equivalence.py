@@ -31,7 +31,8 @@ def z3_value_to_python_value(
     if isinstance(value, z3.BitVecNumRef):
         return to_signed(cast(z3.BitVecNumRef, value).as_long())
     if isinstance(value, z3.FPRef):
-        return float(cast(z3.FPRef, value).as_string())
+        fraction = z3.RealVal(value).as_fraction()
+        return float(fraction.numerator / fraction.denominator)
     if isinstance(value, z3.BoolRef):
         return cast(z3.BoolRef, value).__bool__()
     if isinstance(value, z3.DatatypeRef):
