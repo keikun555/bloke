@@ -65,7 +65,8 @@ class Bloke(object):
             if state.correct:
                 if state.cost < last_state.cost:
                     state_queue.put(state, block=True)
-                if state.cost < best_correct_state.cost:
+                if state.cost <= best_correct_state.cost:
+                    # Allow equality for a radom walk
                     best_correct_state = state
             i += 1
 
