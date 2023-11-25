@@ -56,7 +56,7 @@ class Bloke(object):
         state.cost = sampler.cost(state)
         state_queue.put(state, block=True)
 
-        best_state = state
+        best_correct_state = state
 
         i = 0
         while i < max_iterations:
@@ -65,11 +65,11 @@ class Bloke(object):
             if state.correct:
                 if state.cost < last_state.cost:
                     state_queue.put(state, block=True)
-                if state.cost < best_state.cost:
-                    best_state = state
+                if state.cost < best_correct_state.cost:
+                    best_correct_state = state
             i += 1
 
-        state_queue.put(best_state, block=True)
+        state_queue.put(best_correct_state, block=True)
         state_queue.put(None, block=True)
 
         logger.debug("Finished sample thread")
