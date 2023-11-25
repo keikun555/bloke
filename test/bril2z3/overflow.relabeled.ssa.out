@@ -1,0 +1,10 @@
+@main {
+.main.b0:
+  x.0.0: int = const 9223372036854775807;
+  one.0.0: int = const 1;
+  two.0.0: int = const 3;
+  y.0.0: int = add x.0.0 one.0.0;
+  print y.0.0;
+  y.0.1: int = mul x.0.0 two.0.0;
+  print y.0.1;
+}

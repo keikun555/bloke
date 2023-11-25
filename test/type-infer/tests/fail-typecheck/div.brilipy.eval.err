@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 847, in <module>
+    main()
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 843, in main
+    raise e
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 838, in main
+    evalProg(prog)
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 820, in evalProg
+    evalFunc(main_func, state)
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 689, in evalFunc
+    action = evalInstr(line, state)
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 458, in evalInstr
+    val = bril_int_get(cast(int, val))
+  File "/home/kei/course/6120/bloke/test/../src/brili/brilipy.py", line 22, in bril_int_get
+    signed = (val & sign - 1) - (val & sign)
+TypeError: unsupported operand type(s) for &: 'float' and 'int'

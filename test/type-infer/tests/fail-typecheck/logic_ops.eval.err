@@ -22,5 +22,5 @@ KeyError: 'type'
     let prog = JSON.parse(await readStdin()) as bril.Program;
 [0m[31m                    ^[0m
     at [0m[1m[3mJSON.parse[0m ([0m[36m<anonymous>[0m)
-    at [0m[1m[3mmain[0m ([0m[36mfile:///home/kei/course/6120/bril/brili.ts[0m:[0m[33m958[0m:[0m[33m21[0m)
+    at [0m[1m[3mmain[0m ([0m[36mfile:///home/kei/course/6120/bril/brili.ts[0m:[0m[33m959[0m:[0m[33m21[0m)
     at [0m[1m[3meventLoopTick[0m ([0m[36mext:core/01_core.js[0m:[0m[33m183[0m:[0m[33m11[0m)

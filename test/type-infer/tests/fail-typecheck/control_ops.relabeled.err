@@ -1,14 +1,14 @@
 Traceback (most recent call last):
   File "/home/kei/.local/bin/bril2txt", line 8, in <module>
     sys.exit(bril2txt())
-  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 343, in bril2txt
+  File "/home/kei/course/6120/bloke/vendor/bril/bril-txt/briltxt.py", line 343, in bril2txt
     print_prog(json.load(sys.stdin))
-  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 333, in print_prog
+  File "/home/kei/course/6120/bloke/vendor/bril/bril-txt/briltxt.py", line 333, in print_prog
     print_func(func)
-  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 327, in print_func
+  File "/home/kei/course/6120/bloke/vendor/bril/bril-txt/briltxt.py", line 327, in print_func
     print_instr(instr_or_label)
-  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 299, in print_instr
+  File "/home/kei/course/6120/bloke/vendor/bril/bril-txt/briltxt.py", line 299, in print_instr
     print('  {};'.format(instr_to_string(instr)))
-  File "/home/kei/.local/lib/python3.10/site-packages/briltxt.py", line 272, in instr_to_string
+  File "/home/kei/course/6120/bloke/vendor/bril/bril-txt/briltxt.py", line 272, in instr_to_string
     value_to_str(instr['type'], instr['value']),
 KeyError: 'type'

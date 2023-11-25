@@ -1,0 +1,7 @@
+And(a.0.0 == a.0.0,
+    b.0.0 == b.0.0,
+    And(And(a.0.1 == a.0.0, b.0.1 == b.0.0),
+        And(And(true.0.0 == True),
+            If(true.0.0,
+               And(BRIL.RETURN.0 == IntV(a.0.1)),
+               And(BRIL.RETURN.0 == IntV(b.0.1))))))

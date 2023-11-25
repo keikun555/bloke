@@ -1,0 +1,14 @@
+@main(z.0.0: int): int {
+.main.b0:
+  z.0.1: int = id z.0.0;
+.main.b1:
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  nop;
+  ret z.0.1;
+}

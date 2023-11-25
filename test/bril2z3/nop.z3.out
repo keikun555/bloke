@@ -1,0 +1,3 @@
+And(z.0.0 == z.0.0,
+    And(And(z.0.1 == z.0.0),
+        And(BRIL.RETURN.0 == IntV(z.0.1))))

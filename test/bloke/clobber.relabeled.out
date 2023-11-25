@@ -1,0 +1,10 @@
+@main(a.0: int, b.0: int): int {
+  sum1.0: int = add a.0 b.0;
+  sum2.0: int = add a.0 b.0;
+  prod1.0: int = mul sum1.0 sum2.0;
+  sum1.0: int = const 0;
+  sum2.0: int = const 0;
+  sum3.0: int = add a.0 b.0;
+  prod2.0: int = mul sum3.0 sum3.0;
+  ret prod2.0;
+}

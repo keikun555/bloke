@@ -1,0 +1,12 @@
+@main(a.0.0: int, b.0.0: int): int {
+.main.b0:
+  a.0.1: int = id a.0.0;
+  b.0.1: int = id b.0.0;
+.main.b1:
+  true.0.0: bool = const true;
+  br true.0.0 .then .else;
+.then:
+  ret a.0.1;
+.else:
+  ret b.0.1;
+}

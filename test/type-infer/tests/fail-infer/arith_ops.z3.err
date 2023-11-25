@@ -19,7 +19,7 @@ Traceback (most recent call last):
     var_to_type[var] = value["type"]
 KeyError: 'type'
 Traceback (most recent call last):
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2z3.py", line 719, in <module>
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2z3.py", line 855, in <module>
     main()
   File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 1157, in __call__
     return self.main(*args, **kwargs)
@@ -29,7 +29,7 @@ Traceback (most recent call last):
     return ctx.invoke(self.callback, **ctx.params)
   File "/home/kei/course/6120/bloke/bloke_venv/lib/python3.10/site-packages/click/core.py", line 783, in invoke
     return __callback(*args, **kwargs)
-  File "/home/kei/course/6120/bloke/test/../src/bril/bril2z3.py", line 705, in main
+  File "/home/kei/course/6120/bloke/test/../src/bril/bril2z3.py", line 836, in main
     program: Program = json.load(sys.stdin)
   File "/usr/lib/python3.10/json/__init__.py", line 293, in load
     return loads(fp.read(),

@@ -1,5 +1,7 @@
-And(And(n.0.1 == n.0.0, m.0.1 == m.0.0),
-    And(And(condi.0.0 == (n.0.1 < m.0.1)),
-        If(condi.0.0,
-           And(BRIL.RETURN.0 == IntV(m.0.1)),
-           And(BRIL.RETURN.0 == IntV(n.0.1)))))
+And(n.0.0 == n.0.0,
+    m.0.0 == m.0.0,
+    And(And(n.0.1 == n.0.0, m.0.1 == m.0.0),
+        And(And(condi.0.0 == (n.0.1 < m.0.1)),
+            If(condi.0.0,
+               And(BRIL.RETURN.0 == IntV(m.0.1)),
+               And(BRIL.RETURN.0 == IntV(n.0.1))))))
