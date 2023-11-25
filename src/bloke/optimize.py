@@ -113,7 +113,7 @@ class Bloke(object):
             "Phase %.2f (beta=%.2f), finished sample process in %.2f seconds\n"
             "\t%.2f samples per second\n"
             "\t%d test cases\n"
-            "\t%d programs found\n",
+            "\t%d programs found",
             ratio,
             beta,
             time.time() - start_time,
@@ -137,10 +137,12 @@ class Bloke(object):
         logger.debug("Starting phase thread")
         processes: list["mp.pool.ApplyResult[int]"] = []
         program_set: set[str] = set()
+        receive_count = 0
 
         while (state := in_queue.get(block=True)) is not None:
             if (program_string := json.dumps(state.program)) not in program_set:
                 program_set.add(program_string)
+                receive_count += 1
                 logger.info(
                     "Phase %.2f (beta=%.2f) received:\n%s",
                     ratio,
@@ -157,18 +159,19 @@ class Bloke(object):
                     processes.append(process)
 
         # We're done
-        total_count = 0
+        send_count = 0
         for process in processes:
             process.wait()
-            total_count += process.get()
+            send_count += process.get()
 
         out_queue.put(None, block=True)
 
         logger.info(
-            "Phase %.2f (beta=%.2f), sent %d programs",
+            "Phase %.2f (beta=%.2f), received %d programs and sent %d programs",
             ratio,
             beta,
-            total_count,
+            receive_count,
+            send_count,
         )
 
     @staticmethod
