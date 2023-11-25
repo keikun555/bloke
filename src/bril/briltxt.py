@@ -16,4 +16,4 @@ def prints_prog(program: Program) -> BrilText:
     sys.stdout = string_io
     briltxt.print_prog(program)
     sys.stdout = sys.__stdout__
-    return string_io.getvalue()
+    return string_io.getvalue().strip()
