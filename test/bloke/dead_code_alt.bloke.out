@@ -1,0 +1,10 @@
+@main(x: int): int {
+  ret x;
+  x4: bool = lt x x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}

@@ -1,0 +1,617 @@
+2023-11-25 22:33:20,225 INFO: Phase 0.00 (beta=1.00) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,290 INFO: Phase 0.25 (beta=3.25) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,347 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,424 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,514 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  br true .then .else;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,656 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  nop;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,729 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  nop;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,818 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  true: bool = const true;
+  nop;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:20,891 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+.else:
+  nop;
+.then:
+  ret a;
+  true: bool = const true;
+  ret b;
+}
+2023-11-25 22:33:20,912 INFO: Found better program with cost 3.00 
+@main(a: int, b: int): int {
+  true: bool = const true;
+  nop;
+.then:
+  ret a;
+.else:
+  ret b;
+}
+2023-11-25 22:33:21,043 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+.else:
+  nop;
+.then:
+  ret a;
+  true: bool = const true;
+  ret b;
+}
+2023-11-25 22:33:21,210 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.else:
+  nop;
+.then:
+  ret a;
+  true: bool = const true;
+  ret b;
+}
+2023-11-25 22:33:21,697 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  ret a;
+  br true .then .else;
+.then:
+  true: bool = const true;
+.else:
+  ret b;
+}
+2023-11-25 22:33:21,860 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  br true .then .else;
+.then:
+  true: bool = const true;
+.else:
+  ret b;
+}
+2023-11-25 22:33:21,866 INFO: Found better program with cost 1.00 
+@main(a: int, b: int): int {
+  ret a;
+  br true .then .else;
+.then:
+  true: bool = const true;
+.else:
+  ret b;
+}
+2023-11-25 22:33:23,789 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  br true .then .else;
+.then:
+  x0: int = sub a b;
+.else:
+  ret b;
+}
+2023-11-25 22:33:31,436 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  nop;
+.then:
+  true: bool = const true;
+.else:
+  ret b;
+}
+2023-11-25 22:33:37,351 INFO: Phase 0.00 (beta=1.00), finished sample process in 17.11 seconds
+	584.29 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:38,088 INFO: Phase 0.00 (beta=1.00), finished sample process in 17.85 seconds
+	560.16 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:38,544 INFO: Phase 0.00 (beta=1.00), finished sample process in 18.31 seconds
+	546.28 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:38,653 INFO: Phase 0.00 (beta=1.00), finished sample process in 18.41 seconds
+	543.11 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:38,853 INFO: Phase 0.00 (beta=1.00), finished sample process in 18.62 seconds
+	537.14 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:39,412 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.18 seconds
+	521.46 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:39,427 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.19 seconds
+	521.11 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:39,606 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.37 seconds
+	516.31 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:39,999 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.76 seconds
+	505.97 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,159 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.92 seconds
+	501.89 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,197 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.96 seconds
+	501.06 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,227 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.99 seconds
+	500.30 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,371 INFO: Phase 0.00 (beta=1.00), finished sample process in 20.13 seconds
+	496.70 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,384 INFO: Phase 0.00 (beta=1.00), finished sample process in 20.15 seconds
+	496.30 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,703 INFO: Phase 0.00 (beta=1.00), finished sample process in 20.46 seconds
+	488.73 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,929 INFO: Phase 0.00 (beta=1.00), finished sample process in 20.69 seconds
+	483.24 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:33:40,931 INFO: Phase 0.00 (beta=1.00), received 1 programs and sent 16 programs
+2023-11-25 22:34:01,105 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.85 seconds
+	250.93 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:34:03,829 INFO: Phase 0.75 (beta=7.75), finished sample process in 42.77 seconds
+	233.80 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:34:13,132 INFO: Phase 1.00 (beta=10.00), finished sample process in 49.33 seconds
+	202.73 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:34:14,890 INFO: Phase 1.00 (beta=10.00), finished sample process in 54.37 seconds
+	183.92 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:34:16,102 INFO: Phase 1.00 (beta=10.00), finished sample process in 54.23 seconds
+	184.40 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:34:16,540 INFO: Phase 0.75 (beta=7.75), finished sample process in 55.80 seconds
+	179.21 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:34:16,540 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  nop;
+.then:
+  b: int = div b b;
+.else:
+  ret b;
+}
+2023-11-25 22:34:18,044 INFO: Phase 1.00 (beta=10.00), finished sample process in 57.22 seconds
+	174.76 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:34:18,578 INFO: Phase 1.00 (beta=10.00), finished sample process in 47.12 seconds
+	212.21 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:34:19,962 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+.else:
+  ret a;
+.then:
+  ret a;
+  nop;
+  jmp;
+}
+2023-11-25 22:34:19,962 INFO: Phase 0.50 (beta=5.50), finished sample process in 59.05 seconds
+	169.36 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:34:20,010 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.else:
+  ret a;
+.then:
+  ret a;
+  nop;
+  jmp;
+}
+2023-11-25 22:34:20,548 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.else:
+  ret a;
+  nop;
+  ret a;
+.then:
+  jmp;
+}
+2023-11-25 22:34:22,146 INFO: Phase 0.75 (beta=7.75), finished sample process in 60.42 seconds
+	165.51 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:34:22,147 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  br x4 .then .else;
+.then:
+  x0: int = sub a b;
+.else:
+  ret a;
+}
+2023-11-25 22:34:25,548 INFO: Phase 0.75 (beta=7.75), finished sample process in 65.12 seconds
+	153.56 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:34:25,549 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+.else:
+  ret b;
+  x5: bool = fgt x1 x1;
+  br true .then .else;
+.then:
+}
+2023-11-25 22:34:27,603 INFO: Phase 0.50 (beta=5.50), finished sample process in 66.94 seconds
+	149.38 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:34:27,604 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+.then:
+  ret a;
+  x5: bool = lt b a;
+.else:
+  a: int = add b b;
+  a: int = eq b b;
+}
+2023-11-25 22:34:27,642 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.then:
+  ret a;
+  x5: bool = lt b a;
+.else:
+  a: int = add b b;
+  a: int = eq b b;
+}
+2023-11-25 22:34:28,113 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.then:
+  ret a;
+  x5: bool = lt b a;
+  a: int = eq b b;
+  a: int = add b b;
+.else:
+}
+2023-11-25 22:34:41,664 INFO: Phase 0.50 (beta=5.50), finished sample process in 81.31 seconds
+	122.98 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:34:41,664 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  nop;
+  ret a;
+  ret a;
+  x4: bool = gt a x0;
+.else:
+.then:
+}
+2023-11-25 22:34:41,700 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  ret a;
+  ret a;
+  x4: bool = gt a x0;
+.else:
+.then:
+}
+2023-11-25 22:34:42,578 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  ret a;
+.else:
+  x4: bool = gt a x0;
+  ret a;
+.then:
+}
+2023-11-25 22:34:51,298 INFO: Phase 1.00 (beta=10.00), finished sample process in 34.75 seconds
+	287.73 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:34:59,148 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.13 seconds
+	255.53 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:34:59,787 INFO: Phase 1.00 (beta=10.00), finished sample process in 32.14 seconds
+	311.12 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:34:59,898 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.35 seconds
+	254.15 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:35:02,490 INFO: Phase 1.00 (beta=10.00), finished sample process in 34.37 seconds
+	290.92 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:35:03,866 INFO: Phase 1.00 (beta=10.00), finished sample process in 41.72 seconds
+	239.72 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:35:06,218 INFO: Phase 1.00 (beta=10.00), finished sample process in 40.67 seconds
+	245.90 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:35:11,791 INFO: Phase 1.00 (beta=10.00), finished sample process in 30.09 seconds
+	332.36 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:35:12,125 INFO: Phase 0.75 (beta=7.75), finished sample process in 44.52 seconds
+	224.62 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:35:12,126 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.then:
+  ret a;
+  x4: bool = and x4 x4;
+  a: int = eq b b;
+  x5: bool = fle x0 x2;
+.else:
+}
+2023-11-25 22:35:12,870 INFO: Phase 0.75 (beta=7.75), finished sample process in 52.91 seconds
+	189.02 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:35:12,871 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+.else:
+  ret a;
+  x6: bool = fge x3 x2;
+  x6: bool = fgt x1 x1;
+.then:
+  nop;
+}
+2023-11-25 22:35:14,255 INFO: Phase 1.00 (beta=10.00), finished sample process in 31.68 seconds
+	315.71 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:35:14,761 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  ret a;
+.then:
+  nop;
+  ret a;
+.else:
+}
+2023-11-25 22:35:14,761 INFO: Phase 0.75 (beta=7.75), finished sample process in 33.09 seconds
+	302.17 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:35:35,428 INFO: Phase 0.25 (beta=3.25), finished sample process in 135.13 seconds
+	74.00 samples per second
+	2 test cases
+	4 programs found
+2023-11-25 22:35:35,428 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = feq x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:35,430 INFO: Phase 0.25 (beta=3.25), received 1 programs and sent 4 programs
+2023-11-25 22:35:35,465 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = feq x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:35,500 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = feq x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:36,884 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = fadd x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:36,920 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = fadd x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:37,141 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x1 x3;
+.else:
+  x2: float = feq x2 x1;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:37,400 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = or true x4;
+.else:
+  x2: float = fadd x2 x2;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:35:40,720 INFO: Phase 1.00 (beta=10.00), finished sample process in 25.96 seconds
+	385.27 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:35:41,800 INFO: Phase 1.00 (beta=10.00), finished sample process in 29.67 seconds
+	337.02 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:35:43,674 INFO: Phase 1.00 (beta=10.00), finished sample process in 30.80 seconds
+	324.67 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:36:11,826 INFO: Phase 1.00 (beta=10.00), finished sample process in 36.32 seconds
+	275.31 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:36:13,597 INFO: Phase 1.00 (beta=10.00), finished sample process in 36.67 seconds
+	272.67 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:36:13,753 INFO: Phase 1.00 (beta=10.00), finished sample process in 36.35 seconds
+	275.10 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:36:14,860 INFO: Phase 1.00 (beta=10.00), finished sample process in 37.72 seconds
+	265.14 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:36:21,540 INFO: Phase 0.75 (beta=7.75), finished sample process in 44.65 seconds
+	223.95 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:36:21,540 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+.else:
+  true: bool = or x5 x4;
+  nop;
+  x4: bool = and true x4;
+.then:
+}
+2023-11-25 22:36:23,276 INFO: Phase 0.75 (beta=7.75), finished sample process in 47.81 seconds
+	209.17 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:36:23,277 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+  true: bool = fge x3 x3;
+.else:
+  x2: float = feq x2 x1;
+.then:
+  x4: bool = and true x4;
+}
+2023-11-25 22:36:39,529 INFO: Phase 0.50 (beta=5.50), finished sample process in 64.10 seconds
+	156.01 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:36:39,530 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  ret a;
+.then:
+  nop;
+  x4: bool = not x4;
+  x4: bool = and true x4;
+.else:
+}
+2023-11-25 22:36:39,531 INFO: Phase 0.50 (beta=5.50), received 4 programs and sent 11 programs
+2023-11-25 22:36:39,563 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  ret a;
+.then:
+  nop;
+  x4: bool = not x4;
+  x4: bool = and true x4;
+.else:
+}
+2023-11-25 22:36:57,181 INFO: Phase 1.00 (beta=10.00), finished sample process in 33.90 seconds
+	294.97 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:36:57,634 INFO: Phase 1.00 (beta=10.00), finished sample process in 36.09 seconds
+	277.07 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:37:07,910 INFO: Phase 1.00 (beta=10.00), finished sample process in 28.35 seconds
+	352.78 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:37:08,112 INFO: Phase 0.75 (beta=7.75), finished sample process in 28.58 seconds
+	349.89 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:37:08,114 INFO: Phase 0.75 (beta=7.75), received 10 programs and sent 26 programs
+2023-11-25 22:37:08,114 INFO: Phase 1.00 (beta=10.00), received 25 programs and sent 46 programs
+2023-11-25 22:37:08,270 INFO: Completed in 228.13 seconds

@@ -1,0 +1,143 @@
+2023-11-25 22:33:08,926 INFO: Phase 0.00 (beta=1.00) received:
+@main(a: int, b: int, c: int): int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:08,989 INFO: Phase 0.25 (beta=3.25) received:
+@main(a: int, b: int, c: int): int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:09,061 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int, c: int): int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:09,139 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int, c: int): int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:09,209 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int, c: int): int {
+  x1: int = mul a b;
+  x2: int = mul a c;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:14,298 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.36 seconds
+	1865.43 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,398 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.46 seconds
+	1830.66 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,406 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.47 seconds
+	1829.22 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,409 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.47 seconds
+	1829.01 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,478 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.54 seconds
+	1804.69 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,535 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.59 seconds
+	1790.11 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,594 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.65 seconds
+	1770.12 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,638 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.70 seconds
+	1754.71 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,654 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.72 seconds
+	1748.98 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,688 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.75 seconds
+	1738.62 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,769 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.83 seconds
+	1715.17 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,786 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.85 seconds
+	1709.88 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,841 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.89 seconds
+	1697.78 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,872 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.93 seconds
+	1685.50 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,892 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.95 seconds
+	1680.12 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,917 INFO: Phase 0.00 (beta=1.00), finished sample process in 5.98 seconds
+	1673.28 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:14,918 INFO: Phase 0.00 (beta=1.00), received 1 programs and sent 16 programs
+2023-11-25 22:33:15,031 INFO: Phase 0.75 (beta=7.75), finished sample process in 5.89 seconds
+	1698.44 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:15,131 INFO: Phase 0.50 (beta=5.50), finished sample process in 6.07 seconds
+	1648.41 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:33:15,131 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int, c: int): int {
+  x2: int = mul a c;
+  x1: int = mul a b;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:15,179 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int, c: int): int {
+  x2: int = mul a c;
+  x1: int = mul a b;
+  x3: int = add x1 x2;
+  ret x3;
+}
+2023-11-25 22:33:15,184 INFO: Phase 1.00 (beta=10.00), finished sample process in 5.97 seconds
+	1674.78 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:15,297 INFO: Phase 0.25 (beta=3.25), finished sample process in 6.31 seconds
+	1586.04 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:15,298 INFO: Phase 0.25 (beta=3.25), received 1 programs and sent 1 programs
+2023-11-25 22:33:15,299 INFO: Phase 0.50 (beta=5.50), received 1 programs and sent 2 programs
+2023-11-25 22:33:19,424 INFO: Phase 1.00 (beta=10.00), finished sample process in 4.24 seconds
+	2357.08 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:33:19,483 INFO: Phase 0.75 (beta=7.75), finished sample process in 4.35 seconds
+	2299.25 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:33:19,484 INFO: Phase 0.75 (beta=7.75), received 2 programs and sent 3 programs
+2023-11-25 22:33:19,485 INFO: Phase 1.00 (beta=10.00), received 2 programs and sent 2 programs
+2023-11-25 22:33:19,523 INFO: Completed in 10.68 seconds

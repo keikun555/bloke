@@ -1,0 +1,980 @@
+2023-11-25 22:17:37,859 INFO: Phase 0.00 (beta=1.00) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:37,925 INFO: Phase 0.25 (beta=3.25) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:38,005 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:38,088 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:38,147 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:40,919 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = sub sum1 sum2;
+  sum3: int = add a b;
+  x3: bool = le sum1 sum2;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:41,006 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = sub sum1 sum2;
+  sum3: int = add a b;
+  x3: bool = le sum1 sum2;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:41,091 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = sub sum1 sum2;
+  sum3: int = add a b;
+  x3: bool = le sum1 sum2;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:41,186 INFO: Found better program with cost 7.00 
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = sub sum1 sum2;
+  sum3: int = add a b;
+  x3: bool = le sum1 sum2;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:51,389 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum2: int = add a b;
+  sum1: int = add a a;
+  sum3: int = add a b;
+  nop;
+  prod1: int = mul sum1 b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+}
+2023-11-25 22:17:51,521 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum2: int = add a b;
+  sum1: int = add a a;
+  sum3: int = add a b;
+  nop;
+  prod1: int = mul sum1 b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+}
+2023-11-25 22:17:51,669 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum2: int = add a b;
+  sum1: int = add a a;
+  sum3: int = add a b;
+  nop;
+  prod1: int = mul sum1 b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+}
+2023-11-25 22:17:51,868 INFO: Found better program with cost 6.00 
+@main(a: int, b: int): int {
+  sum2: int = add a b;
+  sum1: int = add a a;
+  sum3: int = add a b;
+  nop;
+  prod1: int = mul sum1 b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+}
+2023-11-25 22:17:52,512 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  nop;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:56,283 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  nop;
+  sum3: int = add a b;
+  nop;
+  x3: bool = le sum1 sum2;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:56,572 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = add a b;
+  sum2: int = add a b;
+  nop;
+  sum3: int = add a b;
+  nop;
+  x3: bool = le sum1 sum2;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:17:56,583 INFO: Phase 0.00 (beta=1.00), finished sample process in 18.71 seconds
+	534.38 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,135 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.26 seconds
+	519.09 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,230 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.36 seconds
+	516.64 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,465 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.59 seconds
+	510.44 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,642 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.77 seconds
+	505.81 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,648 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.78 seconds
+	505.67 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,674 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.80 seconds
+	505.01 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,695 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.81 seconds
+	504.77 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:57,756 INFO: Phase 0.00 (beta=1.00), finished sample process in 19.87 seconds
+	503.19 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:58,121 INFO: Phase 1.00 (beta=10.00), finished sample process in 19.97 seconds
+	500.73 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:58,510 INFO: Phase 0.00 (beta=1.00), finished sample process in 20.64 seconds
+	484.50 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:58,958 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.09 seconds
+	474.18 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,031 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.16 seconds
+	472.64 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,209 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.34 seconds
+	468.67 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,362 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.48 seconds
+	465.45 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,436 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.56 seconds
+	463.76 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,644 INFO: Phase 0.00 (beta=1.00), finished sample process in 21.77 seconds
+	459.36 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:17:59,646 INFO: Phase 0.00 (beta=1.00), received 1 programs and sent 16 programs
+2023-11-25 22:18:00,695 INFO: Phase 0.75 (beta=7.75), finished sample process in 22.60 seconds
+	442.41 samples per second
+	4 test cases
+	2 programs found
+2023-11-25 22:18:01,441 INFO: Phase 0.75 (beta=7.75), finished sample process in 20.43 seconds
+	489.47 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:18:01,843 INFO: Phase 1.00 (beta=10.00), finished sample process in 20.75 seconds
+	481.97 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:18:04,981 INFO: Found better program with cost 5.00 
+@main(a: int, b: int): int {
+  nop;
+  sum1: int = add a a;
+  sum3: int = add a b;
+  nop;
+  prod1: int = mul sum1 b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+}
+2023-11-25 22:18:05,009 INFO: Phase 1.00 (beta=10.00), finished sample process in 12.48 seconds
+	801.04 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:18:05,846 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  ret prod2;
+}
+2023-11-25 22:18:05,901 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  ret prod2;
+}
+2023-11-25 22:18:05,968 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  ret prod2;
+}
+2023-11-25 22:18:07,510 INFO: Phase 0.50 (beta=5.50), finished sample process in 29.50 seconds
+	338.97 samples per second
+	4 test cases
+	2 programs found
+2023-11-25 22:18:07,510 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum1: int = sub a b;
+  sum2: int = sub b b;
+  sum3: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:18:07,577 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = sub a b;
+  sum2: int = sub b b;
+  sum3: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  sum2: int = const 0;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:18:07,723 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  ret prod2;
+  nop;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:07,760 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  ret prod2;
+  nop;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:07,965 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  sum1: int = sub a a;
+}
+2023-11-25 22:18:08,022 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  sum1: int = sub a a;
+}
+2023-11-25 22:18:08,093 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  sum1: int = sub a a;
+}
+2023-11-25 22:18:08,712 INFO: Phase 1.00 (beta=10.00), finished sample process in 17.02 seconds
+	587.59 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:18:08,793 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  sum1: int = add a a;
+  nop;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:08,846 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  sum1: int = add a a;
+  nop;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:09,555 INFO: Phase 1.00 (beta=10.00), finished sample process in 12.97 seconds
+	771.27 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:18:09,750 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  sum1: int = add a a;
+  nop;
+  nop;
+  ret prod2;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:09,925 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x3: bool = fgt x0 x0;
+  nop;
+  nop;
+  sum2: int = mul a sum1;
+  sum1: int = sub a a;
+}
+2023-11-25 22:18:10,541 INFO: Phase 0.75 (beta=7.75), finished sample process in 19.00 seconds
+	526.21 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:18:11,082 INFO: Found better program with cost 3.00 
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  nop;
+  sum1: int = add a a;
+  x4: bool = fge x2 x2;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:11,091 INFO: Phase 0.75 (beta=7.75), finished sample process in 14.72 seconds
+	679.28 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:18:11,364 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  sum2: int = add a b;
+  sum1: int = add a b;
+  nop;
+  x3: bool = le sum2 sum1;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:18:11,364 INFO: Phase 0.50 (beta=5.50), finished sample process in 30.44 seconds
+	328.51 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:18:11,403 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  sum2: int = add a b;
+  sum1: int = add a b;
+  nop;
+  x3: bool = le sum2 sum1;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+}
+2023-11-25 22:18:13,613 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  nop;
+  ret prod2;
+  nop;
+  sum2: int = mul a sum1;
+  nop;
+}
+2023-11-25 22:18:26,086 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  nop;
+  sum1: int = mul a a;
+  sum3: int = add a b;
+  prod1: int = sub sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  sum2: int = div b prod2;
+  ret prod2;
+}
+2023-11-25 22:18:26,189 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  sum1: int = mul a a;
+  sum3: int = add a b;
+  prod1: int = sub sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  sum2: int = div b prod2;
+  ret prod2;
+}
+2023-11-25 22:18:26,884 INFO: Phase 1.00 (beta=10.00), finished sample process in 19.30 seconds
+	518.00 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:27,119 INFO: Phase 1.00 (beta=10.00), finished sample process in 21.15 seconds
+	472.88 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:29,241 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum1: int = sub a b;
+  sum2: int = sub b b;
+  sum3: int = add a b;
+  prod1: int = mul sum1 sum2;
+  sum1: int = const 0;
+  prod2: int = mul sum3 sum3;
+  sum2: int = const 0;
+  ret prod2;
+}
+2023-11-25 22:18:29,242 INFO: Phase 0.75 (beta=7.75), finished sample process in 21.73 seconds
+	460.21 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:18:29,668 INFO: Phase 1.00 (beta=10.00), finished sample process in 18.26 seconds
+	547.55 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:30,270 INFO: Phase 0.75 (beta=7.75), finished sample process in 18.90 seconds
+	529.02 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:31,671 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  nop;
+  nop;
+  ret prod2;
+  sum2: int = mul a sum1;
+  sum1: int = add a a;
+}
+2023-11-25 22:18:32,498 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  nop;
+  sum3: int = add a b;
+  sum1: int = mul a a;
+  prod1: int = mul sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  sum2: int = div sum3 prod2;
+  ret prod2;
+}
+2023-11-25 22:18:32,498 INFO: Phase 0.50 (beta=5.50), finished sample process in 41.08 seconds
+	243.40 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:18:32,571 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  sum3: int = add a b;
+  sum1: int = mul a a;
+  prod1: int = mul sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  sum2: int = div sum3 prod2;
+  ret prod2;
+}
+2023-11-25 22:18:37,105 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  sum3: int = add a b;
+  sum1: int = mul a a;
+  prod1: int = mul sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  sum2: int = div sum3 prod2;
+}
+2023-11-25 22:18:38,859 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  sum1: int = mul a a;
+  sum3: int = add a b;
+  prod1: int = sub sum3 b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  sum2: int = div b prod2;
+}
+2023-11-25 22:18:45,456 INFO: Phase 1.00 (beta=10.00), finished sample process in 12.88 seconds
+	776.29 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:47,638 INFO: Phase 1.00 (beta=10.00), finished sample process in 21.45 seconds
+	466.29 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:18:48,346 INFO: Phase 0.75 (beta=7.75), finished sample process in 42.44 seconds
+	235.62 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:18:51,607 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  nop;
+  nop;
+  ret prod2;
+  ret x4;
+  sum1: int = add a prod2;
+}
+2023-11-25 22:18:51,661 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  nop;
+  nop;
+  ret prod2;
+  ret x4;
+  sum1: int = add a prod2;
+}
+2023-11-25 22:18:51,941 INFO: Phase 1.00 (beta=10.00), finished sample process in 22.70 seconds
+	440.57 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:18:52,764 INFO: Phase 0.75 (beta=7.75), finished sample process in 26.65 seconds
+	375.21 samples per second
+	4 test cases
+	2 programs found
+2023-11-25 22:18:57,876 INFO: Phase 0.75 (beta=7.75), finished sample process in 25.38 seconds
+	394.08 samples per second
+	4 test cases
+	2 programs found
+2023-11-25 22:18:57,884 INFO: Phase 1.00 (beta=10.00), finished sample process in 50.12 seconds
+	199.51 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:00,681 INFO: Phase 0.75 (beta=7.75), finished sample process in 52.96 seconds
+	188.84 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:19:00,682 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  nop;
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+  br x4;
+  sum2: int = mul a sum1;
+  x3: bool = and x5 x3;
+}
+2023-11-25 22:19:00,807 INFO: Phase 1.00 (beta=10.00), finished sample process in 47.19 seconds
+	211.90 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:19:01,485 INFO: Phase 0.25 (beta=3.25), finished sample process in 83.56 seconds
+	119.68 samples per second
+	3 test cases
+	6 programs found
+2023-11-25 22:19:01,486 INFO: Phase 0.50 (beta=5.50) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+  br x4;
+  x3: bool = fge x2 x2;
+  x0: float = fadd x1 x1;
+  br x5;
+}
+2023-11-25 22:19:01,488 INFO: Phase 0.25 (beta=3.25), received 1 programs and sent 6 programs
+2023-11-25 22:19:01,524 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+  br x4;
+  x3: bool = fge x2 x2;
+  x0: float = fadd x1 x1;
+  br x5;
+}
+2023-11-25 22:19:01,582 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  nop;
+  ret prod2;
+  br x4;
+  x3: bool = fge x2 x2;
+  x0: float = fadd x1 x1;
+  br x5;
+}
+2023-11-25 22:19:05,603 INFO: Phase 1.00 (beta=10.00), finished sample process in 26.74 seconds
+	373.97 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:19:06,448 INFO: Phase 1.00 (beta=10.00), finished sample process in 29.34 seconds
+	340.86 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:09,560 INFO: Phase 1.00 (beta=10.00), finished sample process in 37.89 seconds
+	263.95 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:11,698 INFO: Phase 1.00 (beta=10.00), finished sample process in 62.85 seconds
+	159.11 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:13,577 INFO: Phase 1.00 (beta=10.00), finished sample process in 63.65 seconds
+	157.11 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:19:14,213 INFO: Phase 1.00 (beta=10.00), finished sample process in 66.12 seconds
+	151.25 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:19:14,601 INFO: Phase 0.75 (beta=7.75), finished sample process in 66.58 seconds
+	150.20 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:19:14,939 INFO: Phase 1.00 (beta=10.00), finished sample process in 65.19 seconds
+	153.41 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:18,085 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  ret prod2;
+  jmp;
+  nop;
+  nop;
+  sum1: int = eq a prod2;
+}
+2023-11-25 22:19:18,085 INFO: Phase 0.50 (beta=5.50), finished sample process in 72.24 seconds
+	138.44 samples per second
+	3 test cases
+	5 programs found
+2023-11-25 22:19:18,120 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  ret prod2;
+  jmp;
+  nop;
+  nop;
+  sum1: int = eq a prod2;
+}
+2023-11-25 22:19:19,247 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  ret prod2;
+  jmp;
+  nop;
+  nop;
+  sum1: int = eq sum1 prod2;
+}
+2023-11-25 22:19:21,337 INFO: Phase 0.75 (beta=7.75), finished sample process in 72.54 seconds
+	137.85 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:21,337 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  sum1: int = add a prod2;
+  sum2: int = mul a sum1;
+  nop;
+  nop;
+  nop;
+}
+2023-11-25 22:19:23,547 INFO: Phase 0.75 (beta=7.75), finished sample process in 31.94 seconds
+	313.12 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:19:24,526 INFO: Phase 1.00 (beta=10.00), finished sample process in 32.86 seconds
+	304.30 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:19:35,127 INFO: Phase 1.00 (beta=10.00), finished sample process in 34.44 seconds
+	290.33 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:19:39,276 INFO: Phase 0.50 (beta=5.50), finished sample process in 91.31 seconds
+	109.52 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:19:39,277 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x5: bool = fgt x2 x2;
+  x3: bool = ge prod2 b;
+  sum1: int = eq a a;
+  nop;
+  x2: float = fdiv x1 x1;
+}
+2023-11-25 22:19:39,324 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x5: bool = fgt x2 x2;
+  x3: bool = ge prod2 b;
+  sum1: int = eq a a;
+  nop;
+  x2: float = fdiv x1 x1;
+}
+2023-11-25 22:19:40,084 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x5: bool = ge sum1 a;
+  x3: bool = ge prod2 b;
+  sum1: int = eq a a;
+  nop;
+  x2: float = fdiv x1 x1;
+}
+2023-11-25 22:19:42,670 INFO: Phase 0.75 (beta=7.75), finished sample process in 41.14 seconds
+	243.05 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:19:43,970 INFO: Phase 1.00 (beta=10.00), finished sample process in 42.39 seconds
+	235.93 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:20:03,172 INFO: Phase 1.00 (beta=10.00), finished sample process in 45.05 seconds
+	221.98 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:20:04,055 INFO: Phase 0.75 (beta=7.75), finished sample process in 45.97 seconds
+	217.55 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:20:04,055 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  ret b;
+  jmp;
+  nop;
+  nop;
+  x0: float = feq x0 x1;
+}
+2023-11-25 22:20:04,518 INFO: Phase 1.00 (beta=10.00), finished sample process in 45.27 seconds
+	220.91 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:20:06,634 INFO: Phase 0.50 (beta=5.50), finished sample process in 65.15 seconds
+	153.50 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:20:06,635 INFO: Phase 0.75 (beta=7.75) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x3: bool = and x4 x5;
+  x0: float = fdiv x2 x1;
+  b: int = sub sum3 prod2;
+  x4: bool = id x4;
+}
+2023-11-25 22:20:06,636 INFO: Phase 0.50 (beta=5.50), received 6 programs and sent 17 programs
+2023-11-25 22:20:06,672 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x3: bool = and x4 x5;
+  x0: float = fdiv x2 x1;
+  b: int = sub sum3 prod2;
+  x4: bool = id x4;
+}
+2023-11-25 22:20:06,873 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x0: float = fdiv x2 x1;
+  x3: bool = and x4 x5;
+  b: int = sub sum3 prod2;
+  x4: bool = id x4;
+}
+2023-11-25 22:20:08,226 INFO: Phase 1.00 (beta=10.00), finished sample process in 46.89 seconds
+	213.28 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:20:22,188 INFO: Phase 1.00 (beta=10.00), finished sample process in 42.86 seconds
+	233.31 samples per second
+	4 test cases
+	1 programs found
+2023-11-25 22:20:24,323 INFO: Phase 1.00 (beta=10.00), finished sample process in 44.24 seconds
+	226.06 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:20:27,236 INFO: Phase 0.75 (beta=7.75), finished sample process in 47.96 seconds
+	208.52 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:20:27,237 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x5: bool = ge sum1 a;
+  x3: bool = ge prod2 b;
+  sum1: int = eq a a;
+  x2: float = fdiv x1 x1;
+  nop;
+}
+2023-11-25 22:20:39,454 INFO: Phase 1.00 (beta=10.00), finished sample process in 32.58 seconds
+	306.95 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:20:43,176 INFO: Phase 1.00 (beta=10.00), finished sample process in 36.50 seconds
+	273.97 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:20:46,067 INFO: Phase 1.00 (beta=10.00), finished sample process in 41.99 seconds
+	238.12 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:20:51,471 INFO: Phase 0.75 (beta=7.75), finished sample process in 44.83 seconds
+	223.05 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:20:51,471 INFO: Phase 1.00 (beta=10.00) received:
+@main(a: int, b: int): int {
+  sum3: int = add a b;
+  nop;
+  prod2: int = mul sum3 sum3;
+  ret prod2;
+  x5: bool = fgt x1 x0;
+  x3: bool = and x4 x5;
+  b: int = sub sum3 prod2;
+  x0: float = fdiv x2 x1;
+}
+2023-11-25 22:20:51,472 INFO: Phase 0.75 (beta=7.75), received 17 programs and sent 33 programs
+2023-11-25 22:21:06,868 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.63 seconds
+	252.34 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:21:27,373 INFO: Phase 1.00 (beta=10.00), finished sample process in 35.90 seconds
+	278.55 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:21:27,375 INFO: Phase 1.00 (beta=10.00), received 33 programs and sent 53 programs
+2023-11-25 22:21:27,507 INFO: Completed in 229.73 seconds

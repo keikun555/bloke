@@ -1,0 +1,1183 @@
+2023-11-25 22:21:28,192 INFO: Phase 0.00 (beta=1.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:21:28,252 INFO: Phase 0.25 (beta=3.25) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:21:28,307 INFO: Phase 0.50 (beta=5.50) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:21:28,391 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:21:28,460 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:21:29,536 INFO: Phase 0.50 (beta=5.50) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:29,619 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:29,698 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:32,845 INFO: Phase 0.50 (beta=5.50) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  ret x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:32,973 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  ret x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:33,138 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  ret x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:33,334 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = gt x x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:33,390 INFO: Found better program with cost 3.00 
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:33,554 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = gt x x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:34,008 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  x5: bool = gt x x;
+  ret x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:35,723 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = div x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:35,873 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = div x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:35,926 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  x: int = add x one;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = mul x one;
+  x: int = add x one;
+}
+2023-11-25 22:21:39,224 INFO: Phase 0.50 (beta=5.50) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = add x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:54,439 INFO: Phase 0.00 (beta=1.00), finished sample process in 26.24 seconds
+	381.15 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:54,480 INFO: Found better program with cost 1.00 
+@main(x: int): int {
+  ret x;
+  x4: bool = lt x x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:21:54,513 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = add x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:55,254 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add one one;
+  x: int = add x x;
+  x: int = eq x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:55,700 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x3: bool = and x3 x5;
+  y: int = add x x;
+}
+2023-11-25 22:21:55,861 INFO: Phase 0.00 (beta=1.00), finished sample process in 27.66 seconds
+	361.55 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:55,973 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = add x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:56,163 INFO: Phase 0.00 (beta=1.00), finished sample process in 27.96 seconds
+	357.67 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:56,211 INFO: Phase 0.00 (beta=1.00), finished sample process in 28.01 seconds
+	357.08 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:56,249 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add one one;
+  x: int = add x x;
+  x: int = eq x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:56,336 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x3: bool = and x3 x5;
+  y: int = add x x;
+}
+2023-11-25 22:21:56,442 INFO: Phase 0.00 (beta=1.00), finished sample process in 28.23 seconds
+	354.18 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:56,631 INFO: Phase 0.00 (beta=1.00), finished sample process in 28.42 seconds
+	351.89 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:56,720 INFO: Phase 0.00 (beta=1.00), finished sample process in 28.51 seconds
+	350.70 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:56,832 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = add x one;
+  x3: bool = fle x0 x0;
+  x: int = add x x;
+  ret y;
+}
+2023-11-25 22:21:56,973 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = eq x one;
+  x3: bool = fle x0 x0;
+  x2: float = fadd x0 x0;
+  ret y;
+}
+2023-11-25 22:21:57,187 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  ret y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add y y;
+  y: int = add x x;
+}
+2023-11-25 22:21:57,343 INFO: Phase 0.00 (beta=1.00), finished sample process in 29.14 seconds
+	343.17 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:57,728 INFO: Phase 0.00 (beta=1.00), finished sample process in 29.52 seconds
+	338.73 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:21:57,846 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = gt x x;
+  ret y;
+  x: int = add one one;
+  x: int = add x one;
+  x5: bool = fgt x0 x1;
+  x: int = mul x x;
+  x: int = add x x;
+}
+2023-11-25 22:21:59,680 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  nop;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = mul x one;
+  x: int = add x one;
+}
+2023-11-25 22:22:00,756 INFO: Phase 0.00 (beta=1.00), finished sample process in 32.55 seconds
+	307.20 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:02,111 INFO: Phase 0.00 (beta=1.00), finished sample process in 33.90 seconds
+	294.97 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:04,121 INFO: Phase 0.00 (beta=1.00), finished sample process in 35.91 seconds
+	278.45 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:04,139 INFO: Phase 0.00 (beta=1.00), finished sample process in 35.93 seconds
+	278.33 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:04,255 INFO: Phase 0.00 (beta=1.00), finished sample process in 36.05 seconds
+	277.37 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:04,743 INFO: Phase 0.00 (beta=1.00), finished sample process in 36.54 seconds
+	273.68 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:06,351 INFO: Phase 0.00 (beta=1.00), finished sample process in 38.15 seconds
+	262.15 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:22:06,360 INFO: Phase 0.00 (beta=1.00), received 1 programs and sent 16 programs
+2023-11-25 22:22:14,038 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  y: int = id x;
+  nop;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = mul x one;
+  x: int = add x one;
+}
+2023-11-25 22:22:39,796 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x5: bool = gt x x;
+  ret y;
+  x: int = add one one;
+  x5: bool = or x5 x5;
+  x5: bool = fgt x0 x1;
+  x: int = add x one;
+  x: int = add x x;
+}
+2023-11-25 22:22:42,712 INFO: Phase 1.00 (beta=10.00), finished sample process in 73.01 seconds
+	136.97 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:22:46,043 INFO: Phase 1.00 (beta=10.00), finished sample process in 72.87 seconds
+	137.24 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:22:50,758 INFO: Phase 1.00 (beta=10.00), finished sample process in 82.29 seconds
+	121.52 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:22:51,762 INFO: Phase 1.00 (beta=10.00), finished sample process in 75.86 seconds
+	131.81 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:22:53,390 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  x4: bool = gt x x;
+  y: int = id x;
+  ret y;
+  x: int = add x x;
+  x: int = add x one;
+  x: int = add x x;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:22:53,390 INFO: Phase 0.75 (beta=7.75), finished sample process in 83.77 seconds
+	119.38 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:22:54,245 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  nop;
+  ret y;
+  x: int = add x one;
+  x4: bool = and x5 x5;
+  x: int = add x one;
+  x: int = add x one;
+}
+2023-11-25 22:22:55,144 INFO: Phase 1.00 (beta=10.00), finished sample process in 81.11 seconds
+	123.29 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:22:57,755 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret y;
+  x3: bool = and x3 x5;
+  x: int = add x one;
+  x: int = add x y;
+  x: int = eq x x;
+  y: int = add x x;
+}
+2023-11-25 22:22:57,811 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret y;
+  x3: bool = and x3 x5;
+  x: int = add x one;
+  x: int = add x y;
+  x: int = eq x x;
+  y: int = add x x;
+}
+2023-11-25 22:22:58,914 INFO: Phase 1.00 (beta=10.00), finished sample process in 54.70 seconds
+	182.83 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:23:00,075 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret y;
+  y: int = add x x;
+  x: int = add x one;
+  x: int = add x y;
+  x: int = eq x x;
+  x3: bool = and x3 x5;
+}
+2023-11-25 22:23:04,865 INFO: Phase 0.75 (beta=7.75), finished sample process in 91.51 seconds
+	109.28 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:23:05,931 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  nop;
+  ret y;
+  jmp;
+  x: int = sub x one;
+  x5: bool = fge x0 x1;
+  x5: bool = id one;
+}
+2023-11-25 22:23:06,083 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  nop;
+  ret y;
+  jmp;
+  x: int = sub x one;
+  x5: bool = fge x0 x1;
+  x5: bool = id one;
+}
+2023-11-25 22:23:06,726 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  one: int = const 1;
+  y: int = id x;
+  nop;
+  ret y;
+  x3: bool = fle x1 x1;
+  x: int = sub x one;
+  x5: bool = fge x0 x1;
+  x5: bool = id one;
+}
+2023-11-25 22:23:06,729 INFO: Phase 1.00 (beta=10.00), finished sample process in 93.17 seconds
+	107.34 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:23:09,163 INFO: Phase 0.75 (beta=7.75), finished sample process in 93.42 seconds
+	107.05 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:23:10,579 INFO: Phase 1.00 (beta=10.00), finished sample process in 94.63 seconds
+	105.67 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:23:12,505 INFO: Phase 1.00 (beta=10.00), finished sample process in 75.76 seconds
+	131.99 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:23:13,098 INFO: Phase 1.00 (beta=10.00), finished sample process in 75.32 seconds
+	132.76 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:23:13,543 INFO: Phase 1.00 (beta=10.00), finished sample process in 76.88 seconds
+	130.07 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:23:14,704 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x5: bool = and x4 x4;
+  nop;
+  x: int = add x one;
+  ret y;
+  x: int = add x one;
+  x: int = mul x one;
+  x: int = add x one;
+}
+2023-11-25 22:23:14,705 INFO: Phase 0.75 (beta=7.75), finished sample process in 106.31 seconds
+	94.06 samples per second
+	2 test cases
+	5 programs found
+2023-11-25 22:23:17,544 INFO: Phase 1.00 (beta=10.00), finished sample process in 76.76 seconds
+	130.28 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:23:17,863 INFO: Phase 1.00 (beta=10.00), finished sample process in 81.42 seconds
+	122.83 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:23:19,275 INFO: Phase 0.75 (beta=7.75), finished sample process in 106.29 seconds
+	94.09 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:23:23,722 INFO: Phase 1.00 (beta=10.00), finished sample process in 86.35 seconds
+	115.81 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:23:24,430 INFO: Phase 1.00 (beta=10.00), finished sample process in 82.28 seconds
+	121.54 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:23:25,219 INFO: Phase 0.75 (beta=7.75), finished sample process in 88.98 seconds
+	112.39 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:23:25,220 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  ret y;
+  x: int = add y y;
+  x: int = add x one;
+  x: int = add x one;
+  x: int = add x one;
+  y: int = add x x;
+}
+2023-11-25 22:23:29,051 INFO: Phase 0.75 (beta=7.75), finished sample process in 93.17 seconds
+	107.34 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:23:29,052 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x3: bool = fle x0 x0;
+  x: int = div x x;
+  x: int = add x one;
+  ret y;
+}
+2023-11-25 22:23:29,986 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  nop;
+  ret x;
+  x5: bool = id one;
+  x3: bool = ge x y;
+  x3: bool = fge x2 x1;
+  jmp;
+}
+2023-11-25 22:23:30,042 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  nop;
+  ret x;
+  x5: bool = id one;
+  x3: bool = ge x y;
+  x3: bool = fge x2 x1;
+  jmp;
+}
+2023-11-25 22:23:30,489 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  y: int = id x;
+  nop;
+  ret x;
+  x5: bool = id one;
+  x3: bool = ge x y;
+  jmp;
+  x3: bool = fge x2 x1;
+}
+2023-11-25 22:23:33,047 INFO: Phase 0.50 (beta=5.50), finished sample process in 124.74 seconds
+	80.17 samples per second
+	2 test cases
+	4 programs found
+2023-11-25 22:23:34,640 INFO: Phase 1.00 (beta=10.00), finished sample process in 80.59 seconds
+	124.08 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:23:35,187 INFO: Phase 0.75 (beta=7.75), finished sample process in 99.00 seconds
+	101.01 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:23:35,188 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = add x x;
+  x: int = add one one;
+  x: int = eq x one;
+  x3: bool = fgt x0 x0;
+  ret y;
+  x2: float = fmul x0 x0;
+}
+2023-11-25 22:23:39,379 INFO: Phase 1.00 (beta=10.00), finished sample process in 59.58 seconds
+	167.84 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:23:46,208 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret x;
+  x3: bool = and x3 x4;
+  x0: float = fadd x0 x1;
+  x2: float = fadd x1 x2;
+  x: int = eq x x;
+  y: int = add x x;
+}
+2023-11-25 22:23:46,209 INFO: Phase 0.50 (beta=5.50), finished sample process in 136.67 seconds
+	73.17 samples per second
+	3 test cases
+	4 programs found
+2023-11-25 22:23:46,267 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret x;
+  x3: bool = and x3 x4;
+  x0: float = fadd x0 x1;
+  x2: float = fadd x1 x2;
+  x: int = eq x x;
+  y: int = add x x;
+}
+2023-11-25 22:23:46,503 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret x;
+  x3: bool = and x3 x4;
+  x0: float = fadd x0 x1;
+  x2: float = fadd x1 x2;
+  x: int = eq x x;
+  y: int = add x x;
+}
+2023-11-25 22:23:49,718 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  y: int = id x;
+  nop;
+  nop;
+  x5: bool = id one;
+  x3: bool = ge x y;
+  jmp;
+  x3: bool = fge x2 x1;
+}
+2023-11-25 22:23:53,150 INFO: Phase 1.00 (beta=10.00), finished sample process in 58.89 seconds
+	169.81 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:23:58,676 INFO: Phase 0.75 (beta=7.75), finished sample process in 52.72 seconds
+	189.67 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:24:00,385 INFO: Phase 1.00 (beta=10.00), finished sample process in 62.57 seconds
+	159.82 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:01,170 INFO: Phase 1.00 (beta=10.00), finished sample process in 55.07 seconds
+	181.57 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:24:01,202 INFO: Phase 1.00 (beta=10.00), finished sample process in 54.45 seconds
+	183.65 samples per second
+	3 test cases
+	1 programs found
+2023-11-25 22:24:02,923 INFO: Phase 1.00 (beta=10.00), finished sample process in 69.48 seconds
+	143.93 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:24:11,676 INFO: Phase 1.00 (beta=10.00), finished sample process in 56.97 seconds
+	175.53 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:13,007 INFO: Phase 1.00 (beta=10.00), finished sample process in 72.93 seconds
+	137.12 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:24:14,353 INFO: Phase 0.50 (beta=5.50), finished sample process in 161.49 seconds
+	61.92 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:24:14,354 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  ret x;
+  jmp;
+  nop;
+  x4: bool = not x4;
+  x4: bool = le x x;
+  x: int = eq x x;
+  x: int = mul x x;
+  x1: float = fmul x1 x2;
+}
+2023-11-25 22:24:14,408 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  jmp;
+  nop;
+  x4: bool = not x4;
+  x4: bool = le x x;
+  x: int = eq x x;
+  x: int = mul x x;
+  x1: float = fmul x1 x2;
+}
+2023-11-25 22:24:14,671 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  jmp;
+  x1: float = fmul x1 x2;
+  x4: bool = not x4;
+  x4: bool = le x x;
+  x: int = eq x x;
+  x: int = mul x x;
+  nop;
+}
+2023-11-25 22:24:16,012 INFO: Phase 0.75 (beta=7.75), finished sample process in 78.25 seconds
+	127.79 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:24:16,013 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret y;
+  x: int = add x y;
+  x: int = add x one;
+  y: int = add x x;
+  x: int = eq x x;
+  x3: bool = and x4 x5;
+}
+2023-11-25 22:24:16,973 INFO: Phase 1.00 (beta=10.00), finished sample process in 46.48 seconds
+	215.15 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:24:17,625 INFO: Phase 1.00 (beta=10.00), finished sample process in 48.57 seconds
+	205.89 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:20,448 INFO: Phase 0.50 (beta=5.50), finished sample process in 145.98 seconds
+	68.50 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:24:20,449 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x5: bool = fge x1 x2;
+  nop;
+  x: int = eq x x;
+  x: int = add x x;
+  x3: bool = fgt x2 x1;
+  x4: bool = not x4;
+}
+2023-11-25 22:24:20,487 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x5: bool = fge x1 x2;
+  nop;
+  x: int = eq x x;
+  x: int = add x x;
+  x3: bool = fgt x2 x1;
+  x4: bool = not x4;
+}
+2023-11-25 22:24:20,809 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x5: bool = fge x1 x2;
+  nop;
+  x: int = div x x;
+  x: int = add x x;
+  x3: bool = fgt x2 x1;
+  x4: bool = not x4;
+}
+2023-11-25 22:24:21,459 INFO: Phase 1.00 (beta=10.00), finished sample process in 56.24 seconds
+	177.82 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:24:21,796 INFO: Phase 1.00 (beta=10.00), finished sample process in 51.75 seconds
+	193.23 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:24:28,439 INFO: Phase 1.00 (beta=10.00), finished sample process in 53.25 seconds
+	187.80 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:34,832 INFO: Phase 0.75 (beta=7.75), finished sample process in 64.84 seconds
+	154.22 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:24:42,818 INFO: Phase 1.00 (beta=10.00), finished sample process in 56.55 seconds
+	176.84 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:24:49,131 INFO: Phase 1.00 (beta=10.00), finished sample process in 59.41 seconds
+	168.32 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:52,584 INFO: Phase 1.00 (beta=10.00), finished sample process in 66.08 seconds
+	151.34 samples per second
+	2 test cases
+	2 programs found
+2023-11-25 22:24:53,924 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.51 seconds
+	253.07 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:24:55,626 INFO: Phase 1.00 (beta=10.00), finished sample process in 40.95 seconds
+	244.19 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:24:57,040 INFO: Phase 0.75 (beta=7.75), finished sample process in 70.83 seconds
+	141.18 samples per second
+	3 test cases
+	3 programs found
+2023-11-25 22:24:57,041 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  ret x;
+  x3: bool = and x3 x4;
+  x: int = mul x x;
+  x2: float = feq x1 x2;
+  x0: float = fmul x1 x1;
+  x4: bool = flt x0 x1;
+}
+2023-11-25 22:24:59,528 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.04 seconds
+	256.16 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:25:00,604 INFO: Phase 1.00 (beta=10.00), finished sample process in 39.79 seconds
+	251.31 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:25:01,426 INFO: Phase 1.00 (beta=10.00), finished sample process in 45.41 seconds
+	220.21 samples per second
+	3 test cases
+	2 programs found
+2023-11-25 22:25:06,366 INFO: Phase 0.75 (beta=7.75), finished sample process in 45.91 seconds
+	217.80 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:25:06,367 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  nop;
+  ret x;
+  x: int = div x x;
+  x: int = sub x x;
+  x5: bool = fge x1 x2;
+  x: int = add x x;
+  x3: bool = fgt x2 x1;
+  x4: bool = not x4;
+}
+2023-11-25 22:25:09,308 INFO: Phase 0.75 (beta=7.75), finished sample process in 54.95 seconds
+	181.98 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:25:09,309 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  nop;
+  x1: float = fmul x1 x2;
+  x0: float = fsub x1 x1;
+  x4: bool = not x4;
+  x: int = eq x x;
+  x: int = mul x x;
+  x3: bool = fle x0 x2;
+}
+2023-11-25 22:25:23,868 INFO: Phase 0.25 (beta=3.25), finished sample process in 235.61 seconds
+	42.44 samples per second
+	2 test cases
+	5 programs found
+2023-11-25 22:25:23,869 INFO: Phase 0.50 (beta=5.50) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  jmp;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:23,880 INFO: Phase 0.25 (beta=3.25), received 1 programs and sent 5 programs
+2023-11-25 22:25:23,913 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  jmp;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:23,948 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  jmp;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:24,169 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  jmp;
+  jmp;
+  x4: bool = lt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:24,405 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  nop;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:24,437 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x1;
+  x5: bool = lt x x;
+  nop;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:25,490 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x3;
+  x5: bool = lt x x;
+  nop;
+  jmp;
+  x4: bool = gt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:25:39,649 INFO: Phase 1.00 (beta=10.00), finished sample process in 33.28 seconds
+	300.49 samples per second
+	2 test cases
+	1 programs found
+2023-11-25 22:25:48,068 INFO: Phase 1.00 (beta=10.00), finished sample process in 38.76 seconds
+	258.02 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:25:51,046 INFO: Phase 1.00 (beta=10.00), finished sample process in 54.00 seconds
+	185.18 samples per second
+	2 test cases
+	3 programs found
+2023-11-25 22:26:08,666 INFO: Phase 1.00 (beta=10.00), finished sample process in 44.72 seconds
+	223.63 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:26:08,894 INFO: Phase 1.00 (beta=10.00), finished sample process in 44.45 seconds
+	224.95 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:26:09,038 INFO: Phase 1.00 (beta=10.00), finished sample process in 44.87 seconds
+	222.89 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:26:11,081 INFO: Phase 1.00 (beta=10.00), finished sample process in 45.59 seconds
+	219.35 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:26:16,316 INFO: Phase 0.75 (beta=7.75), finished sample process in 51.91 seconds
+	192.64 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:26:16,317 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fgt x0 x3;
+  x5: bool = lt x x;
+  nop;
+  jmp;
+  nop;
+  x4: bool = gt y y;
+  nop;
+}
+2023-11-25 22:26:20,626 INFO: Phase 0.75 (beta=7.75), finished sample process in 56.71 seconds
+	176.33 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:26:20,627 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  jmp;
+  x5: bool = lt x x;
+  x4: bool = fgt x2 x2;
+  x4: bool = fgt x0 x1;
+  x4: bool = lt y y;
+  nop;
+  nop;
+}
+2023-11-25 22:26:55,183 INFO: Phase 1.00 (beta=10.00), finished sample process in 38.86 seconds
+	257.31 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:26:56,154 INFO: Phase 0.50 (beta=5.50), finished sample process in 92.28 seconds
+	108.36 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:26:56,155 INFO: Phase 0.75 (beta=7.75) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fge x3 x3;
+  jmp;
+  x3: float = fdiv x2 x6;
+  x2: float = fmul x2 x2;
+  jmp;
+  x4: bool = fge x2 x1;
+  ret x1;
+}
+2023-11-25 22:26:56,157 INFO: Phase 0.50 (beta=5.50), received 5 programs and sent 17 programs
+2023-11-25 22:26:56,187 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fge x3 x3;
+  jmp;
+  x3: float = fdiv x2 x6;
+  x2: float = fmul x2 x2;
+  jmp;
+  x4: bool = fge x2 x1;
+  ret x1;
+}
+2023-11-25 22:26:58,211 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x4: bool = fge x3 x3;
+  jmp;
+  x3: float = fdiv x2 x6;
+  x2: float = fmul x2 x2;
+  nop;
+  x4: bool = fge x2 x1;
+  ret x1;
+}
+2023-11-25 22:27:07,576 INFO: Phase 1.00 (beta=10.00), finished sample process in 46.95 seconds
+	213.01 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:27:39,364 INFO: Phase 1.00 (beta=10.00), finished sample process in 43.17 seconds
+	231.62 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:27:40,224 INFO: Phase 1.00 (beta=10.00), finished sample process in 42.01 seconds
+	238.03 samples per second
+	1 test cases
+	1 programs found
+2023-11-25 22:27:44,135 INFO: Phase 0.75 (beta=7.75), finished sample process in 47.98 seconds
+	208.43 samples per second
+	1 test cases
+	3 programs found
+2023-11-25 22:27:44,135 INFO: Phase 1.00 (beta=10.00) received:
+@main(x: int): int {
+  ret x;
+  x1: int = add x0 x0;
+  jmp;
+  x3: float = fdiv x2 x6;
+  x2: float = fmul x2 x2;
+  nop;
+  x4: bool = fge x2 x1;
+  ret x1;
+}
+2023-11-25 22:27:44,136 INFO: Phase 0.75 (beta=7.75), received 17 programs and sent 49 programs
+2023-11-25 22:28:29,644 INFO: Phase 1.00 (beta=10.00), finished sample process in 45.51 seconds
+	219.75 samples per second
+	1 test cases
+	2 programs found
+2023-11-25 22:28:29,648 INFO: Phase 1.00 (beta=10.00), received 49 programs and sent 83 programs
+2023-11-25 22:28:29,773 INFO: Completed in 421.67 seconds

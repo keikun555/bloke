@@ -1,9 +1,8 @@
-# ARGS: 1 2
 @main(a: int, b: int): int {
-  true: bool = const true;
+  ret a;
   br true .then .else;
 .then:
-  ret a;
+  true: bool = const true;
 .else:
   ret b;
 }

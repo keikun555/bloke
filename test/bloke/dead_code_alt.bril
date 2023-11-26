@@ -2,10 +2,11 @@
 @main(x: int):int
 {
   one: int = const 1;
+  y: int = id x;
   x: int = add x one;
   x: int = add x one;
   x: int = add x one;
   x: int = add x one;
   x: int = add x one;
-  ret one;
+  ret y;
 }

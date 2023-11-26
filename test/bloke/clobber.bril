@@ -1,3 +1,4 @@
+# ARGS: 2 3
 @main(a: int, b: int): int {
   # (a + b) * (a + b)
   sum1: int = add a b;

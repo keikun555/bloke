@@ -1,0 +1,14 @@
+[envs.original-eval]
+command = "bril2json < {filename} | deno run --no-config '../vendor/bril/brili.ts' {args}"
+output.out = "-"
+output."eval.err" = "2"
+
+[envs.bloke]
+command = "bril2json < {filename} | python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -v | bril2txt"
+output."bloke.out" = "-"
+output."bloke.err" = "2"
+
+[envs.bloke-eval]
+command = "bril2json < {base}.bloke.out | deno run --no-config '../vendor/bril/brili.ts' {args}"
+output.out = "-"
+output."bloke-eval.err" = "2"
