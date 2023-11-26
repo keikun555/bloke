@@ -180,6 +180,7 @@ class Bloke(object):
         beta_range: tuple[float, float],
         num_phases: int,
         samples: int,
+        processes: int,
     ) -> Program:
         """Optimize program, beta is for MCMC, num_phases for performance factor smoothing"""
         assert MIN_PHASES <= num_phases <= MAX_PHASES
@@ -208,7 +209,7 @@ class Bloke(object):
         # Phase worker threads
         threads: list[threading.Thread] = []
 
-        with mp.Pool() as pool:
+        with mp.Pool(processes) as pool:
             # Start phase threads
             for beta, ratio, in_queue, out_queue, processes in zip(
                 betas, ratios, in_queues, out_queues, processes_per_program
@@ -282,6 +283,13 @@ def validate_num_phases(ctx, param, value):
     help="Number of samples per program.",
 )
 @click.option(
+    "-j",
+    "--jobs",
+    type=int,
+    default=os.cpu_count(),
+    help="Number jobs to run simultaneously.",
+)
+@click.option(
     "-v",
     "--verbose",
     is_flag=True,
@@ -302,6 +310,7 @@ def main(
     beta_max: float,
     num_phases: int,
     samples: int,
+    jobs: int,
     verbose: bool,
     debug: bool,
 ) -> None:
@@ -326,7 +335,9 @@ def main(
     )  # pylint: disable=consider-using-with
 
     start_time = time.time()
-    optimized_program = Bloke.optimize(program, (beta_min, beta_max), num_phases, samples)
+    optimized_program = Bloke.optimize(
+        program, (beta_min, beta_max), num_phases, samples, jobs
+    )
     logger.info("Completed in %.2f seconds", time.time() - start_time)
     print(json.dumps(optimized_program))
 
