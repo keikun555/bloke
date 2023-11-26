@@ -260,18 +260,21 @@ def validate_num_phases(ctx, param, value):
     "--beta-min",
     type=float,
     default=1.0,
+    show_default=True,
     help="Minimum beta value for MCMC.",
 )
 @click.option(
     "--beta-max",
     type=float,
     default=10.0,
+    show_default=True,
     help="Maximum beta value for MCMC.",
 )
 @click.option(
     "--num-phases",
     type=int,
     default=2,
+    show_default=True,
     callback=validate_num_phases,
     help="Number of phases, determines gamma. "
     f"Must be between {MIN_PHASES} and {MAX_PHASES}, inclusive.",
@@ -280,6 +283,7 @@ def validate_num_phases(ctx, param, value):
     "--samples",
     type=int,
     default=10000,
+    show_default=True,
     help="Number of samples per program.",
 )
 @click.option(
@@ -287,6 +291,7 @@ def validate_num_phases(ctx, param, value):
     "--jobs",
     type=int,
     default=os.cpu_count(),
+    show_default=True,
     help="Number jobs to run simultaneously.",
 )
 @click.option(
@@ -294,6 +299,7 @@ def validate_num_phases(ctx, param, value):
     "--verbose",
     is_flag=True,
     default=False,
+    show_default=True,
     type=bool,
     help="Verbose output",
 )
@@ -302,6 +308,7 @@ def validate_num_phases(ctx, param, value):
     "--debug",
     is_flag=True,
     default=False,
+    show_default=True,
     type=bool,
     help="Debug output",
 )
