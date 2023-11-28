@@ -1,0 +1,39 @@
+extract = 'INFO: Completed in ([\d\.]+) seconds'
+benchmarks = './bloke/*.bril'
+timeout = 1800 # 30 minutes
+
+[runs.1]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 1 -v > /dev/null",
+]
+
+[runs.2]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 2 -v > /dev/null",
+]
+
+[runs.4]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 4 -v > /dev/null",
+]
+
+[runs.8]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 8 -v > /dev/null",
+]
+
+[runs.16]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 16 -v > /dev/null",
+]
+
+[runs.32]
+pipeline = [
+    "bril2json",
+    "python3 ../src/bloke/optimize.py --beta-min 1 --beta-max 10 --num-phases 5 --samples 10000 -j 32 -v > /dev/null",
+]

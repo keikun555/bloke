@@ -1,0 +1,11 @@
+benchmark,run,result
+distribute,baseline,4
+distribute,bloke,4
+dead_code,baseline,7
+dead_code,bloke,2
+clobber,baseline,8
+clobber,bloke,3
+unused_br,baseline,3
+unused_br,bloke,1
+dead_code_alt,baseline,8
+dead_code_alt,bloke,1
