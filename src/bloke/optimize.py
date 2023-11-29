@@ -198,7 +198,7 @@ class Bloke(object):
         # Make input and output queues
         manager = mp.Manager()
         queues: list[queue.Queue[State | None]] = [
-            manager.Queue(maxsize=cpu_count) for _ in range(num_phases + 1)
+            manager.Queue() for _ in range(num_phases + 1)
         ]
         in_queues: list[queue.Queue[State | None]] = queues[:-1]
         out_queues: list[queue.Queue[State | None]] = queues[1:]
